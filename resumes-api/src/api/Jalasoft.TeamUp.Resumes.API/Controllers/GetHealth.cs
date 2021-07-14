@@ -1,6 +1,7 @@
 namespace Jalasoft.TeamUp.Resumes.API
 {
     using System.Net;
+    using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
@@ -8,17 +9,24 @@ namespace Jalasoft.TeamUp.Resumes.API
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
     using Microsoft.OpenApi.Models;
 
-    public static class GetHealth
+    public class GetHealth
     {
+        private readonly IHealthService healthService;
+
+        public GetHealth(IHealthService healthService)
+        {
+            this.healthService = healthService;
+        }
+
         [FunctionName("GetHealth")]
         [OpenApiOperation(operationId: "Run", tags: new[] { "GetHealth" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public static IActionResult Run(
+        public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
-            string responseMessage = "I'm resumes-api and I'm alive and running! ;)";
+            var healths = this.healthService.GetHealths();
 
-            return new OkObjectResult(responseMessage);
+            return new OkObjectResult(healths);
         }
     }
 }
