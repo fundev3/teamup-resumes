@@ -24,7 +24,7 @@ namespace Jalasoft.TeamUp.Resumes.API
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
-            var healths = this.healthService.GetHealths();
+            var healths = this.healthService.GetHealth();
 
             return new OkObjectResult(healths);
         }

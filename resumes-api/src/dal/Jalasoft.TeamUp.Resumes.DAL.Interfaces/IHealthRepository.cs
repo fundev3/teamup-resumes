@@ -4,6 +4,6 @@
 
     public interface IHealthRepository
     {
-        Health[] GetHealths();
+        Health GetHealth();
     }
 }

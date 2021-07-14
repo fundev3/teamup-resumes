@@ -13,9 +13,9 @@
             this.healthRepository = healthRepository;
         }
 
-        public Health[] GetHealths()
+        public Health GetHealth()
         {
-            return this.healthRepository.GetHealths();
+            return this.healthRepository.GetHealth();
         }
     }
 }

@@ -6,9 +6,9 @@
 
     public class HealthRepository : IHealthRepository
     {
-        public Health[] GetHealths()
+        public Health GetHealth()
         {
-            var healths = new Health[] { new Health { Id = Guid.NewGuid(), Message = "I'm resumes-api and I'm alive and running! ;)" } };
+            var healths = new Health { Id = Guid.NewGuid(), Message = "I'm resumes-api and I'm alive and running! ;)" };
             return healths;
         }
     }

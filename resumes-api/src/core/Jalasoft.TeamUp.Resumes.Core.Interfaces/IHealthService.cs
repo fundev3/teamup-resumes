@@ -4,6 +4,6 @@
 
     public interface IHealthService
     {
-        Health[] GetHealths();
+        Health GetHealth();
     }
 }
