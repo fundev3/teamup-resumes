@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{EBEC1D91-1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jalasoft.TeamUp.Resumes.API", "src\api\Jalasoft.TeamUp.Resumes.API\Jalasoft.TeamUp.Resumes.API.csproj", "{201B8B99-20E0-4B00-8399-416EBEDD8487}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jalasoft.TeamUp.Resumes.Core.Tests", "tests\core\Jalasoft.TeamUp.Resumes.Core.Tests\Jalasoft.TeamUp.Resumes.Core.Tests.csproj", "{B940D2ED-661C-4904-8782-5061F1600BD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jalasoft.TeamUp.Resumes.Core.Tests", "tests\core\Jalasoft.TeamUp.Resumes.Core.Tests\Jalasoft.TeamUp.Resumes.Core.Tests.csproj", "{B940D2ED-661C-4904-8782-5061F1600BD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

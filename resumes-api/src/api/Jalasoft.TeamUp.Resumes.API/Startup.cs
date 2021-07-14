@@ -17,6 +17,8 @@ namespace Jalasoft.TeamUp.Resumes.API
         {
             builder.Services.AddTransient<IHealthService, HealthService>();
             builder.Services.AddTransient<IHealthRepository, HealthRepository>();
+            builder.Services.AddTransient<IResumesService, ResumesService>();
+            builder.Services.AddTransient<IResumesRepository, ResumesRepository>();
         }
     }
 }
