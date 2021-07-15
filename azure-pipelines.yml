@@ -7,20 +7,14 @@ trigger:
   batch: true
   branches:
     include:
-      - main
-      - develop
       - feature/13-azure-pipelines
-
 
 pr:
   autoCancel: true
   branches:
     include:
-      - master
-      - develop
       - feature/13-azure-pipelines
 
-      
 pool:
   vmImage: ubuntu-latest
 
@@ -30,11 +24,28 @@ steps:
     packageType: 'sdk'
     version: '5.0.x'
   displayName: 'Install DotNet'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Install dotnet format'
+  inputs:
+    command: 'custom'
+    custom: 'tool'
+    arguments: 'update -g dotnet-format'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Lint dotnet'
+  inputs:
+    command: 'custom'
+    custom: 'format'
+    arguments: '--check --verbosity diagnostic'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     projects: '**/**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
   displayName: 'DotNet Build'
 
 - task: DotNetCoreCLI@2
@@ -42,10 +53,9 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/**/*.csproj'    
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    arguments: '-o $(Build.ArtifactStagingDirectory)/Output'
     zipAfterPublish: False
   displayName: 'DotNet Publish'
-
 
 - task: DotNetCoreCLI@2
   inputs:
