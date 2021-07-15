@@ -11,6 +11,7 @@ trigger:
       - develop
       - feature/13-azure-pipelines
 
+
 pr:
   autoCancel: true
   branches:
@@ -18,6 +19,7 @@ pr:
       - master
       - develop
       - feature/13-azure-pipelines
+
       
 pool:
   vmImage: ubuntu-latest
@@ -27,12 +29,13 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '5.0.x'
-
+  displayName: 'Install DotNet'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     projects: '**/**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
+  displayName: 'DotNet Build'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -41,6 +44,7 @@ steps:
     projects: '**/**/*.csproj'    
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: False
+  displayName: 'DotNet Publish'
 
 
 - task: DotNetCoreCLI@2
@@ -48,6 +52,7 @@ steps:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     versioningScheme: 'off'
+  displayName: 'DotNet Pack'
 
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -55,6 +60,7 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+  displayName: 'DotNet Drop'
 
 
 
