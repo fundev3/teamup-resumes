@@ -6,7 +6,7 @@
 
     public class ResumesRepository : IResumesRepository
     {
-        private static IList<Resume> resumes = new List<Resume>();
+        private static IEnumerable<Resume> resumes = new List<Resume>();
 
         public IEnumerable<Resume> GetResumes()
         {
