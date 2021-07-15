@@ -7,13 +7,15 @@ trigger:
   batch: true
   branches:
     include:
-      - feature/13-azure-pipelines
+      - main
+      - develop
 
 pr:
   autoCancel: true
   branches:
     include:
-      - feature/13-azure-pipelines
+      - main
+      - develop
 
 pool:
   vmImage: ubuntu-latest
@@ -24,10 +26,6 @@ steps:
     packageType: 'sdk'
     version: '5.0.x'
   displayName: 'Install DotNet'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
 
 - task: DotNetCoreCLI@2
   displayName: 'Install dotnet format'
@@ -46,7 +44,9 @@ steps:
   inputs:
     command: 'build'
     projects: '**/**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
   displayName: 'DotNet Build'
+  
 
 - task: DotNetCoreCLI@2
   inputs:
