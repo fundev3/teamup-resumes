@@ -27,19 +27,9 @@ steps:
     version: '5.0.x'
   displayName: 'Install DotNet'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Install dotnet format'
-  inputs:
-    command: 'custom'
-    custom: 'tool'
-    arguments: 'update -g dotnet-format'
-
-- task: DotNetCoreCLI@2
+- script: 'dotnet tool update -g dotnet-format && dotnet format --check --verbosity diagnostic'
   displayName: 'Lint dotnet'
-  inputs:
-    command: 'custom'
-    custom: 'format'
-    arguments: '--check --verbosity diagnostic'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
