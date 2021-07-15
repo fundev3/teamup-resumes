@@ -4,15 +4,55 @@
 # https://aka.ms/yaml
 
 trigger:
-- develop
+  batch: true
+  branches:
+    include:
+      - main
+      - develop
 
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - master
+      - develop
+      
 pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '5.0.x'
+
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'test'
-    projects: '**/TestCase/*.csproj'
+    command: 'build'
+    projects: '**/**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/**/*.csproj'    
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: False
+
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'off'
+
+- task: PublishBuildArtifacts@1
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+
 
