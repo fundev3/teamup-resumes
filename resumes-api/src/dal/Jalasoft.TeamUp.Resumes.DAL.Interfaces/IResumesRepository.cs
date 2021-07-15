@@ -5,6 +5,6 @@
 
     public interface IResumesRepository
     {
-        List<Resume> GetResumes();
+        IEnumerable<Resume> GetResumes();
     }
 }
