@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<CodeAnalysisRuleSet>../../../stylecop.ruleset</CodeAnalysisRuleSet>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+		<PackageReference Include="xunit" Version="2.4.0" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+		<PackageReference Include="coverlet.collector" Version="1.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\src\core\Jalasoft.TeamUp.Resumes.Core.Interfaces\Jalasoft.TeamUp.Resumes.Core.Interfaces.csproj" />
+	  <ProjectReference Include="..\..\..\src\core\Jalasoft.TeamUp.Resumes.Core\Jalasoft.TeamUp.Resumes.Core.csproj" />
+	  <ProjectReference Include="..\..\..\src\dal\Jalasoft.TeamUp.Resumes.DAL.Interfaces\Jalasoft.TeamUp.Resumes.DAL.Interfaces.csproj" />
+	  <ProjectReference Include="..\..\..\src\dal\Jalasoft.TeamUp.Resumes.DAL\Jalasoft.TeamUp.Resumes.DAL.csproj" />
+	  <ProjectReference Include="..\..\..\src\models\Jalasoft.TeamUp.Resumes.Models\Jalasoft.TeamUp.Resumes.Models.csproj" />
+	</ItemGroup>
+
+</Project>
