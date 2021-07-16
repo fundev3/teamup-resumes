@@ -33,20 +33,6 @@ steps:
     projects: '**/**/*.csproj'
   displayName: 'DotNet Build'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '**/**/*.csproj'    
-    zipAfterPublish: False
-  displayName: 'DotNet Publish'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'pack'
-    packagesToPack: '**/*.csproj'
-    versioningScheme: 'off'
-  displayName: 'DotNet Pack'
-
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
