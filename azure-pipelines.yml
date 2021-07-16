@@ -7,16 +7,12 @@ trigger:
   batch: true
   branches:
     include:
-      - main
-      - develop
       - feature/13-azure-pipelines
 
 pr:
   autoCancel: true 
   branches:
     include:
-      - main
-      - develop
       - feature/13-azure-pipelines
 
 pool:
