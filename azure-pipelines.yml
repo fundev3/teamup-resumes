@@ -7,13 +7,16 @@ trigger:
   batch: true
   branches:
     include:
-      - feature/13-azure-pipelines
+      - develop
+      - main
 
 pr:
   autoCancel: true 
   branches:
     include:
-      - feature/13-azure-pipelines
+      - develop
+      - main
+
 
 pool:
   vmImage: ubuntu-latest
@@ -36,7 +39,7 @@ steps:
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
-    PathtoPublish: '$(Agent.BuildDirectory)/s/HelloWorld/HelloWorld/bin/Debug/netcoreapp3.1'
+    PathtoPublish: '$(Agent.BuildDirectory)/s/resumes-api/resumes-api/bin/Debug/netcoreapp3.1'
     ArtifactName: 'Drop'
     publishLocation: 'Container'
   displayName: 'DotNet Drop'
