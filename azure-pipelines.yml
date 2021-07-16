@@ -26,8 +26,10 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '3.x.x'
+    version: '3.x'
   displayName: 'Install DotNet'
+  condition: 
+
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -44,7 +46,6 @@ steps:
     arguments: '-o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: False
   displayName: 'DotNet Publish'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
