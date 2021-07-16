@@ -9,6 +9,7 @@ trigger:
     include:
       - develop
       - main
+      - feature/13-azure-pipelines
 
 pr:
   autoCancel: true 
@@ -16,6 +17,7 @@ pr:
     include:
       - develop
       - main
+      - feature/13-azure-pipelines
   drafts: false
 
 
