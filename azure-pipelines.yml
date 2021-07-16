@@ -9,7 +9,6 @@ trigger:
     include:
       - develop
       - main
-      - feature/13-azure-pipelines
 
 pr:
   autoCancel: true 
@@ -17,9 +16,7 @@ pr:
     include:
       - develop
       - main
-      - feature/13-azure-pipelines
   drafts: false
-
 
 pool:
   vmImage: ubuntu-latest
@@ -31,7 +28,6 @@ steps:
     version: '3.x'
   displayName: 'Install DotNet'
   condition: 
-
 
 - task: DotNetCoreCLI@2
   inputs:

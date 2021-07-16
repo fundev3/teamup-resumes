@@ -1,2 +1,0 @@
-# teamup-resumes
-Backend microservice
