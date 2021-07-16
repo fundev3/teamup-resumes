@@ -31,7 +31,6 @@ steps:
   inputs:
     command: 'build'
     projects: '**/**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
   displayName: 'DotNet Build'
 
 - task: DotNetCoreCLI@2
@@ -39,7 +38,6 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/**/*.csproj'    
-    arguments: '-o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: False
   displayName: 'DotNet Publish'
 - task: DotNetCoreCLI@2
@@ -52,7 +50,7 @@ steps:
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Agent.BuildDirectory)/s/build'
     ArtifactName: 'Alex'
     publishLocation: 'Container'
   displayName: 'DotNet Drop'
