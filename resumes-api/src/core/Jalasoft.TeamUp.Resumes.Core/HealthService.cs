@@ -17,5 +17,10 @@
         {
             return this.healthRepository.GetHealth();
         }
+
+        public Health PostHealth()
+        {
+            return this.healthRepository.PostHealth();
+        }
     }
 }

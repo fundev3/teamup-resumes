@@ -11,5 +11,11 @@
             var healths = new Health { Id = Guid.NewGuid(), Message = "I'm resumes-api and I'm alive and running! ;)" };
             return healths;
         }
+
+        public Health PostHealth()
+        {
+            var healths = new Health { Id = Guid.NewGuid(), Message = "I'm create resumes api and I'm alive and running! ;)" };
+            return healths;
+        }
     }
 }
