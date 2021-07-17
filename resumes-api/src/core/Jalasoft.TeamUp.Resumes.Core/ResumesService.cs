@@ -1,5 +1,6 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
+    using System;
     using System.Linq;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
@@ -21,6 +22,7 @@
 
         public Resume PostResumes(Resume resume)
         {
+            resume.Id = Guid.NewGuid();
             return this.resumesRepository.PostResumes(resume);
         }
     }
