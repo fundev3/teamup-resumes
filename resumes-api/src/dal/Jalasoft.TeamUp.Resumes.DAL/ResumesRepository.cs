@@ -16,7 +16,7 @@
 
         public Resume PostResumes(Resume resume)
         {
-            resumes.Add(resume);
+            resumes = resumes.Append(resume);
             return resume;
         }
     }
