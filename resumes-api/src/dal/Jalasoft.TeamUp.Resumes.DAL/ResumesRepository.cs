@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
@@ -11,6 +12,12 @@
         public IEnumerable<Resume> GetResumes()
         {
             return resumes;
+        }
+
+        public Resume PostResumes(Resume resume)
+        {
+            resumes.Add(resume);
+            return resume;
         }
     }
 }
