@@ -1,15 +1,10 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-  batch: true
   branches:
     include:
       - develop
       - main
-
+variables:
+  project: '**/*.sln'
 pr:
   autoCancel: true 
   branches:
@@ -17,10 +12,8 @@ pr:
       - develop
       - main
   drafts: false
-
 pool:
   vmImage: ubuntu-latest
-
 steps:
 - task: UseDotNet@2
   inputs:
@@ -28,17 +21,16 @@ steps:
     version: '3.x'
   displayName: 'Install DotNet'
   condition: 
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/**/*.csproj'
+    projects: project
   displayName: 'DotNet Build'
 
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
-    PathtoPublish: '$(Agent.BuildDirectory)/s/resumes-api'
+    PathtoPublish: '$(Agent.BuildDirectory)/s/*'
     ArtifactName: 'Drop'
     publishLocation: 'Container'
   displayName: 'DotNet Drop'
