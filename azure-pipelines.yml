@@ -24,7 +24,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: $(projects)
+    projects: $(project)
   displayName: 'DotNet Build'
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
