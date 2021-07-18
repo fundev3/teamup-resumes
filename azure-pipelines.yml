@@ -4,7 +4,7 @@ trigger:
       - develop
       - main
 variables:
-  project: '**/resumes-api.sln'
+  project: '**/**/*.sln'
 pr:
   autoCancel: true 
   branches:
@@ -30,7 +30,7 @@ steps:
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
-    PathtoPublish: '$(Agent.BuildDirectory)/s/*'
+    PathtoPublish: '$(Agent.BuildDirectory)/s/**/'
     ArtifactName: 'Drop'
     publishLocation: 'Container'
   displayName: 'DotNet Drop'
