@@ -25,6 +25,7 @@ steps:
   inputs:
     command: 'build'
     projects: $(project)
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
   displayName: 'DotNet Build'
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
