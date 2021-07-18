@@ -4,7 +4,7 @@ trigger:
       - develop
       - main
 variables:
-  project: '**/*.sln'
+  project: '**/resumes-api.sln'
 pr:
   autoCancel: true 
   branches:
