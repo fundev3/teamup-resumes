@@ -3,36 +3,28 @@ trigger:
     include:
       - develop
       - main
-
 variables:
   projects: '**/**/*.sln'
-
 pr:
-  autoCancel: true 
   branches:
     include:
       - develop
       - main
   drafts: false
-
 pool:
   vmImage: ubuntu-latest
-
 steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '3.x'
   displayName: 'Install DotNet'
-  condition: 
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     projects: $(projects)
     arguments: '--output $(Build.ArtifactStagingDirectory)'
   displayName: 'DotNet Build'
-
 - task: PublishBuildArtifacts@1
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
