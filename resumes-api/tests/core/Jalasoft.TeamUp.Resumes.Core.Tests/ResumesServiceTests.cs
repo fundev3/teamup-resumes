@@ -19,7 +19,7 @@
         }
 
         [Fact]
-        public void GetTasks_Returns_EmptyResult()
+        public void GetResumes_Returns_EmptyResult()
         {
             this.mockRepository.Setup(repository => repository.GetResumes()).Returns(new List<Resume>());
 
@@ -29,7 +29,7 @@
         }
 
         [Fact]
-        public void GetResumes_Returns_AllItems()
+        public void GetResumes_Returns_AllItemsResult()
         {
             this.mockRepository.Setup(repository => repository.GetResumes()).Returns(this.GetTestResumes());
 

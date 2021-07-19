@@ -35,7 +35,7 @@
         }
 
         [Fact]
-        public void GetTasks_Returns_EmptyResult()
+        public void GetResumes_Returns_EmptyResult()
         {
             this.mockService.Setup(service => service.GetResumes()).Returns(new Resume[0]);
 
@@ -47,7 +47,7 @@
         }
 
         [Fact]
-        public void GetResumes_Returns_AllItems()
+        public void GetResumes_Returns_AllItemsResult()
         {
             this.mockService.Setup(service => service.GetResumes()).Returns(this.GetTestResumes());
 
