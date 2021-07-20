@@ -1,18 +1,18 @@
 trigger:
   branches:
     include:
-      - develop
       - main
+      - develop
       
 pr:
   branches:
     include:
-      - develop
       - main
+      - develop
   drafts: false
   
 variables:
-  projects: '**/*.sln'
+  projects: '**/**/*.sln'
 
 pool:
   vmImage: ubuntu-latest
