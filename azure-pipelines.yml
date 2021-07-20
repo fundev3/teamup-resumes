@@ -3,32 +3,39 @@ trigger:
     include:
       - develop
       - main
-variables:
-  projects: '**/*.sln'
+      
 pr:
   branches:
     include:
       - develop
       - main
   drafts: false
+  
+variables:
+  projects: '**/*.sln'
+
 pool:
   vmImage: ubuntu-latest
+
 steps:
 - task: UseDotNet@2
+  displayName: 'Install DotNet'
   inputs:
     packageType: 'sdk'
     version: '3.x'
-  displayName: 'Install DotNet'
+
 - task: DotNetCoreCLI@2
+  displayName: 'DotNet Build'
   inputs:
     command: 'build'
     projects: $(projects)
     arguments: '--output $(Build.ArtifactStagingDirectory)'
-  displayName: 'DotNet Build'
+
 - task: PublishBuildArtifacts@1
+  displayName: 'DotNet Drop'
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'Drop'
     publishLocation: 'Container'
-  displayName: 'DotNet Drop'
+  
