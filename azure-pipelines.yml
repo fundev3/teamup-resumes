@@ -13,6 +13,7 @@ pr:
   
 variables:
   projects: '**/*.sln'
+  testsProjects: '**/*Tests/*.csproj'
 
 pool:
   vmImage: ubuntu-latest
@@ -30,6 +31,12 @@ steps:
     command: 'build'
     projects: $(projects)
     arguments: '--output $(Build.ArtifactStagingDirectory)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'DotNet Tests'
+  inputs:
+    command: test
+    projects:  $(testsProjects)
 
 - task: PublishBuildArtifacts@1
   displayName: 'DotNet Drop'
