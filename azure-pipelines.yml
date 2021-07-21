@@ -10,11 +10,6 @@ pr:
       - main
       - develop
   drafts: false
-  
-variables:
-  projects: '**/*.sln'
-  testsProjects: '**/*Tests/*.csproj'
-  styleCopEnabled: '/p:TreatWarningsAsErrors=true'
 
 pool:
   vmImage: ubuntu-latest
