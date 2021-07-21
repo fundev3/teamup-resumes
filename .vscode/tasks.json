@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "func",
+            "options": {
+                "cwd": "${workspaceFolder}/src/api/Jalasoft.TeamUp.Resumes.API/bin/Debug/netcoreapp3.1"
+            },
+            "command": "start --dotnet-isolated-debug",
+            "isBackground": true,
+            "problemMatcher": "$func-dotnet-watch"
+        }
+    ]
+}
