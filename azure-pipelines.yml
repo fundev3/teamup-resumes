@@ -30,7 +30,7 @@ steps:
   inputs:
     command: 'build'
     projects: $(projects)
-    arguments: '--output $(Build.ArtifactStagingDirectory)'
+    arguments: '--output $(Build.ArtifactStagingDirectory) /p:TreatWarningsAsErrors=true'
 
 - task: DotNetCoreCLI@2
   displayName: 'DotNet Tests'
