@@ -3,7 +3,7 @@ trigger:
     include:
       - main
       - develop
-      
+
 pr:
   branches:
     include:
@@ -11,34 +11,41 @@ pr:
       - develop
   drafts: false
 
+variables:
+  projects: "**/*.sln"
+  azureSubscription: <Azure subscription I'm gonna create>
+  appName: <Name of the Function app>
+  vmImageName: 'ubuntu-latest' # is optional but I'm gonna create
+
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: UseDotNet@2
-  displayName: 'Install DotNet'
-  inputs:
-    packageType: 'sdk'
-    version: '3.x'
+  - task: UseDotNet@2
+    displayName: "Install DotNet"
+    inputs:
+      packageType: "sdk"
+      version: "3.x"
 
-- task: DotNetCoreCLI@2
-  displayName: 'DotNet Build'
-  inputs:
-    command: 'build'
-    projects: $(projects)
-    arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
+  - task: DotNetCoreCLI@2
+    displayName: "DotNet Build"
+    inputs:
+      command: "build"
+      projects: $(projects)
+      arguments: "--output $(Build.ArtifactStagingDirectory)"
 
-- task: DotNetCoreCLI@2
-  displayName: 'DotNet Tests'
-  inputs:
-    command: test
-    projects:  $(testsProjects)
+  - task: PublishBuildArtifacts@1
+    displayName: "DotNet Drop"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: "Drop"
+      publishLocation: "Container"
 
-- task: PublishBuildArtifacts@1
-  displayName: 'DotNet Drop'
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Drop'
-    publishLocation: 'Container'
-  
+
+  - task: AzureFunctionApp@1 # Add this at the end of your file
+    inputs:
+      azureSubscription: <Azure service connection>
+      appType: functionAppLinux
+      appName: $(appName)
+      package: $(System.ArtifactsDirectory)/**/*.zip
