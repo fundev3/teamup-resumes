@@ -43,8 +43,8 @@
             var result = this.getResumes.Run(this.mockRequest.Object);
 
             var okObjectResult = Assert.IsType<OkObjectResult>(result);
-            var resumes = Assert.IsType<Resume[]>(okObjectResult.Value);
-            Assert.Empty(resumes);
+            var resumes = Assert.IsType<ResumesResponse>(okObjectResult.Value);
+            Assert.Empty(resumes.Resumes);
         }
 
         [Fact]
@@ -55,8 +55,8 @@
             var result = this.getResumes.Run(this.mockRequest.Object);
 
             var okObjectResult = Assert.IsType<OkObjectResult>(result);
-            var resumes = Assert.IsType<Resume[]>(okObjectResult.Value);
-            Assert.Equal(2, resumes.Length);
+            var resumes = Assert.IsType<ResumesResponse>(okObjectResult.Value);
+            Assert.Equal(2, resumes.Resumes.Length);
         }
 
         public Resume[] GetTestResumes()

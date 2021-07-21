@@ -21,12 +21,12 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
         [FunctionName("resumes")]
         [OpenApiOperation(operationId: "Run", tags: new[] { "Resumes" })]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ResumesResponse), Description = "Successful response")]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes")] HttpRequest req)
         {
             var resumes = this.resumesService.GetResumes();
-            return new OkObjectResult(new { resumes });
+            return new OkObjectResult(new ResumesResponse { Resumes = resumes });
         }
     }
 }
