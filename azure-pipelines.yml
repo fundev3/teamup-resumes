@@ -27,7 +27,7 @@ stages:
 
       pool:
         vmImage: $(vmImageName)
-    - job: BuildMachine
+
       steps:
       - task: UseDotNet@2
         displayName: 'Install DotNet'
@@ -82,3 +82,4 @@ stages:
                 appType: functionApp
                 appName: $(functionAppName)
                 package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+                runtimeStack: 'DOTNET|3.1'
