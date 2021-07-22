@@ -23,11 +23,11 @@ stages:
   
     jobs:
     - job: Build
-      displayName: Build
+      displayName: BuildJob
 
       pool:
         vmImage: $(vmImageName)
-
+    - job: BuildMachine
       steps:
       - task: UseDotNet@2
         displayName: 'Install DotNet'
