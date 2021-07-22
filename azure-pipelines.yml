@@ -12,7 +12,7 @@ pr:
   drafts: false
 
 variables:
-  projects: '**/**/*.sln'
+  projects: '**/*.sln'
   azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
   functionAppName: 'fa-tuapi-resumes-dev-bra'
   vmImageName: 'ubuntu-latest'
