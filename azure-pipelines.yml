@@ -40,13 +40,7 @@ stages:
         inputs:
           command: 'build'
           projects: $(projects)
-          arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
-
-      - task: DotNetCoreCLI@2
-        displayName: 'DotNet Tests'
-        inputs:
-          command: test
-          projects:  $(testsProjects)
+          arguments: '--output $(Build.ArtifactStagingDirectory)'
         
       - task: ArchiveFiles@2
         inputs:
