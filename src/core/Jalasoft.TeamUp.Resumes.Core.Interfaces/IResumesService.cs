@@ -1,9 +1,10 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Interfaces
 {
+    using System;
     using Jalasoft.TeamUp.Resumes.Models;
 
     public interface IResumesService
     {
-        Resume[] GetResumes();
+        public Resume GetResume(Guid id);
     }
 }

@@ -1,5 +1,6 @@
 namespace Jalasoft.TeamUp.Resumes.API.Controllers
 {
+    using System;
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -23,10 +24,11 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiOperation(operationId: "Run", tags: new[] { "Resumes" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
         public IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes/{id}")] HttpRequest req)
         {
-            var resumes = this.resumesService.GetResumes();
-            return new OkObjectResult(resumes);
+            Guid id = Guid.Parse(req.Query["id"]);
+            var result = this.resumesService.GetResume(id);
+            return new OkObjectResult(result);
         }
     }
 }
