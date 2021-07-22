@@ -15,10 +15,10 @@ namespace Jalasoft.TeamUp.Resumes.API
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddTransient<IHealthService, HealthService>();
-            builder.Services.AddTransient<IHealthRepository, HealthRepository>();
-            builder.Services.AddTransient<IResumesService, ResumesService>();
-            builder.Services.AddTransient<IResumesRepository, ResumesRepository>();
+            builder.Services.AddScoped<IHealthService, HealthService>();
+            builder.Services.AddScoped<IHealthRepository, HealthRepository>();
+            builder.Services.AddScoped<IResumesService, ResumesService>();
+            builder.Services.AddScoped<IResumesRepository, ResumesRepository>();
         }
     }
 }

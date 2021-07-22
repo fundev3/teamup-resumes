@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class PersonalInformation
+    public class Person
     {
         public string FirstName { get; set; }
 
