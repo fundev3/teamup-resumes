@@ -14,7 +14,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\dal\Jalasoft.TeamUp.Resumes.DAL.Interfaces\Jalasoft.TeamUp.Resumes.DAL.Interfaces.csproj" />
-		<ProjectReference Include="..\..\dal\Jalasoft.TeamUp.Resumes.DAL\Jalasoft.TeamUp.Resumes.DAL.csproj" />
 		<ProjectReference Include="..\..\models\Jalasoft.TeamUp.Resumes.Models\Jalasoft.TeamUp.Resumes.Models.csproj" />
 		<ProjectReference Include="..\Jalasoft.TeamUp.Resumes.Core.Interfaces\Jalasoft.TeamUp.Resumes.Core.Interfaces.csproj" />
 	</ItemGroup>
