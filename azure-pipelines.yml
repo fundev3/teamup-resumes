@@ -32,7 +32,7 @@ steps:
     inputs:
       command: 'build'
       projects: $(projects)
-      arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
+      arguments: '--output $(Build.ArtifactStagingDirectory)/build $(styleCopEnabled)'
 
   - task: DotNetCoreCLI@2
     displayName: 'DotNet Tests'
@@ -44,12 +44,12 @@ steps:
     displayName: 'DotNet Drop'
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
       ArtifactName: 'Drop'
   
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/build'
       includeRootFolder: false
       archiveType: zip
       archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
