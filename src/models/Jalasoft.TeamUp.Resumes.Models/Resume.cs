@@ -6,14 +6,18 @@
     {
         public Guid Id { get; set; }
 
-        public string FirstName { get; set; }
+        public string Title { get; set; }
 
-        public string LastName { get; set; }
+        public Person PersonalInformation { get; set; }
 
-        public string Email { get; set; }
-
-        public string Phone { get; set; }
+        public Contact Contact { get; set; }
 
         public string Summary { get; set; }
+
+        public Skill[] Skills { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public DateTime LastUpdate { get; set; }
     }
 }
