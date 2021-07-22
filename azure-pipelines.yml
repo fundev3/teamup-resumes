@@ -19,7 +19,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build stage
+  displayName: Build & Test
 
   jobs:
   - job: Build
@@ -42,15 +42,6 @@ stages:
         projects: $(projects)
         arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
 
-- stage: Test
-  displayName: 'Run Test'
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - job: Test
-    displayName: Run Test
-
-    steps:
     - task: DotNetCoreCLI@2
       displayName: 'DotNet Tests'
       inputs:
