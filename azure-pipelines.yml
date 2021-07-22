@@ -13,8 +13,8 @@ pr:
 
 variables:
   projects: "**/*.sln"
-  azureSubscription: a797242d-ce60-41aa-98ca-2e22d5221cfe
-  appName: team-up-backend-resumes
+  azureSubscription: 'a797242d-ce60-41aa-98ca-2e22d5221cfe'
+  appName: 'team-up-backend-resumes'
   vmImageName: 'ubuntu-latest' # is optional but I'm gonna create
 
 pool:
