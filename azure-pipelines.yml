@@ -50,7 +50,7 @@ stages:
 
 - stage: Publish
   displayName: Publish drop
-  dependsOn: Test
+  dependsOn: Build
   condition: succeeded()
   jobs:
   - job: Publish
