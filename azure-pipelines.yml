@@ -40,7 +40,7 @@ stages:
         inputs:
           command: 'build'
           projects: $(projects)
-          arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
+          arguments: '--output $(Build.ArtifactStagingDirectory)/drop $(styleCopEnabled)'
 
       - task: DotNetCoreCLI@2
         displayName: 'DotNet Tests'
@@ -50,7 +50,7 @@ stages:
         
       - task: ArchiveFiles@2
         inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/drop'
           includeRootFolder: false
           archiveType: zip
           archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
