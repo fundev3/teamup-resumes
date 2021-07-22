@@ -32,7 +32,7 @@ steps:
     inputs:
       command: 'build'
       projects: $(projects)
-      arguments: '--output $(Build.ArtifactStagingDirectory)/build $(styleCopEnabled)'
+      arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
 
   - task: DotNetCoreCLI@2
     displayName: 'DotNet Tests'
@@ -40,16 +40,28 @@ steps:
       command: test
       projects:  $(testsProjects)
 
+  - task: DeleteFiles@1
+    displayName: 'Remove unneeded files'
+    inputs:
+      contents: $(Build.ArtifactStagingDirectory)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'DotNet Build'
+    inputs:
+      command: 'build'
+      projects: $(projects)
+      arguments: '--output $(Build.ArtifactStagingDirectory)'
+
   - task: PublishBuildArtifacts@1
     displayName: 'DotNet Drop'
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'Drop'
   
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/build'
+      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
       includeRootFolder: false
       archiveType: zip
       archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
