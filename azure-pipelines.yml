@@ -17,8 +17,8 @@ variables:
   appName: 'team-up-backend-resumes'
   vmImageName: 'ubuntu-latest'
 
-  pool:
-    vmImage: $(vmImageName)
+pool:
+  vmImage: $(vmImageName)
 
 steps:
   - task: UseDotNet@2
