@@ -43,7 +43,7 @@ stages:
         arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
 
 - stage: Test
-  displayName: Run Test
+  displayName: 'Run Test'
   dependsOn: Build
   condition: succeeded()
   jobs:
@@ -59,7 +59,7 @@ stages:
 
 - stage: Publish
   displayName: Publish drop
-  dependsOn: Run Test
+  dependsOn: Test
   condition: succeeded()
   jobs:
   - job: Publish
@@ -84,7 +84,7 @@ stages:
 
 - stage: Deploy
   displayName: Deploy stage
-  dependsOn: Publish drop
+  dependsOn: Publish
   condition: succeeded()
 
   jobs:
