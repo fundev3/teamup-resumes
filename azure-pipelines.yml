@@ -18,71 +18,70 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-  - stage: Build
-    displayName: Build stage
-  
-    jobs:
-    - job: Build
-      displayName: BuildJob
+- stage: Build
+  displayName: Build stage
 
-      pool:
-        vmImage: $(vmImageName)
+  jobs:
+  - job: Build
+    displayName: BuildJob
 
-      steps:
-      - task: UseDotNet@2
-        displayName: 'Install DotNet'
-        inputs:
-          packageType: 'sdk'
-          version: '3.x'
+    pool:
+      vmImage: $(vmImageName)
 
-      - task: DotNetCoreCLI@2
-        displayName: 'DotNet Build'
-        inputs:
-          command: 'build'
-          projects: $(projects)
-          arguments: '--output $(Build.ArtifactStagingDirectory)'
-        
-      - task: ArchiveFiles@2
-        inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
-          includeRootFolder: false
-          archiveType: zip
-          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-          replaceExistingArchive: true
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Install DotNet'
+      inputs:
+        packageType: 'sdk'
+        version: '3.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'DotNet Build'
+      inputs:
+        command: 'build'
+        projects: $(projects)
+        arguments: '--output $(Build.ArtifactStagingDirectory)'
       
-      - task: PublishBuildArtifacts@1
-        displayName: 'Dotnet Drop Artifacts'
-        # condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+      
+    - task: PublishBuildArtifacts@1
+      displayName: 'Dotnet Drop Artifacts'
+      # condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 
-  - stage: Deploy
-    displayName: Deploy stage
-    dependsOn: Build
-    condition: succeeded()
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: succeeded()
 
-    jobs:
-    - deployment: Deploy
-      displayName: Deploy
-      environment: 'development'
-      pool:
-        vmImage: $(vmImageName)
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
 
-        steps:
-        - task: DownloadBuildArtifacts@1
-          inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            itemPattern: 'drop/$(Build.BuildId).zip'
-            downloadPath: '$(System.ArtifactsDirectory)'
+    steps:
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        itemPattern: 'drop/$(Build.BuildId).zip'
+        downloadPath: '$(System.ArtifactsDirectory)'
 
-        - task: AzureFunctionApp@1
-          displayName: 'Azure functions app deploy'
-          inputs:
-            azureSubscription: '$(azureSubscription)'
-            appType: functionAppLinux
-            appName: $(functionAppName)
-            package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
-            runtimeStack: 'DOTNET|3.1'
+    - task: AzureFunctionApp@1
+      displayName: 'Azure functions app deploy'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        appType: functionAppLinux
+        appName: $(functionAppName)
+        package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
+        runtimeStack: 'DOTNET|3.1'
