@@ -14,7 +14,7 @@ pr:
 variables:
   projects: '**/*.sln'
   azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
-  functionAppName: 'team-up-backend-resumes'
+  functionAppName: 'fa-tuapi-resumes-dev-bra'
   vmImageName: 'ubuntu-latest'
 
 stages:
@@ -79,7 +79,7 @@ stages:
               displayName: 'Azure functions app deploy'
               inputs:
                 azureSubscription: '$(azureSubscription)'
-                appType: functionApp
+                appType: functionAppLinux
                 appName: $(functionAppName)
-                package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+                package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
                 runtimeStack: 'DOTNET|3.1'
