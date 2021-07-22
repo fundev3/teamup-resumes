@@ -44,7 +44,8 @@ stages:
 
 - stage: Test
   displayName: Run Test
-
+  dependsOn: Build
+  condition: succeeded()
   jobs:
   - job: Test
     displayName: Run Test
@@ -58,7 +59,8 @@ stages:
 
 - stage: Publish
   displayName: Publish drop
-
+  dependsOn: Run Test
+  condition: succeeded()
   jobs:
   - job: Publish
     displayName: Publish drop
@@ -82,7 +84,7 @@ stages:
 
 - stage: Deploy
   displayName: Deploy stage
-  dependsOn: Build
+  dependsOn: Publish drop
   condition: succeeded()
 
   jobs:
