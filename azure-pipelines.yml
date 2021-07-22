@@ -3,7 +3,7 @@ trigger:
     include:
       - main
       - develop
-
+      
 pr:
   branches:
     include:
@@ -12,52 +12,47 @@ pr:
   drafts: false
 
 variables:
-      projects: '**/**/*.sln'
-      azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
-      appName: 'team-up-backend-resumes'
-stages:
-- stage: Build
-  displayName: Build stage
-  jobs: 
-  - job: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: UseDotNet@2
-      displayName: 'DotNet Install'
-      inputs:
-        packageType: 'sdk'
-        version: '3.x'
+  projects: '**/*.sln'
+  azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
+  appName: 'team-up-backend-resumes'
+  vmImageName: 'ubuntu-latest'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'Dotnet Build'
-      inputs:
-        command: 'build'
-        projects: $(projects)
-        arguments: '--output $(Build.ArtifactStagingDirectory)'
+  pool:
+    vmImage: $(vmImageName)
 
-    - task: PublishBuildArtifacts@1
-      displayName: 'Dotnet Drop Artifacts'
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'Drop'
-        publishLocation: 'Container'
+steps:
+  - task: UseDotNet@2
+    displayName: 'Install DotNet'
+    inputs:
+      packageType: 'sdk'
+      version: '3.x'
 
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
-  condition: succeeded()
-  jobs: 
-  - job: Deploy
-    displayName: Deploy
-    pool: 
-      vmImage: 'ubuntu-latest'
-    steps:    
-    - task: AzureFunctionApp@1
-      inputs:
-        azureSubscription: $(azureSubscription)
-        appType: 'functionAppLinux'
-        appName: $(appName)
-        package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-        runtimeStack: 'DOTNET|3.1'
+  - task: DotNetCoreCLI@2
+    displayName: 'DotNet Build'
+    inputs:
+      command: 'build'
+      projects: $(projects)
+      arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'DotNet Tests'
+    inputs:
+      command: test
+      projects:  $(testsProjects)
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'DotNet Drop'
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
+      ArtifactName: 'Drop'
+  
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/build'
+      includeRootFolder: false
+      archiveType: zip
+      archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      replaceExistingArchive: true
+  - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    artifact: drop
