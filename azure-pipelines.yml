@@ -13,8 +13,8 @@ pr:
 
 variables:
   projects: "**/*.sln"
-  azureSubscription: <Azure subscription I'm gonna create>
-  appName: <Name of the Function app>
+  azureSubscription: a797242d-ce60-41aa-98ca-2e22d5221cfe
+  appName: team-up-backend
   vmImageName: 'ubuntu-latest' # is optional but I'm gonna create
 
 pool:
@@ -42,10 +42,10 @@ steps:
       ArtifactName: "Drop"
       publishLocation: "Container"
 
-
   - task: AzureFunctionApp@1 # Add this at the end of your file
     inputs:
-      azureSubscription: <Azure service connection>
+      azureSubscription: azureSubscription
       appType: functionAppLinux
       appName: $(appName)
       package: $(System.ArtifactsDirectory)/**/*.zip
+      appSettings: 
