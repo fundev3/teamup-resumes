@@ -12,7 +12,7 @@ pr:
   drafts: false
 
 variables:
-  projects: '**/*.sln'
+  projects: '**/**/*.sln'
   azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
   functionAppName: 'fa-tuapi-resumes-dev-bra'
   vmImageName: 'ubuntu-latest'
@@ -40,7 +40,7 @@ stages:
         inputs:
           command: 'build'
           projects: $(projects)
-          arguments: '--output $(Build.ArtifactStagingDirectory)/drop $(styleCopEnabled)'
+          arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
 
       - task: DotNetCoreCLI@2
         displayName: 'DotNet Tests'
@@ -50,13 +50,21 @@ stages:
         
       - task: ArchiveFiles@2
         inputs:
-          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/drop'
+          rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
           includeRootFolder: false
           archiveType: zip
           archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
           replaceExistingArchive: true
       - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         artifact: drop
+      
+      - task: PublishBuildArtifacts@1
+        displayName: 'Dotnet Drop Artifacts'
+        # condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
 
   - stage: Deploy
     displayName: Deploy stage
@@ -70,16 +78,19 @@ stages:
       pool:
         vmImage: $(vmImageName)
 
-      strategy:
-        runOnce:
-          deploy:
+        steps:
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            itemPattern: 'drop/$(Build.BuildId).zip'
+            downloadPath: '$(System.ArtifactsDirectory)'
 
-            steps:
-            - task: AzureFunctionApp@1
-              displayName: 'Azure functions app deploy'
-              inputs:
-                azureSubscription: '$(azureSubscription)'
-                appType: functionAppLinux
-                appName: $(functionAppName)
-                package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
-                runtimeStack: 'DOTNET|3.1'
+        - task: AzureFunctionApp@1
+          displayName: 'Azure functions app deploy'
+          inputs:
+            azureSubscription: '$(azureSubscription)'
+            appType: functionAppLinux
+            appName: $(functionAppName)
+            package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
+            runtimeStack: 'DOTNET|3.1'
