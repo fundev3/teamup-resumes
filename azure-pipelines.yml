@@ -47,16 +47,6 @@ stages:
       inputs:
         command: test
         projects:  $(testsProjects)
-
-- stage: Publish
-  displayName: Publish drop
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - job: Publish
-    displayName: Publish drop
-
-    steps:     
     - task: ArchiveFiles@2
       inputs:
         rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
