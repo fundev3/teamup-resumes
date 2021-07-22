@@ -5,5 +5,7 @@
     public interface IHealthRepository
     {
         Health GetHealth();
+
+        Health PostHealth();
     }
 }

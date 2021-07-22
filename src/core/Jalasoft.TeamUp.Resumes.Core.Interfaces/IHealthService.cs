@@ -5,5 +5,7 @@
     public interface IHealthService
     {
         Health GetHealth();
+
+        Health PostHealth();
     }
 }

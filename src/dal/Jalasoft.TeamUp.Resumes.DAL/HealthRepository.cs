@@ -9,5 +9,10 @@
         {
             return new Health { Message = "I'm resumes-api and I'm alive and running! ;)" };
         }
+
+        public Health PostHealth()
+        {
+            return new Health { Message = "I'm resumes-create-api and I'm alive and running! ;)" };
+        }
     }
 }

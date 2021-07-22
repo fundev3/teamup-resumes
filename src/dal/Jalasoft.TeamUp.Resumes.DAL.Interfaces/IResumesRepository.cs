@@ -6,5 +6,7 @@
     public interface IResumesRepository
     {
         IEnumerable<Resume> GetResumes();
+
+        Resume PostResumes(Resume resume);
     }
 }

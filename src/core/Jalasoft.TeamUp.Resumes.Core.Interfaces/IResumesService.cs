@@ -5,5 +5,7 @@
     public interface IResumesService
     {
         Resume[] GetResumes();
+
+        Resume PostResumes(Resume resume);
     }
 }

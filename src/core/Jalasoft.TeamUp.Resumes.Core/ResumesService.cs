@@ -18,5 +18,10 @@
         {
             return this.resumesRepository.GetResumes().ToArray();
         }
+
+        public Resume PostResumes(Resume resume)
+        {
+            return this.resumesRepository.PostResumes(resume);
+        }
     }
 }

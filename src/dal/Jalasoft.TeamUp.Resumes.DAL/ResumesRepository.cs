@@ -7,7 +7,7 @@
 
     public class ResumesRepository : IResumesRepository
     {
-        private static readonly Resume[] Resumes = new Resume[]
+        private static List<Resume> resumes = new List<Resume>
             {
                 new Resume
                 {
@@ -81,7 +81,13 @@
 
         public IEnumerable<Resume> GetResumes()
         {
-            return Resumes;
+            return resumes;
+        }
+
+        public Resume PostResumes(Resume resume)
+        {
+            resumes.Add(resume);
+            return resume;
         }
     }
 }
