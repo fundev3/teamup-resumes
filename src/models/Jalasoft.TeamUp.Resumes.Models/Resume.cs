@@ -13,7 +13,7 @@
 
         public DateTime LastUpdateDate { get; set; }
 
-        public Person Person{ get; set; }
+        public Person Person { get; set; }
 
         public Contact Contact { get; set; }
 
