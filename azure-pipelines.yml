@@ -1,3 +1,7 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 trigger:
   branches:
     include:
@@ -12,40 +16,52 @@ pr:
   drafts: false
 
 variables:
-  projects: "**/*.sln"
-  azureSubscription: 'a797242d-ce60-41aa-98ca-2e22d5221cfe'
-  appName: 'team-up-backend-resumes'
-  vmImageName: 'ubuntu-latest' # is optional but I'm gonna create
+      projects: '**/**/*.sln'
+      azureSubscription: 'a797242d-ce60-41aa-98ca-2e22d5221cfe'
 
-pool:
-  vmImage: ubuntu-latest
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs: 
+  - job: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: UseDotNet@2
+      displayName: 'DotNet Install'
+      inputs:
+        packageType: 'sdk'
+        version: '3.x'
 
-steps:
-  - task: UseDotNet@2
-    displayName: "Install DotNet"
-    inputs:
-      packageType: "sdk"
-      version: "3.x"
+    - task: DotNetCoreCLI@2
+      displayName: 'Dotnet Build'
+      inputs:
+        command: 'build'
+        projects: $(projects)
+        arguments: '--output $(Build.ArtifactStagingDirectory)'
 
-  - task: DotNetCoreCLI@2
-    displayName: "DotNet Build"
-    inputs:
-      command: "build"
-      projects: $(projects)
-      arguments: "--output $(Build.ArtifactStagingDirectory)"
+    - task: PublishBuildArtifacts@1
+      displayName: 'Dotnet Drop Artifacts'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'Drop'
+        publishLocation: 'Container'
 
-  - task: PublishBuildArtifacts@1
-    displayName: "DotNet Drop"
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-    inputs:
-      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
-      ArtifactName: "Drop"
-      publishLocation: "Container"
-
-  - task: AzureFunctionApp@1 # Add this at the end of your file
-    inputs:
-      azureSubscription: $(azureSubscription)
-      appType: functionAppLinux
-      appName: $(appName)
-      package: $(System.ArtifactsDirectory)/**/*.zip
-      appSettings: 
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: succeeded()
+  jobs: 
+  - job: Deploy
+    displayName: Deploy
+    pool: 
+      vmImage: 'ubuntu-latest'
+    steps:    
+    - task: AzureFunctionApp@1
+      inputs:
+        azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
+        appType: 'functionAppLinux'
+        appName: 'team-up-backend-resumes'
+        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        runtimeStack: 'DOTNET|3.1'
