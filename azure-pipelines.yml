@@ -44,12 +44,12 @@ steps:
     displayName: 'DotNet Drop'
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/build'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'Drop'
   
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/build'
+      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
       includeRootFolder: false
       archiveType: zip
       archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
