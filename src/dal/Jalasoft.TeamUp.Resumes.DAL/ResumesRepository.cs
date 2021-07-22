@@ -13,7 +13,7 @@
                 {
                     Id = new Guid("dd05d77a-ca64-401a-be39-8e1ea84e2f83"),
                     Title = "My Custom Title",
-                    Person = new Person
+                    PersonalInformation = new Person
                     {
                         FirstName = "Rodrigo",
                         LastName = "Baldivieso",
@@ -22,7 +22,7 @@
                     },
                     Contact = new Contact
                     {
-                        Address = "Tarija Av.",
+                        Direction = "Tarija Av.",
                         Email = "rodrigo.baldivieso@fundacion-jala.org",
                         Phone = 77669911
                     },
@@ -32,12 +32,12 @@
                         new Skill
                         {
                             Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
-                            Name = "C#"
+                            NameSkill = "C#"
                         },
                         new Skill
                         {
                             Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
-                            Name = "API"
+                            NameSkill = "API"
                         }
                     },
                     CreationDate = DateTime.Now.AddDays(-10),
@@ -47,7 +47,7 @@
                 {
                     Id = new Guid("40b3f7e3-eaba-4b0f-bbef-5f5882af3ced"),
                     Title = "My Custom Title",
-                    Person = new Person
+                    PersonalInformation = new Person
                     {
                         FirstName = "Paola",
                         LastName = "Quintanilla",
@@ -56,7 +56,7 @@
                     },
                     Contact = new Contact
                     {
-                        Address = "Cochabamba Av.",
+                        Direction = "Cochabamba Av.",
                         Email = "paola.quintanilla@fundacion-jala.org",
                         Phone = 77669911
                     },
@@ -66,12 +66,12 @@
                         new Skill
                         {
                             Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
-                            Name = "C#"
+                            NameSkill = "C#"
                         },
                         new Skill
                         {
                             Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
-                            Name = "API"
+                            NameSkill = "API"
                         }
                     },
                     CreationDate = DateTime.Now.AddDays(-10),

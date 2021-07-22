@@ -8,7 +8,7 @@
 
         public string Title { get; set; }
 
-        public Person Person { get; set; }
+        public Person PersonalInformation { get; set; }
 
         public Contact Contact { get; set; }
 

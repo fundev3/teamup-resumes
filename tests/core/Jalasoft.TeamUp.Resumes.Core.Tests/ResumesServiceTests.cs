@@ -28,13 +28,13 @@
                     Title = "Guido Castro",
                     Contact = new Contact
                     {
-                        Address = "15 street",
+                        Direction = "15 street",
                         Email = "guido.castro@fundacion-jala.org",
                         Phone = 123456789,
                     },
                     CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    Person = new Person
+                    PersonalInformation = new Person
                     {
                         FirstName = "Guido",
                         LastName = "Castro",
@@ -47,12 +47,12 @@
                         new Skill
                         {
                             Id = Guid.NewGuid(),
-                            Name = "C#"
+                            NameSkill = "C#"
                         },
                         new Skill
                         {
                             Id = Guid.NewGuid(),
-                            Name = "Javascript"
+                            NameSkill = "Javascript"
                         },
                     }
                 },
@@ -62,13 +62,13 @@
                     Title = "Marcelo Ruiz",
                     Contact = new Contact
                     {
-                        Address = "16 street",
+                        Direction = "16 street",
                         Email = "marcelo.ruiz@fundacion-jala.org",
                         Phone = 123456789,
                     },
                     CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    Person = new Person
+                    PersonalInformation = new Person
                     {
                         FirstName = "Marcelo",
                         LastName = "Ruiz",
@@ -81,12 +81,12 @@
                         new Skill
                         {
                             Id = Guid.NewGuid(),
-                            Name = "Figma"
+                            NameSkill = "Figma"
                         },
                         new Skill
                         {
                             Id = Guid.NewGuid(),
-                            Name = "HTML"
+                            NameSkill = "HTML"
                         },
                     }
                 }
