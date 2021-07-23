@@ -3,13 +3,12 @@ trigger:
     include:
       - main
       - develop
-      - feature/94-azure-pipelines-cd
+
 pr:
   branches:
     include:
       - main
       - develop
-      - feature/94-azure-pipelines-cd
   drafts: false
 
 pool:
@@ -70,11 +69,10 @@ stages:
   jobs:
   - job: Deploy
     displayName: Deploy
-    pool:
-      vmImage: 'ubuntu-latest'
 
     steps:
     - task: DownloadBuildArtifacts@1
+      displayName: 'Download Artifact'
       inputs:
         buildType: 'current'
         downloadType: 'single'
@@ -85,7 +83,7 @@ stages:
       displayName: 'Azure functions app deploy'
       inputs:
         azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
-        appType: functionAppLinux
+        appType: 'functionAppLinux'
         appName: 'fa-tuapi-resumes-dev-bra'
         package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
         runtimeStack: 'DOTNET|3.1'
