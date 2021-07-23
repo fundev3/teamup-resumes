@@ -3,7 +3,7 @@ trigger:
     include:
       - main
       - develop
-
+      
 pr:
   branches:
     include:
@@ -11,11 +11,8 @@ pr:
       - develop
   drafts: false
 
-pool:
-  vmImage: 'ubuntu-latest'
-
 variables:
-  projects: '**/**/*.sln'
+  projects: '**/*.sln'
 
 stages:
 - stage: Build
@@ -23,6 +20,9 @@ stages:
 
   jobs:
   - job: Build
+
+    pool:
+      vmImage: 'ubuntu-latest'
 
     steps:
     - task: UseDotNet@2
@@ -55,7 +55,7 @@ stages:
       
     - task: PublishBuildArtifacts@1
       displayName: 'Dotnet Drop Artifacts'
-      #condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
         ArtifactName: 'drop'
@@ -64,15 +64,16 @@ stages:
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
-  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+  condition: succeeded()
 
   jobs:
   - job: Deploy
     displayName: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
 
     steps:
     - task: DownloadBuildArtifacts@1
-      displayName: 'Download Artifact'
       inputs:
         buildType: 'current'
         downloadType: 'single'
@@ -83,7 +84,7 @@ stages:
       displayName: 'Azure functions app deploy'
       inputs:
         azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
-        appType: 'functionAppLinux'
+        appType: functionAppLinux
         appName: 'fa-tuapi-resumes-dev-bra'
         package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
         runtimeStack: 'DOTNET|3.1'
