@@ -13,9 +13,6 @@ pr:
 
 variables:
   projects: '**/*.sln'
-  azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
-  functionAppName: 'fa-tuapi-resumes-dev-bra'
-  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
@@ -23,10 +20,9 @@ stages:
 
   jobs:
   - job: Build
-    displayName: BuildJob
 
     pool:
-      vmImage: $(vmImageName)
+      vmImage: 'ubuntu-latest'
 
     steps:
     - task: UseDotNet@2
@@ -47,7 +43,9 @@ stages:
       inputs:
         command: test
         projects:  $(testsProjects)
+
     - task: ArchiveFiles@2
+      displayName: 'Archive files'
       inputs:
         rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
         includeRootFolder: false
@@ -57,7 +55,7 @@ stages:
       
     - task: PublishBuildArtifacts@1
       displayName: 'Dotnet Drop Artifacts'
-      # condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
         ArtifactName: 'drop'
@@ -72,7 +70,7 @@ stages:
   - job: Deploy
     displayName: Deploy
     pool:
-      vmImage: $(vmImageName)
+      vmImage: 'ubuntu-latest'
 
     steps:
     - task: DownloadBuildArtifacts@1
@@ -85,8 +83,8 @@ stages:
     - task: AzureFunctionApp@1
       displayName: 'Azure functions app deploy'
       inputs:
-        azureSubscription: '$(azureSubscription)'
+        azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
         appType: functionAppLinux
-        appName: $(functionAppName)
+        appName: 'fa-tuapi-resumes-dev-bra'
         package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
         runtimeStack: 'DOTNET|3.1'
