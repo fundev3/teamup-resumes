@@ -62,7 +62,6 @@
 
             this.mockRepository.Setup(repository => repository.PostResumes(resume)).Returns(new Resume());
             var result = this.resumeService.PostResumes(resume);
-
             Assert.IsType<Resume>(result);
         }
     }
