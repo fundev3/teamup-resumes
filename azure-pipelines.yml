@@ -3,7 +3,7 @@ trigger:
     include:
       - main
       - develop
-      
+
 pr:
   branches:
     include:
@@ -12,33 +12,78 @@ pr:
   drafts: false
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
-steps:
-- task: UseDotNet@2
-  displayName: 'Install DotNet'
-  inputs:
-    packageType: 'sdk'
-    version: '3.x'
+variables:
+  projects: '**/**/*.sln'
 
-- task: DotNetCoreCLI@2
-  displayName: 'DotNet Build'
-  inputs:
-    command: 'build'
-    projects: $(projects)
-    arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
+stages:
+- stage: Build
+  displayName: Build & Test
 
-- task: DotNetCoreCLI@2
-  displayName: 'DotNet Tests'
-  inputs:
-    command: test
-    projects:  $(testsProjects)
+  jobs:
+  - job: Build
 
-- task: PublishBuildArtifacts@1
-  displayName: 'DotNet Drop'
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Drop'
-    publishLocation: 'Container'
-  
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Install DotNet'
+      inputs:
+        packageType: 'sdk'
+        version: '3.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'DotNet Build'
+      inputs:
+        command: 'build'
+        projects: $(projects)
+        arguments: '--output $(Build.ArtifactStagingDirectory) $(styleCopEnabled)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'DotNet Tests'
+      inputs:
+        command: test
+        projects:  $(testsProjects)
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+      
+    - task: PublishBuildArtifacts@1
+      displayName: 'Dotnet Drop Artifacts'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+
+    steps:
+    - task: DownloadBuildArtifacts@1
+      displayName: 'Download Artifact'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        itemPattern: 'drop/$(Build.BuildId).zip'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: AzureFunctionApp@1
+      displayName: 'Azure functions app deploy'
+      inputs:
+        azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
+        appType: 'functionAppLinux'
+        appName: 'fa-tuapi-resumes-dev-bra'
+        package: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
+        runtimeStack: 'DOTNET|3.1'
