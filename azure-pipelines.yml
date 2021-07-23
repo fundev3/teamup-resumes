@@ -3,16 +3,20 @@ trigger:
     include:
       - main
       - develop
-      
+      - feature/94-azure-pipelines-cd
 pr:
   branches:
     include:
       - main
       - develop
+      - feature/94-azure-pipelines-cd
   drafts: false
 
+pool:
+  vmImage: 'ubuntu-latest'
+
 variables:
-  projects: '**/*.sln'
+  projects: '**/**/*.sln'
 
 stages:
 - stage: Build
@@ -20,9 +24,6 @@ stages:
 
   jobs:
   - job: Build
-
-    pool:
-      vmImage: 'ubuntu-latest'
 
     steps:
     - task: UseDotNet@2
