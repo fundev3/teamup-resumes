@@ -19,6 +19,11 @@
 
         public string Summary { get; set; }
 
-        public Skill Skills { get; set; }
+        public Skill[] Skills { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public DateTime LastUpdate { get; set; }
+
     }
 }

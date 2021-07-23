@@ -1,4 +1,5 @@
-﻿namespace Jalasoft.TeamUp.Projects.Models
+namespace Jalasoft.TeamUp.Resumes.Models
+
 {
     using System;
 

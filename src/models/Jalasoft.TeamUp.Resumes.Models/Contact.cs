@@ -1,7 +1,6 @@
-﻿namespace Jalasoft.TeamUp.Projects.Models
+namespace Jalasoft.TeamUp.Resumes.Models
 {
-    using System;
-
+   using System;
     public class Contact
     {
         public string Direction { get; set; }
