@@ -51,23 +51,9 @@
             var response = this.getResume.Run(request, new Guid("5a7939fd-59de-44bd-a092-f5d8434584de"));
 
             // Assert
-            var notfountObjectResult = Assert.IsType<NotFoundObjectResult>(response);
-            Assert.Null(notfountObjectResult.Value);
+            var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(response);
+            Assert.Null(notFoundObjectResult.Value);
         }
 
-        [Fact]
-        public void GetResumeIDUpper_Returns_OkObjectResult()
-        {
-            // Arrange
-            var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetResume(Guid.Parse("5A7939FD-59DE-44BD-A092-F5D8434584DE"))).Equals(null);
-
-            // Act
-            var response = this.getResume.Run(request, new Guid("5A7939FD-59DE-44BD-A092-F5D8434584DE"));
-
-            // Assert
-            var notfountObjectResult = Assert.IsType<NotFoundObjectResult>(response);
-            Assert.Null(notfountObjectResult.Value);
-        }
     }
 }
