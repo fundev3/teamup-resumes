@@ -21,7 +21,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             this.resumesService = resumesService;
         }
 
-        [FunctionName("resume")]
+        [FunctionName("PostResume")]
         [OpenApiOperation(operationId: "createResume", tags: new[] { "Resumes" })]
         [OpenApiRequestBody("application/json", typeof(Resume), Description = "JSON request body containing { FirstName, LastName, Email, Phone, Summary}")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
