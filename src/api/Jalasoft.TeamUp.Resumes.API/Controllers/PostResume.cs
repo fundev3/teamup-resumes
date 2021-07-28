@@ -23,7 +23,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
         [FunctionName("PostResume")]
         [OpenApiOperation(operationId: "createResume", tags: new[] { "Resumes" })]
-        [OpenApiRequestBody("application/json", typeof(Resume), Description = "JSON request body containing { FirstName, LastName, Email, Phone, Summary}")]
+        [OpenApiRequestBody("application/json", typeof(Resume), Description = "JSON request body containing { FirstName, LastName, Email, Phone, Summary, Picture}")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
         public IActionResult CreateResume(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/resumes")] HttpRequest req)
