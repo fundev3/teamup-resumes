@@ -120,5 +120,19 @@
             // Assert
             Assert.Equal(2, result.Length);
         }
+
+        [Fact]
+        public void GetResume_Returns_SingleResume()
+        {
+            // Arrange
+            var stubResume = new Resume { Id = Guid.NewGuid() };
+            this.mockRepository.Setup(repository => repository.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Returns(stubResume);
+
+            // Act
+            var result = this.resumesService.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"));
+
+            // Assert
+            Assert.NotNull(result);
+        }
     }
 }
