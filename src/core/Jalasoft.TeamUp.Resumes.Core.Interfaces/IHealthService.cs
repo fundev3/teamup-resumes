@@ -6,6 +6,6 @@
     {
         Health GetHealth();
 
-        Health PostHealth();
+        // Health PostHealth();
     }
 }
