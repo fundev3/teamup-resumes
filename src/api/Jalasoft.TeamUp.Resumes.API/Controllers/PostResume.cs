@@ -31,7 +31,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             string requestBody = new StreamReader(req.Body).ReadToEnd();
             var input = JsonConvert.DeserializeObject<Resume>(requestBody);
             var createResume = this.resumesService.PostResumes(input);
-            return new OkObjectResult(createResume);
+            return new CreatedResult("https://www.teamup.com/create-resume", createResume);
         }
     }
 }

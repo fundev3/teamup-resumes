@@ -7,7 +7,8 @@
 
     public class ResumesRepository : IResumesRepository
     {
-        private static List<Resume> resumes = new List<Resume>
+        // private static List<Resume> resumes = new List<Resume>
+        private static Resume[] resumes = new Resume[]
             {
                 new Resume
                 {
@@ -86,7 +87,7 @@
 
         public Resume PostResumes(Resume resume)
         {
-            resumes.Add(resume);
+            resumes = new List<Resume>(resumes) { resume }.ToArray();
             return resume;
         }
     }
