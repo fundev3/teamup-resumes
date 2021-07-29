@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
@@ -78,6 +79,12 @@
                     LastUpdate = DateTime.Now
                 }
             };
+
+        public Resume GetResume(Guid id)
+        {
+            Resume result = Resumes.FirstOrDefault(p => Equals(p.Id, id));
+            return result;
+        }
 
         public IEnumerable<Resume> GetResumes()
         {

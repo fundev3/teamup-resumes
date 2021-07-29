@@ -1,5 +1,6 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
+    using System;
     using System.Linq;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
@@ -12,6 +13,11 @@
         public ResumesService(IResumesRepository resumesRepository)
         {
             this.resumesRepository = resumesRepository;
+        }
+
+        public Resume GetResume(Guid id)
+        {
+            return this.resumesRepository.GetResume(id);
         }
 
         public Resume[] GetResumes()
