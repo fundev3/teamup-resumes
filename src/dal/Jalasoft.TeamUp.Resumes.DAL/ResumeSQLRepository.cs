@@ -10,18 +10,19 @@
     using Jalasoft.TeamUp.Resumes.Models;
     using Microsoft.Extensions.Configuration;
 
-    public class ResumeSQLRepository : IResumeRepository
+    public class ResumeSQLRepository : IResumesRepository
     {
-        private IDapperWrapper wrapper;
         private string connectionString;
 
-        public ResumeSQLRepository(IDapperWrapper wrapper, string connectionString)
+        public ResumeSQLRepository()
         {
-            this.wrapper = wrapper;
-            this.connectionString = connectionString;
+            IConfigurationRoot config = new ConfigurationBuilder()
+            .AddJsonFile("DBConfig.json", optional: false, reloadOnChange: true)
+            .Build();
+            this.connectionString = config["appSettings:ConnectionString"];
         }
 
-        public int Add(Resume newObject)
+        public Resume Add(Resume newObject)
         {
             throw new NotImplementedException();
         }
@@ -36,7 +37,7 @@
             List<Resume> resumes = new List<Resume>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resumes = this.wrapper.Query<Resume>(db, "select * from resume").ToList();
+                resumes = db.Query<Resume>("select * from resume").ToList();
             }
 
             return resumes;

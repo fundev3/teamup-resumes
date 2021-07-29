@@ -4,10 +4,7 @@
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public interface IResumesRepository
+    public interface IResumesRepository : IRepository<Resume>
     {
-        public Resume GetResume(Guid id);
-
-        IEnumerable<Resume> GetResumes();
     }
 }

@@ -5,7 +5,7 @@
 
     public interface IRepository<T>
     {
-        public int Add(T newObject);
+        public T Add(T newObject);
 
         public T GetById(Guid id);
 

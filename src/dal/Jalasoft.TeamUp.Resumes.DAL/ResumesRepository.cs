@@ -5,11 +5,10 @@
     using System.Linq;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Microsoft.Extensions.Configuration;
 
     public class ResumesRepository : IResumesRepository
     {
-        private static readonly Resume[] Resumes = new Resume[]
+        private static readonly List<Resume> Resumes = new Resume[]
             {
                 new Resume
                 {
@@ -79,23 +78,45 @@
                     CreationDate = DateTime.Now.AddDays(-10),
                     LastUpdate = DateTime.Now
                 }
-            };
+            }.ToList();
 
-        private IConfigurationRoot config;
+        public Resume Add(Resume newObject)
+        {
+            Resumes.Add(newObject);
+            return Resumes.Last();
+        }
+
+        public void Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Resume> GetAll()
+        {
+            return Resumes.ToList();
+        }
+
+        public Resume GetById(Guid id)
+        {
+            foreach (Resume item in Resumes)
+            {
+                if (item.Id == id)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
 
         public IEnumerable<Resume> GetResumes()
         {
-            this.config = new ConfigurationBuilder()
-            .AddJsonFile("DBConfig.json", optional: false, reloadOnChange: true)
-            .Build();
-            string connectionString = this.config["appSettings:ConnectionString"];
+            return Resumes;
+        }
 
-            IDapperWrapper wrapper = new DapperWrapper();
-
-            ResumeSQLRepository myRepository = new ResumeSQLRepository(wrapper, connectionString);
-            return myRepository.GetAll();
-
-            // return Resumes;
+        public void Update(Guid id, Resume updateObject)
+        {
+            throw new NotImplementedException();
         }
     }
 }

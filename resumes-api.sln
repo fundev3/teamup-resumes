@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jalasoft.TeamUp.Resumes.API
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jalasoft.TeamUp.Resumes.Core.Tests", "tests\core\Jalasoft.TeamUp.Resumes.Core.Tests\Jalasoft.TeamUp.Resumes.Core.Tests.csproj", "{B940D2ED-661C-4904-8782-5061F1600BD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jalasoft.TeamUp.Resumes.DAL.Test", "Jalasoft.TeamUp.Resumes.DAL.Test\Jalasoft.TeamUp.Resumes.DAL.Test.csproj", "{02A96E6F-0894-4137-8A01-21D1B350C3C4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,10 +73,6 @@ Global
 		{B940D2ED-661C-4904-8782-5061F1600BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B940D2ED-661C-4904-8782-5061F1600BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B940D2ED-661C-4904-8782-5061F1600BD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02A96E6F-0894-4137-8A01-21D1B350C3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02A96E6F-0894-4137-8A01-21D1B350C3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02A96E6F-0894-4137-8A01-21D1B350C3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02A96E6F-0894-4137-8A01-21D1B350C3C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,7 +92,6 @@ Global
 		{EBEC1D91-143D-4199-A725-9B8CA8CE9113} = {A723F1B9-2494-453D-8931-4F96BF55956A}
 		{201B8B99-20E0-4B00-8399-416EBEDD8487} = {915B6649-EE00-4ADF-B625-F7E354A42D88}
 		{B940D2ED-661C-4904-8782-5061F1600BD9} = {EBEC1D91-143D-4199-A725-9B8CA8CE9113}
-		{02A96E6F-0894-4137-8A01-21D1B350C3C4} = {21AA94A1-44EB-4F28-BFBA-E66F03A37164}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57BE26B7-03AE-4894-B5C6-1F563D97D943}

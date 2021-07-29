@@ -17,12 +17,12 @@
 
         public Resume GetResume(Guid id)
         {
-            return this.resumesRepository.GetResume(id);
+            return this.resumesRepository.GetById(id);
         }
 
         public Resume[] GetResumes()
         {
-            return this.resumesRepository.GetResumes().ToArray();
+            return this.resumesRepository.GetAll().ToArray();
         }
     }
 }
