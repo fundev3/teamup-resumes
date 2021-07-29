@@ -9,5 +9,7 @@
         public Resume GetResume(Guid id);
 
         IEnumerable<Resume> GetResumes();
+
+        Resume PostResumes(Resume resume);
     }
 }

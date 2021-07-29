@@ -8,5 +8,7 @@
         public Resume GetResume(Guid id);
 
         Resume[] GetResumes();
+
+        Resume PostResumes(Resume resume);
     }
 }

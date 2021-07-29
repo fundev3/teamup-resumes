@@ -8,7 +8,7 @@
 
     public class ResumesRepository : IResumesRepository
     {
-        private static readonly Resume[] Resumes = new Resume[]
+        private static Resume[] resumes = new Resume[]
             {
                 new Resume
                 {
@@ -82,13 +82,19 @@
 
         public Resume GetResume(Guid id)
         {
-            Resume result = Resumes.FirstOrDefault(p => Equals(p.Id, id));
+            Resume result = resumes.FirstOrDefault(p => Equals(p.Id, id));
             return result;
         }
 
         public IEnumerable<Resume> GetResumes()
         {
-            return Resumes;
+            return resumes;
+        }
+
+        public Resume PostResumes(Resume resume)
+        {
+            resumes = new List<Resume>(resumes) { resume }.ToArray();
+            return resume;
         }
     }
 }
