@@ -1,22 +1,19 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.API.Tests
 {
     using System;
-    using Jalasoft.TeamUp.Resumes.API.Controllers;
     using Jalasoft.TeamUp.Resumes.Core;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using Moq;
     using Xunit;
 
-    public class PostResumesTests
+    public class PostResumesCoreTests
     {
         private readonly ResumesService resumeService;
         private readonly Mock<IResumesRepository> mockRepository;
 
-        public PostResumesTests()
+        public PostResumesCoreTests()
         {
             this.mockRepository = new Mock<IResumesRepository>();
             this.resumeService = new ResumesService(this.mockRepository.Object);
