@@ -22,7 +22,7 @@
         [Fact]
         public void PostResumes_Returns_OkObjectResult()
         {
-            Resume resume = new Resume
+            var stubResume = new Resume
             {
                 Id = new Guid("dd05d77a-ca64-401a-be39-8e1ea84e2f83"),
                 Title = "My Custom Title",
@@ -57,8 +57,8 @@
                 LastUpdate = DateTime.Now
             };
 
-            this.mockRepository.Setup(repository => repository.PostResumes(resume)).Returns(new Resume());
-            var result = this.resumeService.PostResumes(resume);
+            this.mockRepository.Setup(repository => repository.PostResumes(stubResume)).Returns(new Resume());
+            var result = this.resumeService.PostResumes(stubResume);
             Assert.IsType<Resume>(result);
         }
     }

@@ -82,7 +82,7 @@
 
         public Resume GetResume(Guid id)
         {
-            Resume result = Resumes.FirstOrDefault(p => Equals(p.Id, id));
+            Resume result = resumes.FirstOrDefault(p => Equals(p.Id, id));
             return result;
         }
 
