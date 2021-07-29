@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Microsoft.Extensions.Configuration;
 
     public class ResumesRepository : IResumesRepository
     {
@@ -79,9 +80,21 @@
                 }
             };
 
+        private IConfigurationRoot config;
+
         public IEnumerable<Resume> GetResumes()
         {
-            return Resumes;
+            this.config = new ConfigurationBuilder()
+            .AddJsonFile("DBConfig.json", optional: false, reloadOnChange: true)
+            .Build();
+            string connectionString = this.config["appSettings:ConnectionString"];
+
+            IDapperWrapper wrapper = new DapperWrapper();
+
+            ResumeSQLRepository myRepository = new ResumeSQLRepository(wrapper, connectionString);
+            return myRepository.GetAll();
+
+            // return Resumes;
         }
     }
 }
