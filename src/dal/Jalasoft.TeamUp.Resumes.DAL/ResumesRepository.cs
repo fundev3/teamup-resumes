@@ -111,7 +111,13 @@
 
         public IEnumerable<Resume> GetResumes()
         {
-            return Resumes;
+            return resumes;
+        }
+
+        public Resume PostResumes(Resume resume)
+        {
+            resumes = new List<Resume>(resumes) { resume }.ToArray();
+            return resume;
         }
 
         public void Update(Guid id, Resume updateObject)
