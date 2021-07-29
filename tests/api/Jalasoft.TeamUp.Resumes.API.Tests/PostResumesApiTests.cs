@@ -30,8 +30,8 @@
             var request = this.mockHttpContext.Request;
             this.mockResumesService.Setup(service => service.PostResumes(null)).Returns(new Resume());
             var response = this.postResume.CreateResume(request);
-            var okObjectResult = Assert.IsType<CreatedResult>(response);
-            Assert.IsType<Resume>(okObjectResult.Value);
+            var createdResult = Assert.IsType<CreatedResult>(response);
+            Assert.IsType<Resume>(createdResult.Value);
         }
     }
 }
