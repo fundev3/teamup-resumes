@@ -7,7 +7,6 @@
 
     public class ResumesRepository : IResumesRepository
     {
-        // private static List<Resume> resumes = new List<Resume>
         private static Resume[] resumes = new Resume[]
             {
                 new Resume
