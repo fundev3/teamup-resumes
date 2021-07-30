@@ -9,6 +9,7 @@ namespace Jalasoft.TeamUp.Resumes.API
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
+    using Jalasoft.TeamUp.Resumes.Models;
     using Microsoft.Extensions.DependencyInjection;
 
     public class Startup : FunctionsStartup
@@ -18,7 +19,7 @@ namespace Jalasoft.TeamUp.Resumes.API
             builder.Services.AddScoped<IHealthService, HealthService>();
             builder.Services.AddScoped<IHealthRepository, HealthRepository>();
             builder.Services.AddScoped<IResumesService, ResumesService>();
-            builder.Services.AddScoped<IResumesRepository, ResumesRepository>();
+            builder.Services.AddScoped<IRepository<Resume>, ResumesRepository>();
         }
     }
 }

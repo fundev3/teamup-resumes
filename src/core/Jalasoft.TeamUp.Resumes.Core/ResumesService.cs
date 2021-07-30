@@ -8,9 +8,9 @@
 
     public class ResumesService : IResumesService
     {
-        private readonly IResumesRepository resumesRepository;
+        private readonly IRepository<Resume> resumesRepository;
 
-        public ResumesService(IResumesRepository resumesRepository)
+        public ResumesService(IRepository<Resume> resumesRepository)
         {
             this.resumesRepository = resumesRepository;
         }
