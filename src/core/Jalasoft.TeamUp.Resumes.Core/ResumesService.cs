@@ -27,7 +27,7 @@
 
         public Resume PostResumes(Resume resume)
         {
-            return this.resumesRepository.PostResumes(resume);
+            return this.resumesRepository.Add(resume);
         }
     }
 }

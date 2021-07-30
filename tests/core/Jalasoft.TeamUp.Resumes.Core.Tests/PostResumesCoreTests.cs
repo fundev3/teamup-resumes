@@ -57,7 +57,7 @@
                 LastUpdate = DateTime.Now
             };
 
-            this.mockRepository.Setup(repository => repository.PostResumes(stubResume)).Returns(new Resume());
+            this.mockRepository.Setup(repository => repository.Add(stubResume)).Returns(new Resume());
             var result = this.resumeService.PostResumes(stubResume);
             Assert.IsType<Resume>(result);
         }
