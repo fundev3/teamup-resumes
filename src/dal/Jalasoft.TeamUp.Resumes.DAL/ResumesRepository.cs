@@ -111,12 +111,12 @@
 
         public IEnumerable<Resume> GetResumes()
         {
-            return resumes;
+            return Resumes;
         }
 
         public Resume PostResumes(Resume resume)
         {
-            resumes = new List<Resume>(resumes) { resume }.ToArray();
+            var resumes = new List<Resume>(Resumes) { resume }.ToArray();
             return resume;
         }
 
