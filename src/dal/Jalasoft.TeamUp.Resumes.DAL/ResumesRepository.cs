@@ -80,12 +80,6 @@
                 }
             }.ToList();
 
-        public Resume Add(Resume newObject)
-        {
-            Resumes.Add(newObject);
-            return Resumes.Last();
-        }
-
         public void Delete(Guid id)
         {
             throw new NotImplementedException();
@@ -93,7 +87,7 @@
 
         public List<Resume> GetAll()
         {
-            return Resumes.ToList();
+            return Resumes;
         }
 
         public Resume GetById(Guid id)
@@ -109,12 +103,7 @@
             return null;
         }
 
-        public IEnumerable<Resume> GetResumes()
-        {
-            return Resumes;
-        }
-
-        public Resume PostResumes(Resume resume)
+        public Resume Add(Resume resume)
         {
             var resumes = new List<Resume>(Resumes) { resume }.ToArray();
             return resume;
