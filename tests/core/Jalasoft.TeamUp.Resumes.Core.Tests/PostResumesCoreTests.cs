@@ -11,11 +11,11 @@
     public class PostResumesCoreTests
     {
         private readonly ResumesService resumeService;
-        private readonly Mock<IResumesRepository> mockRepository;
+        private readonly Mock<IRepository<Resume>> mockRepository;
 
         public PostResumesCoreTests()
         {
-            this.mockRepository = new Mock<IResumesRepository>();
+            this.mockRepository = new Mock<IRepository<Resume>>();
             this.resumeService = new ResumesService(this.mockRepository.Object);
         }
 
@@ -57,7 +57,7 @@
                 LastUpdate = DateTime.Now
             };
 
-            this.mockRepository.Setup(repository => repository.PostResumes(stubResume)).Returns(new Resume());
+            this.mockRepository.Setup(repository => repository.Add(stubResume)).Returns(new Resume());
             var result = this.resumeService.PostResumes(stubResume);
             Assert.IsType<Resume>(result);
         }

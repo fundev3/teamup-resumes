@@ -8,7 +8,7 @@
 
     public class ResumesRepository : IResumesRepository
     {
-        private static Resume[] resumes = new Resume[]
+        private static readonly List<Resume> Resumes = new Resume[]
             {
                 new Resume
                 {
@@ -78,23 +78,40 @@
                     CreationDate = DateTime.Now.AddDays(-10),
                     LastUpdate = DateTime.Now
                 }
-            };
+            }.ToList();
 
-        public Resume GetResume(Guid id)
+        public void Delete(Guid id)
         {
-            Resume result = resumes.FirstOrDefault(p => Equals(p.Id, id));
-            return result;
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Resume> GetResumes()
+        public List<Resume> GetAll()
         {
-            return resumes;
+            return Resumes;
         }
 
-        public Resume PostResumes(Resume resume)
+        public Resume GetById(Guid id)
         {
-            resumes = new List<Resume>(resumes) { resume }.ToArray();
+            foreach (Resume item in Resumes)
+            {
+                if (item.Id == id)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        public Resume Add(Resume resume)
+        {
+            var resumes = new List<Resume>(Resumes) { resume }.ToArray();
             return resume;
+        }
+
+        public void Update(Guid id, Resume updateObject)
+        {
+            throw new NotImplementedException();
         }
     }
 }

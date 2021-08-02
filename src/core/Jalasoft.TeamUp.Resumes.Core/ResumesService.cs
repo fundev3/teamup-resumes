@@ -8,26 +8,26 @@
 
     public class ResumesService : IResumesService
     {
-        private readonly IResumesRepository resumesRepository;
+        private readonly IRepository<Resume> resumesRepository;
 
-        public ResumesService(IResumesRepository resumesRepository)
+        public ResumesService(IRepository<Resume> resumesRepository)
         {
             this.resumesRepository = resumesRepository;
         }
 
         public Resume GetResume(Guid id)
         {
-            return this.resumesRepository.GetResume(id);
+            return this.resumesRepository.GetById(id);
         }
 
         public Resume[] GetResumes()
         {
-            return this.resumesRepository.GetResumes().ToArray();
+            return this.resumesRepository.GetAll().ToArray();
         }
 
         public Resume PostResumes(Resume resume)
         {
-            return this.resumesRepository.PostResumes(resume);
+            return this.resumesRepository.Add(resume);
         }
     }
 }

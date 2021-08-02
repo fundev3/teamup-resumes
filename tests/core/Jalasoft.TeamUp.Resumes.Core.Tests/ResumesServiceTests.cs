@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Moq;
@@ -9,12 +10,12 @@
 
     public class ResumesServiceTests
     {
-        private readonly Mock<IResumesRepository> mockRepository;
+        private readonly Mock<IRepository<Resume>> mockRepository;
         private readonly ResumesService resumesService;
 
         public ResumesServiceTests()
         {
-            this.mockRepository = new Mock<IResumesRepository>();
+            this.mockRepository = new Mock<IRepository<Resume>>();
             this.resumesService = new ResumesService(this.mockRepository.Object);
         }
 
@@ -99,7 +100,7 @@
         {
             // Arrange
             var stubEmptyResumeList = new List<Resume>();
-            this.mockRepository.Setup(repository => repository.GetResumes()).Returns(stubEmptyResumeList);
+            this.mockRepository.Setup(repository => repository.GetAll()).Returns(stubEmptyResumeList);
 
             // Act
             var result = this.resumesService.GetResumes();
@@ -112,7 +113,7 @@
         public void GetResumes_Returns_AllItemsResult()
         {
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetResumes()).Returns(GetTestResumes());
+            this.mockRepository.Setup(repository => repository.GetAll()).Returns(GetTestResumes().ToList());
 
             // Act
             var result = this.resumesService.GetResumes();
@@ -126,7 +127,7 @@
         {
             // Arrange
             var stubResume = new Resume { Id = Guid.NewGuid() };
-            this.mockRepository.Setup(repository => repository.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Returns(stubResume);
+            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Returns(stubResume);
 
             // Act
             var result = this.resumesService.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"));
