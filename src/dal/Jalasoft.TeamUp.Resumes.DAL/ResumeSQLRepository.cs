@@ -29,7 +29,11 @@
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            Resume resume = new Resume();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                resume = db.Query("delete from resume where id= " + id).Single();
+            }
         }
 
         public List<Resume> GetAll()
@@ -45,7 +49,13 @@
 
         public Resume GetById(Guid id)
         {
-            throw new NotImplementedException();
+            Resume resume = new Resume();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                resume = db.Query("select * from resume where id= " + id).Single();
+            }
+
+            return resume;
         }
 
         public void Update(Guid id, Resume updateObject)
