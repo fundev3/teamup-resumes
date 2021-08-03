@@ -10,14 +10,14 @@
     using Jalasoft.TeamUp.Resumes.Models;
     using Microsoft.Extensions.Configuration;
 
-    public class ResumeSQLRepository : IResumesRepository
+    public class ResumeSQLRepository : IResumeSQLRepository
     {
         private string connectionString;
 
         public ResumeSQLRepository()
         {
             IConfigurationRoot config = new ConfigurationBuilder()
-            .AddJsonFile("DBConfig.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("local.settings.json", optional: false, reloadOnChange: true)
             .Build();
             this.connectionString = config["appSettings:ConnectionString"];
         }
