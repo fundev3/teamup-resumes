@@ -4,20 +4,22 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.IO;
     using System.Linq;
     using Dapper;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Microsoft.Extensions.Configuration;
 
-    public class ResumeSQLRepository : IResumesRepository
+    public class ResumeSQLRepository : IResumeSQLRepository
     {
         private string connectionString;
 
         public ResumeSQLRepository()
         {
             IConfigurationRoot config = new ConfigurationBuilder()
-            .AddJsonFile("DBConfig.json", optional: false, reloadOnChange: true)
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("local.settings.json", optional: false, reloadOnChange: true)
             .Build();
             this.connectionString = config["appSettings:ConnectionString"];
         }
@@ -29,11 +31,7 @@
 
         public void Delete(Guid id)
         {
-            Resume resume = new Resume();
-            using (IDbConnection db = new SqlConnection(this.connectionString))
-            {
-                resume = db.Query("delete from resume where id= " + id).Single();
-            }
+            throw new NotImplementedException();
         }
 
         public List<Resume> GetAll()
@@ -41,7 +39,7 @@
             List<Resume> resumes = new List<Resume>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resumes = db.Query<Resume>("select * from resume").ToList();
+                resumes = db.Query<Resume>("select * from Resume").ToList();
             }
 
             return resumes;
@@ -52,7 +50,7 @@
             Resume resume = new Resume();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resume = db.Query("select * from resume where id= " + id).Single();
+                resume = db.Query("select * from Resume where Id= '" + id + "'").Single();
             }
 
             return resume;

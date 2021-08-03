@@ -6,5 +6,9 @@
   },
   "Host": {
     "CORS": "*"
+  },
+
+  "appSettings": {
+    "connectionString": "Server = DESKTOP-Q2NAQ5R; DataBase = TeamUp; User ID = AppConnection; Password=123; "
   }
 }
