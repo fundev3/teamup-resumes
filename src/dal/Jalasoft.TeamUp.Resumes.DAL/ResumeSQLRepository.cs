@@ -21,12 +21,25 @@
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("local.settings.json", optional: false, reloadOnChange: true)
             .Build();
-            this.connectionString = config["appSettings:ConnectionString"];
+            this.connectionString = config["Values:ConnectionString"];
         }
 
         public Resume Add(Resume newObject)
         {
-            throw new NotImplementedException();
+            var sql = "INSERT INTO Resume ( Id, Title, Sumary, CreationDate, LastUpdate ) VALUES (@id, @title, @sumary, @creationdate, @lastupdate)";
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                db.Open();
+                DynamicParameters parameter = new DynamicParameters();
+                parameter.Add("@id", newObject.Id);
+                parameter.Add("@title", newObject.Title);
+                parameter.Add("@sumary", newObject.Summary);
+                parameter.Add("@creationdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
+                parameter.Add("@lastupdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
+                db.Execute(sql, parameter);
+            }
+
+            return newObject;
         }
 
         public void Delete(Guid id)
@@ -39,7 +52,7 @@
             List<Resume> resumes = new List<Resume>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resumes = db.Query<Resume>("select Id, Title, Sumary, CreationDate, LastUpdate from Resume").ToList();
+                resumes = db.Query<Resume>("SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume").ToList();
             }
 
             return resumes;
@@ -47,14 +60,14 @@
 
         public Resume GetById(Guid id)
         {
-            var sql = "select Id, Title, Sumary, CreationDate, LastUpdate from Resume where Id=@id";
+            var sql = "SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume WHERE Id=@id";
             Resume resume = new Resume();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
                 parameter.Add("@id", id);
-                db.Execute(sql, parameter);
+                resume = db.QuerySingle(sql, parameter).ToSingle();
             }
 
             return resume;

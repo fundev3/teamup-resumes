@@ -2,13 +2,10 @@
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "connectionString": "Server = DESKTOP-Q2NAQ5R; DataBase = TeamUp; User ID = AppConnection; Password=123; "
   },
   "Host": {
     "CORS": "*"
-  },
-
-  "appSettings": {
-    "connectionString": "Server = DESKTOP-Q2NAQ5R; DataBase = TeamUp; User ID = AppConnection; Password=123; "
   }
 }
