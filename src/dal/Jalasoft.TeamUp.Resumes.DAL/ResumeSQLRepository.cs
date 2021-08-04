@@ -17,10 +17,6 @@
 
         public ResumeSQLRepository()
         {
-            IConfigurationRoot config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("local.settings.json", optional: false, reloadOnChange: true)
-            .Build();
             this.connectionString = Environment.GetEnvironmentVariable("SQLConnetionString", EnvironmentVariableTarget.Process);
         }
 
@@ -32,8 +28,8 @@
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
                 parameter.Add("@id", newObject.Id);
-                parameter.Add("@title", newObject.Title);
-                parameter.Add("@sumary", newObject.Summary);
+                parameter.Add("@title", newObject.Title, DbType.String);
+                parameter.Add("@sumary", newObject.Summary, DbType.String);
                 parameter.Add("@creationdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
                 parameter.Add("@lastupdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
                 db.Execute(sql, parameter);
@@ -52,7 +48,7 @@
             IEnumerable<Resume> resumes = new List<Resume>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resumes = db.Query<Resume>("SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume").ToList();
+                resumes = db.Query<Resume>("SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume");
             }
 
             return resumes;
@@ -66,8 +62,8 @@
             {
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
-                parameter.Add("@id", id);
-                resume = db.QuerySingle(sql, parameter).ToSingle();
+                parameter.Add("@id", id, DbType.Int32);
+                resume = db.QuerySingle(sql, parameter);
             }
 
             return resume;
