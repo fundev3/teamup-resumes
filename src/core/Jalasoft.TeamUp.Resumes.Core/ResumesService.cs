@@ -29,10 +29,5 @@
         {
             return this.resumesRepository.Add(resume);
         }
-
-        public Resume[] GetSkills()
-        {
-            return this.resumesRepository.GetAll().ToArray();
-        }
     }
 }

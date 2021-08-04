@@ -10,7 +10,5 @@
         Resume[] GetResumes();
 
         Resume PostResumes(Resume resume);
-
-        Resume[] GetSkills();
     }
 }
