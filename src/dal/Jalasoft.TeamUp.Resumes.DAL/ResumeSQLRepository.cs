@@ -39,7 +39,7 @@
             List<Resume> resumes = new List<Resume>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resumes = db.Query<Resume>("select * from Resume").ToList();
+                resumes = db.Query<Resume>("select Id, Title, Sumary, CreationDate, LastUpdate from Resume").ToList();
             }
 
             return resumes;
@@ -47,10 +47,14 @@
 
         public Resume GetById(Guid id)
         {
+            var sql = "select Id, Title, Sumary, CreationDate, LastUpdate from Resume where Id=@id";
             Resume resume = new Resume();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resume = db.Query("select * from Resume where Id= '" + id + "'").Single();
+                db.Open();
+                DynamicParameters parameter = new DynamicParameters();
+                parameter.Add("@id", id);
+                db.Execute(sql, parameter);
             }
 
             return resume;
