@@ -85,7 +85,7 @@
             throw new NotImplementedException();
         }
 
-        public List<Resume> GetAll()
+        public IEnumerable<Resume> GetAll()
         {
             return Resumes;
         }

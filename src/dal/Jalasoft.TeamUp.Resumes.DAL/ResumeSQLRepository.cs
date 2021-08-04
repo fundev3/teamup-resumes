@@ -47,9 +47,9 @@
             throw new NotImplementedException();
         }
 
-        public List<Resume> GetAll()
+        public IEnumerable<Resume> GetAll()
         {
-            List<Resume> resumes = new List<Resume>();
+            IEnumerable<Resume> resumes = new List<Resume>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 resumes = db.Query<Resume>("SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume").ToList();
