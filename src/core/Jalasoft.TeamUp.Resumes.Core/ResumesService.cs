@@ -23,7 +23,6 @@
                 if (resume == null)
                 {
                     throw new ResumeException(404);
-
                 }
 
                 return resume;
