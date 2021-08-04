@@ -21,7 +21,7 @@
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("local.settings.json", optional: false, reloadOnChange: true)
             .Build();
-            this.connectionString = config["Values:ConnectionString"];
+            this.connectionString = Environment.GetEnvironmentVariable("SQLConnetionString", EnvironmentVariableTarget.Process);
         }
 
         public Resume Add(Resume newObject)
