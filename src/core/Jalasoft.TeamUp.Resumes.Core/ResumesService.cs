@@ -23,11 +23,16 @@
                 if (resume == null)
                 {
                     throw new ResumeException(404);
+
                 }
 
                 return resume;
             }
-            catch (Exception ex)
+            catch (ResumeException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
             {
                 throw new ResumeException(500);
             }
@@ -39,7 +44,7 @@
             {
                 return this.resumesRepository.GetAll().ToArray();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new ResumeException(500);
             }
@@ -51,7 +56,7 @@
             {
                 return this.resumesRepository.Add(resume);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new ResumeException(500);
             }

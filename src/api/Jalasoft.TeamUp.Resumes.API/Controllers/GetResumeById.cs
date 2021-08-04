@@ -22,7 +22,7 @@
         }
 
         [FunctionName("GetResumeById")]
-        [OpenApiOperation(operationId: "Run", tags: new[] { "Resumes" })]
+        [OpenApiOperation(operationId: "GetResumeById", tags: new[] { "Resumes" })]
         [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The resume identifier.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
@@ -33,7 +33,7 @@
             try
             {
                 result = this.resumesService.GetResume(id);
-                throw new Exception();
+                return new OkObjectResult(result);
             }
             catch (ResumeException ex)
             {
