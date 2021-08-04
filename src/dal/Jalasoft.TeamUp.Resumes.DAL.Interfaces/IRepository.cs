@@ -9,7 +9,7 @@
 
         public T GetById(Guid id);
 
-        public List<T> GetAll();
+        public IEnumerable<T> GetAll();
 
         public void Update(Guid id, T updateObject);
 
