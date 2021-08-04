@@ -1,10 +1,10 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
-    using System.Linq;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Jalasoft.TeamUp.Resumes.Utils;
 
     public class ResumesService : IResumesService
     {
@@ -17,17 +17,44 @@
 
         public Resume GetResume(Guid id)
         {
-            return this.resumesRepository.GetById(id);
+            try
+            {
+                var resume = this.resumesRepository.GetById(id);
+                if (resume == null)
+                {
+                    throw new ResumeException(404);
+                }
+
+                return resume;
+            }
+            catch (Exception ex)
+            {
+                throw new ResumeException(500);
+            }
         }
 
         public Resume[] GetResumes()
         {
-            return this.resumesRepository.GetAll().ToArray();
+            try
+            {
+                return this.resumesRepository.GetAll().ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new ResumeException(500);
+            }
         }
 
         public Resume PostResumes(Resume resume)
         {
-            return this.resumesRepository.Add(resume);
+            try
+            {
+                return this.resumesRepository.Add(resume);
+            }
+            catch (Exception ex)
+            {
+                throw new ResumeException(500);
+            }
         }
     }
 }

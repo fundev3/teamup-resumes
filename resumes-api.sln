@@ -35,6 +35,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jalasoft.TeamUp.Resumes.API
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jalasoft.TeamUp.Resumes.Core.Tests", "tests\core\Jalasoft.TeamUp.Resumes.Core.Tests\Jalasoft.TeamUp.Resumes.Core.Tests.csproj", "{B940D2ED-661C-4904-8782-5061F1600BD9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{AC7F8E33-8EA7-4D1C-BF75-C513326E0C37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jalasoft.TeamUp.Resumes.Utils", "src\utils\Jalasoft.TeamUp.Resumes.Utils\Jalasoft.TeamUp.Resumes.Utils.csproj", "{34207E09-3B38-4455-9C01-7AF95DF5C46C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,10 @@ Global
 		{B940D2ED-661C-4904-8782-5061F1600BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B940D2ED-661C-4904-8782-5061F1600BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B940D2ED-661C-4904-8782-5061F1600BD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34207E09-3B38-4455-9C01-7AF95DF5C46C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34207E09-3B38-4455-9C01-7AF95DF5C46C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34207E09-3B38-4455-9C01-7AF95DF5C46C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34207E09-3B38-4455-9C01-7AF95DF5C46C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +100,8 @@ Global
 		{EBEC1D91-143D-4199-A725-9B8CA8CE9113} = {A723F1B9-2494-453D-8931-4F96BF55956A}
 		{201B8B99-20E0-4B00-8399-416EBEDD8487} = {915B6649-EE00-4ADF-B625-F7E354A42D88}
 		{B940D2ED-661C-4904-8782-5061F1600BD9} = {EBEC1D91-143D-4199-A725-9B8CA8CE9113}
+		{AC7F8E33-8EA7-4D1C-BF75-C513326E0C37} = {8964CD8C-367A-42B8-B273-E7D8BEF592DC}
+		{34207E09-3B38-4455-9C01-7AF95DF5C46C} = {AC7F8E33-8EA7-4D1C-BF75-C513326E0C37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57BE26B7-03AE-4894-B5C6-1F563D97D943}

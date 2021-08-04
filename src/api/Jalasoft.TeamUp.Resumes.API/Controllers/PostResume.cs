@@ -4,6 +4,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Jalasoft.TeamUp.Resumes.Utils;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
@@ -28,10 +29,20 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         public IActionResult CreateResume(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/resumes")] HttpRequest req)
         {
-            string requestBody = new StreamReader(req.Body).ReadToEnd();
-            var input = JsonConvert.DeserializeObject<Resume>(requestBody);
-            var createResume = this.resumesService.PostResumes(input);
-            return new CreatedResult("v1/resumes/:id", createResume);
+            try
+            {
+                Resume createResume = new Resume();
+                string requestBody = new StreamReader(req.Body).ReadToEnd();
+                var input = JsonConvert.DeserializeObject<Resume>(requestBody);
+                createResume = this.resumesService.PostResumes(input);
+                return new CreatedResult("v1/resumes/:id", createResume);
+            }
+            catch (ResumeException ex)
+            {
+                var error = new ObjectResult(ex.Error.ErrorMessage);
+                error.StatusCode = ex.Error.Code;
+                return error;
+            }
         }
     }
 }
