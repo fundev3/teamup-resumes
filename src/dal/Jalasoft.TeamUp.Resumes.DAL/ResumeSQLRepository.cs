@@ -16,10 +16,7 @@
 
         public ResumeSQLRepository()
         {
-            IConfigurationRoot config = new ConfigurationBuilder()
-            .AddJsonFile("local.settings.json", optional: false, reloadOnChange: true)
-            .Build();
-            this.connectionString = config["appSettings:ConnectionString"];
+            this.connectionString = Environment.GetEnvironmentVariable("SQLConnetionString", EnvironmentVariableTarget.Process);
         }
 
         public Resume Add(Resume newObject)
