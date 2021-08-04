@@ -22,14 +22,14 @@
 
         public Resume Add(Resume newObject)
         {
-            var sql = "INSERT INTO Resume ( Id, Title, Sumary, CreationDate, LastUpdate ) VALUES (@id, @title, @sumary, @creationdate, @lastupdate)";
+            var sql = "INSERT INTO Resume ( Id, Title, Sumary, CreationDate, LastUpdate ) VALUES (@id, @title, @summary, @creationdate, @lastupdate)";
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
                 parameter.Add("@id", newObject.Id);
-                parameter.Add("@title", newObject.Title, DbType.String);
-                parameter.Add("@sumary", newObject.Summary, DbType.String);
+                parameter.Add("@title", newObject.Title, DbType.AnsiString, ParameterDirection.Input, 30);
+                parameter.Add("@summary", newObject.Summary, DbType.AnsiString, ParameterDirection.Input, 150);
                 parameter.Add("@creationdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
                 parameter.Add("@lastupdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
                 db.Execute(sql, parameter);
