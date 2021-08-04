@@ -27,7 +27,7 @@
             {
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
-                parameter.Add("@id", newObject.Id);
+                parameter.Add("@id", newObject.Id, DbType.Int32);
                 parameter.Add("@title", newObject.Title, DbType.AnsiString, ParameterDirection.Input, 30);
                 parameter.Add("@summary", newObject.Summary, DbType.AnsiString, ParameterDirection.Input, 150);
                 parameter.Add("@creationdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
