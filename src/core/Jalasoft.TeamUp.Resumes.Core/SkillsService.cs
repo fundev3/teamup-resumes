@@ -8,9 +8,9 @@
 
     public class SkillsService : ISkillsService
     {
-        private readonly ISkillsRepository<Skill> skillsRepository;
+        private readonly ISkillsRepository skillsRepository;
 
-        public SkillsService(IRepository<Skill> skillsRepository)
+        public SkillsService(ISkillsRepository skillsRepository)
         {
             this.skillsRepository = skillsRepository;
         }
@@ -25,9 +25,9 @@
             return this.skillsRepository.GetAll().ToArray();
         }
 
-        public Guid GetSkillByParameter(string skill)
+        public Skill[] GetSkillByName(string skill)
         {
-            return this.skillsRepository.GetSkillByParameter(skill);
+            return this.skillsRepository.GetSkillsByName(skill);
         }
 
         public Skill PostSkills(Skill skill)

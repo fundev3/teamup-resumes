@@ -6,14 +6,24 @@
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public class SkillRepository : ISkillsRepository
+    public class SkillsInMemoryRepository : ISkillsRepository
     {
         private static readonly List<Skill> Skills = new Skill[]
             {
                 new Skill
                         {
                             Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
-                            NameSkill = "C#"
+                            Name = ".NET Core",
+                        },
+                new Skill
+                        {
+                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
+                            Name = "C#",
+                        },
+                new Skill
+                        {
+                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
+                            Name = ".NET Framework",
                         }
             }.ToList();
 
@@ -40,17 +50,17 @@
             return null;
         }
 
-        public Guid GetSkillsByParameter(string skill)
+        public IEnumerable<Skill> GetSkillsByName(string skill)
         {
             foreach (Skill item in Skills)
             {
-                if (item.NameSkill == skill)
+                if (item.Name == skill)
                 {
-                    return item.Id;
+                    return 
                 }
             }
 
-            return Guid.NewGuid();
+            return 
         }
 
         public Skill Add(Skill skill)
