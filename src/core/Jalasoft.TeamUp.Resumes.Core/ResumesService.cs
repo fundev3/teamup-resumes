@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
+    using System.Linq;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
