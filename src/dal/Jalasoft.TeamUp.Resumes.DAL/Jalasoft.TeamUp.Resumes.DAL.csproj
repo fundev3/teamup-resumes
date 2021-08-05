@@ -21,10 +21,4 @@
 	  <ProjectReference Include="..\Jalasoft.TeamUp.Resumes.DAL.Interfaces\Jalasoft.TeamUp.Resumes.DAL.Interfaces.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Update="DBConfig.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-
 </Project>

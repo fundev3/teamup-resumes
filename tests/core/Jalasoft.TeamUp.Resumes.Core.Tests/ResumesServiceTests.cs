@@ -48,12 +48,12 @@
                         new Skill
                         {
                             Id = Guid.NewGuid(),
-                            NameSkill = "C#"
+                            Name = "C#"
                         },
                         new Skill
                         {
                             Id = Guid.NewGuid(),
-                            NameSkill = "Javascript"
+                            Name = "Javascript"
                         },
                     }
                 },
@@ -82,12 +82,12 @@
                         new Skill
                         {
                             Id = Guid.NewGuid(),
-                            NameSkill = "Figma"
+                            Name = "Figma"
                         },
                         new Skill
                         {
                             Id = Guid.NewGuid(),
-                            NameSkill = "HTML"
+                            Name = "HTML"
                         },
                     }
                 }

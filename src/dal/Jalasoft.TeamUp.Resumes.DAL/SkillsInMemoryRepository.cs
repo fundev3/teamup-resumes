@@ -6,7 +6,7 @@
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public class SkillsInMemoryRepository : ISkillsRepository
+    public class SkillsInMemoryRepository : ISkillsInMemoryRepository
     {
         private static readonly List<Skill> Skills = new Skill[]
             {
@@ -71,6 +71,11 @@
         }
 
         public void Update(Guid id, Skill updateObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Skill> IRepository<Skill>.GetAll()
         {
             throw new NotImplementedException();
         }

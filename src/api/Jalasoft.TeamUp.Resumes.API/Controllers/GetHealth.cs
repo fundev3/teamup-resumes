@@ -20,7 +20,7 @@ namespace Jalasoft.TeamUp.Resumes.API
         }
 
         [FunctionName("GetHealth")]
-        [OpenApiOperation(operationId: "Run", tags: new[] { "Health" })]
+        [OpenApiOperation(operationId: "GetHealth", tags: new[] { "Health" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Health), Description = "Successful response")]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/health")] HttpRequest req)

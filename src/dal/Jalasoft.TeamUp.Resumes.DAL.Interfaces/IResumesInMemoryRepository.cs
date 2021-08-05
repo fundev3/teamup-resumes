@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public interface IResumesRepository : IRepository<Resume>
+    public interface IResumesInMemoryRepository : IRepository<Resume>
     {
     }
 }
