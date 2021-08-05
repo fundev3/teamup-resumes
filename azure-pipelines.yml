@@ -16,12 +16,12 @@ trigger:
       - main
       - develop
 
-#pr:
-#  drafts: false
-#  branches:
-#    include:
-#      - main
-#      - develop
+pr:
+  drafts: false
+  branches:
+    include:
+      - main
+      - develop
 
 pool:
   vmImage: ubuntu-latest
@@ -35,6 +35,6 @@ stages:
 - stage: Deploy
   displayName: Deploy
   dependsOn: Build
-  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   jobs: 
   - template: azure-pipelines/netcore-deploy-template.yml@templates
