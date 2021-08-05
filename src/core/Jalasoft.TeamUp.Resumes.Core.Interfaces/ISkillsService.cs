@@ -5,12 +5,6 @@
 
     public interface ISkillsService
     {
-        public Skill GetSkill(Guid id);
-
-        Skill[] GetSkills();
-
-        Skill PostSkills(Skill skill);
-
-        Skill[] GetSkillByName(string skill);
+        Skill[] GetSkills(string name);
     }
 }

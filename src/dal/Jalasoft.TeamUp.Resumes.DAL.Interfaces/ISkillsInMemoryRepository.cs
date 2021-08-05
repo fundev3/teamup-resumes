@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public interface ISkillsInMemoryRepository : IRepository<Skill>
+    public interface ISkillsInMemoryRepository
     {
-        public Skill[] GetSkillsByName(string skill);
+        public Skill[] GetSkills(string name);
     }
 }

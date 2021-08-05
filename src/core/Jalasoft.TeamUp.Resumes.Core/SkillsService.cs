@@ -16,24 +16,9 @@
             this.skillsRepository = skillsRepository;
         }
 
-        public Skill GetSkill(Guid id)
+        public Skill[] GetSkills(string name)
         {
-            return this.skillsRepository.GetById(id);
-        }
-
-        public Skill[] GetSkills()
-        {
-            return this.skillsRepository.GetAll().ToArray();
-        }
-
-        public Skill[] GetSkillByName(string skill)
-        {
-            return (Skill[])this.skillsRepository.GetSkillsByName(skill);
-        }
-
-        public Skill PostSkills(Skill skill)
-        {
-            return this.skillsRepository.Add(skill);
+            return (Skill[])this.skillsRepository.GetSkills(name);
         }
     }
 }
