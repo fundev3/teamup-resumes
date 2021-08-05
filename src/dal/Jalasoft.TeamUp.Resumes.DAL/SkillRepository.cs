@@ -40,6 +40,19 @@
             return null;
         }
 
+        public Guid GetSkillsByParameter(string skill)
+        {
+            foreach (Skill item in Skills)
+            {
+                if (item.NameSkill == skill)
+                {
+                    return item.Id;
+                }
+            }
+
+            return Guid.NewGuid();
+        }
+
         public Skill Add(Skill skill)
         {
             var skills = new List<Skill>(Skills) { skill }.ToArray();

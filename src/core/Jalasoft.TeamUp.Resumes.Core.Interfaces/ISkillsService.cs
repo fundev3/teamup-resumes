@@ -10,5 +10,7 @@
         Skill[] GetSkills();
 
         Skill PostSkills(Skill skill);
+
+        Guid GetSkillByParameter(string skill);
     }
 }

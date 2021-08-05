@@ -21,14 +21,14 @@
         }
 
         [FunctionName("GetSkillsByParameter")]
-        [OpenApiOperation(operationId: "Run", tags: new[] { "Skills" })]
-        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The skill identifier.")]
+        [OpenApiOperation(operationId: "GetSkillsByParameter", tags: new[] { "Skills" })]
+        [OpenApiParameter(name: "skill", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The skill identifier.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/skills/{id:guid}")] HttpRequest req, Guid id)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/skills/{name:string}")] HttpRequest req, string skill)
         {
-            var result = this.skillsService.GetSkill(id);
+            var result = this.skillsService.GetSkillByParameter(skill);
 
             if (result == null)
             {

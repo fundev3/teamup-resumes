@@ -6,5 +6,6 @@
 
     public interface ISkillsRepository : IRepository<Skill>
     {
+        public Guid GetSkillsByParameter(string skill);
     }
 }

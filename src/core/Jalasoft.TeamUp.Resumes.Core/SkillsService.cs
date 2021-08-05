@@ -8,7 +8,7 @@
 
     public class SkillsService : ISkillsService
     {
-        private readonly IRepository<Skill> skillsRepository;
+        private readonly ISkillsRepository<Skill> skillsRepository;
 
         public SkillsService(IRepository<Skill> skillsRepository)
         {
@@ -23,6 +23,11 @@
         public Skill[] GetSkills()
         {
             return this.skillsRepository.GetAll().ToArray();
+        }
+
+        public Guid GetSkillByParameter(string skill)
+        {
+            return this.skillsRepository.GetSkillByParameter(skill);
         }
 
         public Skill PostSkills(Skill skill)
