@@ -7,7 +7,7 @@ resources:
     - repository: templates
       type: github
       name: fundev3/teamup-infrastructure
-      ref: refs/heads/feature/140-make-deployment-stage-a-pipeline-template
+      ref: refs/heads/develop
       endpoint: github.com_martin-callejas-jalafund
 
 trigger:
@@ -35,6 +35,6 @@ stages:
 - stage: Deploy
   displayName: Deploy
   dependsOn: Build
-  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/feature/140-make-deployment-stage-a-pipeline-template'))
+  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   jobs: 
   - template: azure-pipelines/netcore-deploy-template.yml@templates
