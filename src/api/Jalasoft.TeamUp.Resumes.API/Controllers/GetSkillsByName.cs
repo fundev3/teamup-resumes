@@ -11,24 +11,26 @@
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
     using Microsoft.OpenApi.Models;
 
-    public class GetSkillsByParameter
+    public class GetSkillsByName
     {
         private readonly ISkillsService skillsService;
 
-        public GetSkillsByParameter(ISkillsService skillsService)
+        public GetSkillsByName(ISkillsService skillsService)
         {
             this.skillsService = skillsService;
         }
 
         [FunctionName("GetSkillsByName")]
         [OpenApiOperation(operationId: "GetSkillsByName", tags: new[] { "Skills" })]
-        [OpenApiParameter(name: "skill", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The skill identifier.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
+        [OpenApiParameter(name: "name", In = ParameterLocation.Path, Required = false, Type = typeof(string), Description = "The resume identifier.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
+
         public IActionResult Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/skills/{name:string}")] HttpRequest req, string skill)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/skills/{name}")] HttpRequest req, string name)
         {
-            var result = this.skillsService.GetSkillByName(skill);
+            Console.WriteLine("esta en skillservice.getskillbyname");
+            var result = this.skillsService.GetSkillByName(name);
 
             if (result == null)
             {

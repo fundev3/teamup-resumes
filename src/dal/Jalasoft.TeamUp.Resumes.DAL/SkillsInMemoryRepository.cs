@@ -50,17 +50,18 @@
             return null;
         }
 
-        public IEnumerable<Skill> GetSkillsByName(string skill)
+        public Skill[] GetSkillsByName(string skill)
         {
+            List<Skill> listSkills = new List<Skill>();
             foreach (Skill item in Skills)
             {
-                if (item.Name == skill)
+                if (item.Name.ToUpper() == skill.ToUpper())
                 {
-                    return 
+                    listSkills.Add(item);
                 }
             }
 
-            return 
+            return listSkills.ToArray();
         }
 
         public Skill Add(Skill skill)

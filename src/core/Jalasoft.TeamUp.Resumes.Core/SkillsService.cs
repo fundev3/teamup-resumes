@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
@@ -27,7 +28,7 @@
 
         public Skill[] GetSkillByName(string skill)
         {
-            return this.skillsRepository.GetSkillsByName(skill);
+            return (Skill[])this.skillsRepository.GetSkillsByName(skill);
         }
 
         public Skill PostSkills(Skill skill)
