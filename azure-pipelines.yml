@@ -1,3 +1,7 @@
+variables:
+- name: projName
+  value: 'resumes'
+
 resources:
   repositories:
     - repository: templates
@@ -33,18 +37,4 @@ stages:
   dependsOn: Build
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   jobs: 
-  - deployment: Deploy
-    displayName: 'Deploy to dev'
-    environment: $(envName)
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureFunctionApp@1
-            displayName: 'Deploy API'
-            inputs:
-              azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
-              appType: 'functionAppLinux'
-              appName: 'fa-tuapi-resumes-$(envName)-bra'
-              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-              runtimeStack: 'DOTNET|3.1'
+  - template: azure-pipelines/netcore-deploy-template.yml@templates
