@@ -4,18 +4,18 @@
 
     public class ResumeException : Exception
     {
-        public ResumeException(int code)
+        public ResumeException(ErrorsTypes code)
         {
             this.Error = new CustomException();
             this.Error.ErrorMessage = new ErrorMessage();
-            this.Error.Code = code;
+            this.Error.Code = (int)code;
 
             switch (code)
             {
-                case 404:
+                case ErrorsTypes.NotFoundError:
                     this.Error.ErrorMessage.Message = "The resource couldn't be found.";
                     break;
-                case 500:
+                case ErrorsTypes.ServerError:
                     this.Error.ErrorMessage.Message = "Something went wrong, please contact the TeamUp administrator.";
                     break;
                 default:

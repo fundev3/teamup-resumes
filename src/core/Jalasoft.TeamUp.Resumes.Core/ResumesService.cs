@@ -23,7 +23,7 @@
                 var resume = this.resumesRepository.GetById(id);
                 if (resume == null)
                 {
-                    throw new ResumeException(404);
+                    throw new ResumeException(ErrorsTypes.NotFoundError);
                 }
 
                 return resume;
@@ -34,7 +34,7 @@
             }
             catch (Exception)
             {
-                throw new ResumeException(500);
+                throw new ResumeException(ErrorsTypes.ServerError);
             }
         }
 
@@ -46,7 +46,7 @@
             }
             catch (Exception)
             {
-                throw new ResumeException(500);
+                throw new ResumeException(ErrorsTypes.ServerError);
             }
         }
 
@@ -58,7 +58,7 @@
             }
             catch (Exception)
             {
-                throw new ResumeException(500);
+                throw new ResumeException(ErrorsTypes.ServerError);
             }
         }
     }

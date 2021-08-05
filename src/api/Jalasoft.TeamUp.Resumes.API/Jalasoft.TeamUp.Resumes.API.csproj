@@ -18,6 +18,7 @@
 	  <ProjectReference Include="..\..\core\Jalasoft.TeamUp.Resumes.Core\Jalasoft.TeamUp.Resumes.Core.csproj" />
 	  <ProjectReference Include="..\..\dal\Jalasoft.TeamUp.Resumes.DAL\Jalasoft.TeamUp.Resumes.DAL.csproj" />
 	  <ProjectReference Include="..\..\models\Jalasoft.TeamUp.Resumes.Models\Jalasoft.TeamUp.Resumes.Models.csproj" />
+	  <ProjectReference Include="..\..\utils\Jalasoft.TeamUp.Resumes.Utils\Jalasoft.TeamUp.Resumes.Utils.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="host.json">
