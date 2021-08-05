@@ -9,5 +9,7 @@
         public int Code { get; set; }
 
         public ErrorMessage ErrorMessage { get; set; }
+
+        public Exception Exception { get; set; }
     }
 }

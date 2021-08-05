@@ -23,7 +23,7 @@
                 var resume = this.resumesRepository.GetById(id);
                 if (resume == null)
                 {
-                    throw new ResumeException(ErrorsTypes.NotFoundError);
+                    throw new ResumeException(ErrorsTypes.NotFoundError, new Exception());
                 }
 
                 return resume;
@@ -32,9 +32,9 @@
             {
                 throw ex;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ResumeException(ErrorsTypes.ServerError);
+                throw new ResumeException(ErrorsTypes.ServerError, ex);
             }
         }
 
@@ -44,9 +44,9 @@
             {
                 return this.resumesRepository.GetAll().ToArray();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ResumeException(ErrorsTypes.ServerError);
+                throw new ResumeException(ErrorsTypes.ServerError, ex);
             }
         }
 
@@ -56,9 +56,9 @@
             {
                 return this.resumesRepository.Add(resume);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new ResumeException(ErrorsTypes.ServerError);
+                throw new ResumeException(ErrorsTypes.ServerError, ex);
             }
         }
     }
