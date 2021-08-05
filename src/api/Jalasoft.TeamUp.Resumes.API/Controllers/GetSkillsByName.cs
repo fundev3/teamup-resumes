@@ -9,6 +9,7 @@
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+    using Microsoft.Extensions.Primitives;
     using Microsoft.OpenApi.Models;
 
     public class GetSkillsByName
@@ -28,7 +29,8 @@
         public IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/skills")] HttpRequest req)
         {
-            var resumes = this.skillsService.GetSkills(".NET");
+            req.Query.TryGetValue("name", out StringValues name);
+            var resumes = this.skillsService.GetSkills(name);
             return new OkObjectResult(resumes);
         }
     }
