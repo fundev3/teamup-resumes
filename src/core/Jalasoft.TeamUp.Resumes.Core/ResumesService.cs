@@ -5,7 +5,7 @@
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils;
+    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
 
     public class ResumesService : IResumesService
     {

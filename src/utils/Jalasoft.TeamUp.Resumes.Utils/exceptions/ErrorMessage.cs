@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Utils
+﻿namespace Jalasoft.TeamUp.Resumes.Utils.Exceptions
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
 
     public class ErrorMessage
     {
-        public List<Property> Properties { get; set; }
+        public List<Property> Errors { get; set; }
 
         public string Message { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Utils
+﻿namespace Jalasoft.TeamUp.Resumes.Utils.Exceptions
 {
     using System;
 
