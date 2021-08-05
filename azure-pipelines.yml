@@ -1,9 +1,13 @@
+variables:
+- name: projName
+  value: 'Resumes'
+
 resources:
   repositories:
     - repository: templates
       type: github
       name: fundev3/teamup-infrastructure
-      ref: refs/heads/develop
+      ref: refs/heads/feature/140-make-deployment-stage-a-pipeline-template
       endpoint: github.com_martin-callejas-jalafund
 
 trigger:
@@ -12,12 +16,12 @@ trigger:
       - main
       - develop
 
-pr:
-  drafts: false
-  branches:
-    include:
-      - main
-      - develop
+#pr:
+#  drafts: false
+#  branches:
+#    include:
+#      - main
+#      - develop
 
 pool:
   vmImage: ubuntu-latest
@@ -31,20 +35,6 @@ stages:
 - stage: Deploy
   displayName: Deploy
   dependsOn: Build
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/feature/140-make-deployment-stage-a-pipeline-template'))
   jobs: 
-  - deployment: Deploy
-    displayName: 'Deploy to dev'
-    environment: $(envName)
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureFunctionApp@1
-            displayName: 'Deploy API'
-            inputs:
-              azureSubscription: 'devlevel3-dev (a797242d-ce60-41aa-98ca-2e22d5221cfe)'
-              appType: 'functionAppLinux'
-              appName: 'fa-tuapi-resumes-$(envName)-bra'
-              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-              runtimeStack: 'DOTNET|3.1'
+  - template: azure-pipelines/netcore-deploy-template.yml@templates
