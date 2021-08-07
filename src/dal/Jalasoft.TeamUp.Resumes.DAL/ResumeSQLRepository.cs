@@ -10,7 +10,7 @@
     using Jalasoft.TeamUp.Resumes.Models;
     using Microsoft.Extensions.Configuration;
 
-    public class ResumeSQLRepository : IResumeSQLRepository
+    public class ResumeSQLRepository : IResumeRepository
     {
         private string connectionString;
 
