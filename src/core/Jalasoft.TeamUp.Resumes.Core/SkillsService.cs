@@ -9,9 +9,9 @@
 
     public class SkillsService : ISkillsService
     {
-        private readonly ISkillsInMemoryRepository skillsRepository;
+        private readonly ISkillsRepository skillsRepository;
 
-        public SkillsService(ISkillsInMemoryRepository skillsRepository)
+        public SkillsService(ISkillsRepository skillsRepository)
         {
             this.skillsRepository = skillsRepository;
         }

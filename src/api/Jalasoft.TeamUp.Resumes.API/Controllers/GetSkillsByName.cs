@@ -23,7 +23,7 @@
 
         [FunctionName("GetSkillsByName")]
         [OpenApiOperation(operationId: "GetSkillsByName", tags: new[] { "Skills" })]
-        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The resume identifier.")]
+        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The name of the skill to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
 

@@ -19,9 +19,13 @@ namespace Jalasoft.TeamUp.Resumes.API
             builder.Services.AddScoped<IHealthService, HealthService>();
             builder.Services.AddScoped<IHealthRepository, HealthRepository>();
             builder.Services.AddScoped<IResumesService, ResumesService>();
+            #if DEBUG
+            builder.Services.AddScoped<IRepository<Resume>, ResumeSQLRepository>();
+            #else
             builder.Services.AddScoped<IRepository<Resume>, ResumesInMemoryRepository>();
-            builder.Services.AddScoped<ISkillsInMemoryRepository, SkillsInMemoryRepository>();
+            #endif
             builder.Services.AddScoped<ISkillsService, SkillsService>();
+            builder.Services.AddScoped<ISkillsRepository, SkillsInMemoryRepository>();
         }
     }
 }
