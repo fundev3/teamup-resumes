@@ -6,7 +6,7 @@
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public class SkillsInMemoryRepository : ISkillsInMemoryRepository
+    public class SkillsInMemoryRepository : ISkillsRepository
     {
         private static readonly Skill[] Skills = new Skill[]
             {

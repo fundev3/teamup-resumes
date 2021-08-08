@@ -2,7 +2,7 @@
 {
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public interface ISkillsInMemoryRepository
+    public interface ISkillsRepository
     {
         public Skill[] GetSkills(string name);
     }
