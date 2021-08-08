@@ -47,12 +47,12 @@
                     {
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
+                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
+                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
                             Name = "Javascript"
                         },
                     }
@@ -81,12 +81,12 @@
                     {
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
+                            Id = "11111111-09c6-4281-894a-5e7a4acc38eb",
                             Name = "Figma"
                         },
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
+                            Id = "22222222-abc1-47da-b383-d0e05ca57d4d",
                             Name = "HTML"
                         },
                     }

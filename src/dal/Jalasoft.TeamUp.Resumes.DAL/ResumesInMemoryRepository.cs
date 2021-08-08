@@ -32,12 +32,12 @@
                     {
                         new Skill
                         {
-                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
+                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
+                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
                             Name = "API"
                         }
                     },
@@ -66,12 +66,12 @@
                     {
                         new Skill
                         {
-                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
+                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
+                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
                             Name = "API"
                         }
                     },
