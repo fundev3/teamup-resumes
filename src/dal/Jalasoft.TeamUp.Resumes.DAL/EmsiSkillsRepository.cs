@@ -28,7 +28,7 @@
             string typeId2 = "ST2";
             string typeId3 = "ST3";
 
-            int limit = 5;
+            int limit = 10;
 
             var client = new RestClient("https://emsiservices.com/skills/versions/latest/skills?q=" + skill + "&typeIds=" + typeId + "%2C" + typeId2 + "%2C" + typeId3 + "&fields=id%2Cname&limit=" + limit);
             var request = new RestRequest(Method.GET);
@@ -48,9 +48,9 @@
             var result = this.GetEmsiSkills(name);
             var response = JsonConvert.DeserializeObject<Root>(result.Content);
             List<Skill> listSkills = new List<Skill>();
-            Skill skills = new Skill();
             foreach (var data in response.Data)
             {
+                Skill skills = new Skill();
                 skills.Id = data.Id;
                 skills.Name = data.Name;
                 listSkills.Add(skills);
