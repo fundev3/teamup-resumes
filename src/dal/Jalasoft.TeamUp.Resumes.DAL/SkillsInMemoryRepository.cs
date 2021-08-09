@@ -1,10 +1,8 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
-    using System;
+    using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
-    using Newtonsoft.Json;
 
     public class SkillsInMemoryRepository : ISkillsRepository
     {
@@ -27,7 +25,7 @@
                         },
             };
 
-        public Skill[] GetSkills(string name)
+        public IEnumerable<Skill> GetSkills(string name)
         {
             return Skills;
         }

@@ -1,8 +1,10 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
+    using System;
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
     using Newtonsoft.Json;
     using RestSharp;
 
@@ -43,20 +45,29 @@
             return response;
         }
 
-        public Skill[] GetSkills(string name)
+        public IEnumerable<Skill> GetSkills(string name)
         {
-            var result = this.GetEmsiSkills(name);
-            var response = JsonConvert.DeserializeObject<Root>(result.Content);
-            List<Skill> listSkills = new List<Skill>();
-            foreach (var data in response.Data)
+            try
             {
-                Skill skills = new Skill();
-                skills.Id = data.Id;
-                skills.Name = data.Name;
-                listSkills.Add(skills);
-            }
+                var result = this.GetEmsiSkills(name);
+                var response = JsonConvert.DeserializeObject<Root>(result.Content);
+                List<Skill> listSkills = new List<Skill>();
+                foreach (var data in response.Data)
+                {
+                    Skill skills = new Skill
+                    {
+                        Id = data.Id,
+                        Name = data.Name
+                    };
+                    listSkills.Add(skills);
+                }
 
-            return listSkills.ToArray();
+                return listSkills;
+            }
+            catch (Exception ex)
+            {
+                throw new ResumeException(ErrorsTypes.ServerError, ex);
+            }
         }
     }
 }
