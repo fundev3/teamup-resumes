@@ -24,14 +24,14 @@
         [FunctionName("GetSkillsByName")]
         [OpenApiOperation(operationId: "GetSkillsByName", tags: new[] { "Skills" })]
         [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The skill name.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill), Description = "Successful response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Data), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/skills")] HttpRequest req)
         {
             req.Query.TryGetValue("name", out StringValues name);
-            var resumes = this.skillsService.GetSkills(name);
-            return new OkObjectResult(resumes);
+            var skills = this.skillsService.GetSkills(name);
+            return new OkObjectResult(skills);
         }
     }
 }

@@ -47,13 +47,13 @@
                     {
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
-                            NameSkill = "C#"
+                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Name = "C#"
                         },
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
-                            NameSkill = "Javascript"
+                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Name = "Javascript"
                         },
                     }
                 },
@@ -81,13 +81,13 @@
                     {
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
-                            NameSkill = "Figma"
+                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Name = "Figma"
                         },
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
-                            NameSkill = "HTML"
+                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Name = "HTML"
                         },
                     }
                 }
