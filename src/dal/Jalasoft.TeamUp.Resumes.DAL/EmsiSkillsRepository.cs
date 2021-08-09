@@ -1,19 +1,17 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
-    using System;
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
     using Newtonsoft.Json;
     using RestSharp;
 
     public class EmsiSkillsRepository : ISkillsRepository
     {
-        public static IRestResponse<EmsiToken> Token()
+        public static string Token()
         {
-            string clientId = "crb5oodm6s07qo3i";
-            string clientSecret = "EjK7DwSH";
+            string clientId = "otela8rzydlupz9t";
+            string clientSecret = "Bv1Bg7aT";
             string scope = "emsi_open";
 
             var client = new RestClient("https://auth.emsicloud.com/connect/token");
@@ -21,53 +19,42 @@
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddParameter("undefined", "client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=client_credentials&scope=" + scope, ParameterType.RequestBody);
             IRestResponse<EmsiToken> response = client.Execute<EmsiToken>(request);
-            return response;
+            string token = response.Data.Access_token;
+            return token;
         }
 
-        public IRestResponse<Root> GetEmsiSkills(string skill)
+        public string GetEmsiSkills(string token, string skill)
         {
             string typeId = "ST1";
             string typeId2 = "ST2";
             string typeId3 = "ST3";
 
-            int limit = 10;
-
-            var client = new RestClient("https://emsiservices.com/skills/versions/latest/skills?q=" + skill + "&typeIds=" + typeId + "%2C" + typeId2 + "%2C" + typeId3 + "&fields=id%2Cname&limit=" + limit);
+            var client = new RestClient("https://emsiservices.com/skills/versions/latest/skills?q=" + skill + "&typeIds=" + typeId + "%2C" + typeId2 + "%2C" + typeId3 + "&fields=id%2Cname");
             var request = new RestRequest(Method.GET);
 
-            var token = Token();
-
-            string bearerToken = $"Bearer {token.Data.Access_token}";
-
+            string bearerToken = $"Bearer {token}";
             request.AddHeader("Authorization", bearerToken);
             IRestResponse<Root> response = client.Execute<Root>(request);
-
-            return response;
+            return response.Content;
         }
 
         public IEnumerable<Skill> GetSkills(string name)
         {
-            try
+            string token = Token();
+            string emsiSkills = this.GetEmsiSkills(token, name);
+            var response = JsonConvert.DeserializeObject<Root>(emsiSkills);
+            List<Skill> listSkills = new List<Skill>();
+            foreach (var data in response.Data)
             {
-                var result = this.GetEmsiSkills(name);
-                var response = JsonConvert.DeserializeObject<Root>(result.Content);
-                List<Skill> listSkills = new List<Skill>();
-                foreach (var data in response.Data)
+                Skill skill = new Skill
                 {
-                    Skill skills = new Skill
-                    {
-                        Id = data.Id,
-                        Name = data.Name
-                    };
-                    listSkills.Add(skills);
-                }
+                    Id = data.Id,
+                    Name = data.Name
+                };
+                listSkills.Add(skill);
+            }
 
-                return listSkills;
-            }
-            catch (Exception ex)
-            {
-                throw new ResumeException(ErrorsTypes.ServerError, ex);
-            }
+            return listSkills;
         }
     }
 }

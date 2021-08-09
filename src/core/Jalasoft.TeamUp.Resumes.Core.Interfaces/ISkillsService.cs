@@ -5,6 +5,6 @@
 
     public interface ISkillsService
     {
-        public IEnumerable<Skill> GetSkills(string name);
+        public Skill[] GetSkills(string name);
     }
 }

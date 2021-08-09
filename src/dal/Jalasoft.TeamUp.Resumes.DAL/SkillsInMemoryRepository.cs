@@ -10,18 +10,18 @@
             {
                 new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
-                            Name = "C#"
+                            Id = "KS1200B62W5ZF38RJ7TD",
+                            Name = ".NET Framework"
                         },
                 new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
-                            Name = ".NET"
+                            Id = "ESA0523F4BCB6FF01890",
+                            Name = "Cisco Networking"
                         },
                 new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
-                            Name = ".NET Core"
+                            Id = "KS126JW72Q0ST3JKR5K0",
+                            Name = "Visual Basic .NET (Programming Language)"
                         },
             };
 
