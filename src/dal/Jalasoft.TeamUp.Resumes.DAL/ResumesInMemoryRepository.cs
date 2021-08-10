@@ -32,13 +32,13 @@
                     {
                         new Skill
                         {
-                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
-                            NameSkill = "C#"
+                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
+                            Name = "C#"
                         },
                         new Skill
                         {
-                            Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
-                            NameSkill = "API"
+                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
+                            Name = "API"
                         }
                     },
                     CreationDate = DateTime.Now.AddDays(-10),
@@ -66,13 +66,13 @@
                     {
                         new Skill
                         {
-                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
-                            NameSkill = "C#"
+                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
+                            Name = "C#"
                         },
                         new Skill
                         {
-                            Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
-                            NameSkill = "API"
+                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
+                            Name = "API"
                         }
                     },
                     CreationDate = DateTime.Now.AddDays(-10),
