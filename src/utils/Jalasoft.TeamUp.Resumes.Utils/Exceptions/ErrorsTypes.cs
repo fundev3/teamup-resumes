@@ -3,6 +3,6 @@
     public enum ErrorsTypes
     {
         ServerError = 500,
-        NotFoundError = 404
+        NotFoundError = 404,
     }
 }
