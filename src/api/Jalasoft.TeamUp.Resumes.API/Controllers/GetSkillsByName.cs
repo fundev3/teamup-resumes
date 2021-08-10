@@ -23,9 +23,10 @@
 
         [FunctionName("GetSkillsByName")]
         [OpenApiOperation(operationId: "GetSkillsByName", tags: new[] { "Skills" })]
-        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The skill name.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Data), Description = "Successful response")]
+        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The name of the skill to search by.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
+
         public IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/skills")] HttpRequest req)
         {
