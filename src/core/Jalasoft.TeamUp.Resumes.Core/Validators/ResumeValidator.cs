@@ -9,15 +9,17 @@
         public ResumeValidator()
         {
             this.RuleFor(resume => resume.Id)
-                .NotEmpty().NotNull();
+                .NotEmpty()
+                .NotNull();
 
             this.RuleFor(resume => resume.Title)
-                .Length(3, 15)
-                .Matches("^[a-zñ A-ZÑ]+$")
-                .NotEmpty().NotNull();
+                .NotEmpty()
+                .NotNull()
+                .MaximumLength(160);
 
             this.RuleFor(resume => resume.Summary)
-                .NotEmpty().NotNull()
+                .NotEmpty()
+                .NotNull()
                 .MaximumLength(160);
         }
     }
