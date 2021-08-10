@@ -10,7 +10,7 @@
     {
         private readonly IRepository<Resume> resumesRepository;
 
-        public ResumesService(IRepository<Resume> resumesRepository)
+        public ResumesService(IResumeRepository resumesRepository)
         {
             this.resumesRepository = resumesRepository;
         }
