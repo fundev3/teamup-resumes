@@ -6,6 +6,6 @@
 
     public interface ISkillsRepository
     {
-        public Skill[] GetSkills(string name);
+        public IEnumerable<Skill> GetSkills(string name);
     }
 }

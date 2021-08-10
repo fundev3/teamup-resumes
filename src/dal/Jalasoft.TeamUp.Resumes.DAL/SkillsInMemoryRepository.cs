@@ -27,7 +27,7 @@
                         }
             };
 
-        public Skill[] GetSkills(string name)
+        public IEnumerable<Skill> GetSkills(string name)
         {
             return Skills;
         }

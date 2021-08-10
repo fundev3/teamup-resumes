@@ -18,7 +18,7 @@
 
         public Skill[] GetSkills(string name)
         {
-            return (Skill[])this.skillsRepository.GetSkills(name);
+            return this.skillsRepository.GetSkills(name).ToArray();
         }
     }
 }
