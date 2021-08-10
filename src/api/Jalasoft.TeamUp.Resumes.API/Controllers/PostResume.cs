@@ -2,9 +2,10 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 {
     using System.IO;
     using System.Net;
+    using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
@@ -37,11 +38,19 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
                 createResume = this.resumesService.PostResumes(input);
                 return new CreatedResult("v1/resumes/:id", createResume);
             }
-            catch (ResumeException ex)
+            catch (ValidationException exVal)
             {
-                var error = new ObjectResult(ex.Error.ErrorMessage);
-                error.StatusCode = ex.Error.Code;
-                return error;
+                var errorException = new ResumesException(ResumesErrors.BadRequest, exVal);
+                return errorException.Error;
+            }
+            catch (ResumesException e)
+            {
+                return e.Error;
+            }
+            catch (System.Exception e)
+            {
+                var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
+                return errorException.Error;
             }
         }
     }

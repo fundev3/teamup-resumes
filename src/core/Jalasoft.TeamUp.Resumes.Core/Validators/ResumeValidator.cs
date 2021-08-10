@@ -1,5 +1,6 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Validators
 {
+    using System;
     using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Models;
 
@@ -7,12 +8,17 @@
     {
         public ResumeValidator()
         {
-            this.RuleFor(x => x.Title)
-                .NotEmpty();
-            this.RuleFor(x => x.Summary)
-                .NotEmpty();
-            this.RuleFor(x => x.PersonalInformation)
-                .NotEmpty();
+            this.RuleFor(resume => resume.Id)
+                .NotEmpty().NotNull();
+
+            this.RuleFor(resume => resume.Title)
+                .Length(3, 15)
+                .Matches("^[a-zñ A-ZÑ]+$")
+                .NotEmpty().NotNull();
+
+            this.RuleFor(resume => resume.Summary)
+                .NotEmpty().NotNull()
+                .MaximumLength(160);
         }
     }
 }
