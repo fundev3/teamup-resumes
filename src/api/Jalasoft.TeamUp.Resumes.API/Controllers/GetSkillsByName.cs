@@ -1,6 +1,5 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.API.Controllers
 {
-    using System;
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -23,7 +22,7 @@
 
         [FunctionName("GetSkillsByName")]
         [OpenApiOperation(operationId: "GetSkillsByName", tags: new[] { "Skills" })]
-        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The name of the skill to search by.")]
+        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The skill name.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
 
