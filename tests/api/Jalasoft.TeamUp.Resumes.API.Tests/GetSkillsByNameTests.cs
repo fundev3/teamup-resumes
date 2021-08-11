@@ -41,22 +41,6 @@
         }
 
         [Fact]
-        public void GetSkillByName_Returns_OkObjectResult()
-        {
-            // Arrange
-            var emsiSkills = this.skillsApiRepository.GetSkills("TypeScript");
-            var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills("TypeScript")).Returns(emsiSkills.ToArray());
-
-            // Act
-            var response = this.getSkillsByName.Run(request);
-
-            // Assert
-            var okObjectResult = Assert.IsType<OkObjectResult>(response);
-            Assert.IsType<Skill[]>(okObjectResult.Value);
-        }
-
-        [Fact]
         public void GetSkillByName_Returns_Skills()
         {
             // Arrange
