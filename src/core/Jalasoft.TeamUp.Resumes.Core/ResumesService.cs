@@ -33,9 +33,9 @@
 
         public Resume PostResumes(Resume resume)
         {
+            resume.Id = Guid.NewGuid();
             ResumeValidator validator = new ResumeValidator();
             validator.ValidateAndThrow(resume);
-            resume.Id = Guid.NewGuid();
             var result = this.resumesRepository.Add(resume);
             return result;
         }

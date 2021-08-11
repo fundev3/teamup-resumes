@@ -1,5 +1,6 @@
 namespace Jalasoft.TeamUp.Resumes.API.Controllers
 {
+    using System;
     using System.IO;
     using System.Net;
     using FluentValidation;
@@ -47,7 +48,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             {
                 return e.Error;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
                 return errorException.Error;

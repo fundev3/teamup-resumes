@@ -5,8 +5,6 @@
 
     public class ErrorMessage
     {
-        public IEnumerable<FluentValidation.Results.ValidationFailure> Errors { get; set; }
-
         public string Message { get; set; }
     }
 }

@@ -42,6 +42,7 @@
             this.mockResumesService.Setup(service => service.PostResumes(null)).Throws(new ResumesException(ResumesErrors.BadRequest, new FluentValidation.ValidationException("BadRequest")));
             var response = this.postResume.CreateResume(request);
             var objectResult = Assert.IsType<ObjectResult>(response);
+            Assert.Equal(400, objectResult.StatusCode);
         }
     }
 }
