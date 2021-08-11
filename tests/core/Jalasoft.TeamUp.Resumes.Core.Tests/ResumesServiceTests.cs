@@ -5,6 +5,7 @@
     using System.Linq;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Moq;
     using Xunit;
 
@@ -127,7 +128,7 @@
         {
             // Arrange
             var stubResume = new Resume { Id = Guid.NewGuid() };
-            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Returns(stubResume);
+            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Throws(new ResumesException(ResumesErrors.NotFound, new Exception()));
 
             // Act
             var result = this.resumesService.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"));

@@ -46,7 +46,7 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Throws(new ResumesException(ResumesErrors.NotFound, new Exception()));
+            this.mockService.Setup(service => service.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Throws(new ResumesException(ResumesErrors.NotFound));
 
             // Act
             var response = this.getResume.Run(request, new Guid("5a7939fd-59de-44bd-a092-f5d8434584de"));
