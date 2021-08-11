@@ -44,9 +44,9 @@
         public void GetSkillByName_Returns_Skills()
         {
             // Arrange
-            var emsiSkills = this.skillsApiRepository.GetSkills("Typescript");
+            var emsiSkills = this.skillsApiRepository.GetSkills("TypeScript");
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills("Typsscript")).Returns(emsiSkills.ToArray());
+            this.mockService.Setup(service => service.GetSkills("TypeScript")).Returns(emsiSkills.ToArray());
 
             // Act
             var response = this.getSkillsByName.Run(request);

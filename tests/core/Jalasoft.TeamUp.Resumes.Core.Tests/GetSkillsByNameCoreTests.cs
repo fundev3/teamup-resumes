@@ -61,11 +61,11 @@
         public void GetSkillByName_Returns_EmsiSkills()
         {
             // Arrange
-            var emsiSkills = this.skillsApiRepository.GetSkills("Typescript");
-            this.mockRepository.Setup(repository => repository.GetSkills("Typescript")).Returns(emsiSkills);
+            var emsiSkills = this.skillsApiRepository.GetSkills("TypeScript");
+            this.mockRepository.Setup(repository => repository.GetSkills("TypeScript")).Returns(emsiSkills);
 
             // Act
-            var result = this.skillsService.GetSkills("Typescript");
+            var result = this.skillsService.GetSkills("TypeScript");
 
             // Assert
             Assert.Single(result);
