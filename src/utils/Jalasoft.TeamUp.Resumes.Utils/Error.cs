@@ -1,6 +1,6 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.ResumesException
 {
-    public class ErrorDAO
+    public class Error
     {
         public string PropertyName { get; set; }
 

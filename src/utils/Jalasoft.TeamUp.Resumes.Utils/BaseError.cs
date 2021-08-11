@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using FluentValidation;
 
-    public class ErrorMessage
+    public class BaseError
     {
         public string Message { get; set; }
     }

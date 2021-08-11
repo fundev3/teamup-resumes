@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
 
-    public class ErrorValidations : ErrorMessage
+    public class ErrorValidations : BaseError
     {
         public ErrorValidations()
         {
-            this.Errors = new List<ErrorDAO>();
+            this.Errors = new List<Error>();
         }
 
-        public List<ErrorDAO> Errors { get; set; }
+        public List<Error> Errors { get; set; }
     }
 }

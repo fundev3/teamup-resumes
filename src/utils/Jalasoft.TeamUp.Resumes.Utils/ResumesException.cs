@@ -8,15 +8,15 @@
     {
         public ResumesException(ResumesErrors code)
         {
-            this.ErrorMessage = new ErrorMessage();
-            this.ErrorMessage.Message = "The resource couldn't be found";
-            this.Error = new ObjectResult(this.ErrorMessage);
+            this.BaseError = new BaseError();
+            this.BaseError.Message = "The resource couldn't be found";
+            this.Error = new ObjectResult(this.BaseError);
             this.Error.StatusCode = (int)ResumesErrors.NotFound;
         }
 
         public ResumesException(ResumesErrors code, Exception exception)
         {
-            this.ErrorMessage = new ErrorMessage();
+            this.BaseError = new BaseError();
             this.ErrorValidations = new ErrorValidations();
 
             switch (code)
@@ -27,7 +27,7 @@
 
                     foreach (var error in validationException.Errors)
                     {
-                        var myErrorDao = new ErrorDAO();
+                        var myErrorDao = new Error();
                         myErrorDao.PropertyName = error.PropertyName;
                         myErrorDao.ErrorMessage = error.ErrorMessage;
                         myErrorDao.AttemptedValue = error.AttemptedValue;
@@ -38,8 +38,8 @@
                     this.Error.StatusCode = (int)ResumesErrors.BadRequest;
                     break;
                 case ResumesErrors.InternalServerError:
-                    this.ErrorMessage.Message = "Something went wrong, please contact the TeamUp administrator.";
-                    this.Error = new ObjectResult(this.ErrorMessage);
+                    this.BaseError.Message = "Something went wrong, please contact the TeamUp administrator.";
+                    this.Error = new ObjectResult(this.BaseError);
                     this.Error.StatusCode = (int)ResumesErrors.InternalServerError;
                     break;
                 default:
@@ -47,7 +47,7 @@
             }
         }
 
-        public ErrorMessage ErrorMessage { get; set; }
+        public BaseError BaseError { get; set; }
 
         public ErrorValidations ErrorValidations { get; set; }
 
