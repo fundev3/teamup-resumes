@@ -13,14 +13,17 @@
             string emsiSkills = this.SkillsManager(name);
             var response = JsonConvert.DeserializeObject<Root>(emsiSkills);
             List<Skill> listSkills = new List<Skill>();
-            foreach (var data in response.Data)
+            if (listSkills != null)
             {
-                Skill skill = new Skill
+                foreach (var data in response.Data)
                 {
-                    Id = data.Id,
-                    Name = data.Name
-                };
-                listSkills.Add(skill);
+                    Skill skill = new Skill
+                    {
+                        Id = data.Id,
+                        Name = data.Name
+                    };
+                    listSkills.Add(skill);
+                }
             }
 
             return listSkills;

@@ -21,7 +21,7 @@
             try
             {
                 var skills = this.skillsRepository.GetSkills(name);
-                if (skills.Count() == 0)
+                if (skills == null)
                 {
                     throw new ResumeException(ErrorsTypes.NotFoundError, new Exception());
                 }
