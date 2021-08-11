@@ -1,26 +1,16 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
-    using System;
     using System.Collections.Generic;
-    using System.Runtime.Caching;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Microsoft.Extensions.Caching.Memory;
     using Newtonsoft.Json;
     using RestSharp;
 
     public class SkillsApiRepository : ISkillsRepository
     {
-        private IMemoryCache cache;
-
-        public SkillsApiRepository(IMemoryCache memoryCache)
-        {
-            this.cache = memoryCache;
-        }
-
         public IEnumerable<Skill> GetSkills(string name)
         {
-            string emsiSkills = this.SkillsCacheManager(name);
+            string emsiSkills = this.SkillsManager(name);
             var response = JsonConvert.DeserializeObject<Root>(emsiSkills);
             List<Skill> listSkills = new List<Skill>();
             foreach (var data in response.Data)
@@ -38,49 +28,36 @@
 
         private IRestResponse<EmsiToken> PostEmsiToken()
         {
-            string clientId = "otela8rzydlupz9t";
-            string clientSecret = "Bv1Bg7aT";
-            string scope = "emsi_open";
+            string clientId = Constants.Constants.ClientId;
+            string clientSecret = Constants.Constants.ClientSecret;
+            string scope = Constants.Constants.Scope;
 
             var client = new RestClient("https://auth.emsicloud.com/connect/token");
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("undefined", "client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=client_credentials&scope=" + scope, ParameterType.RequestBody);
+            request.AddParameter("application/x-www-form-urlencoded", $"client_id={clientId}&client_secret={clientSecret}&grant_type=client_credentials&scope={scope}", ParameterType.RequestBody);
             IRestResponse<EmsiToken> response = client.Execute<EmsiToken>(request);
             return response;
         }
 
         private string GetEmsiSkills(string token, string skill)
         {
-            string typeId = "ST1";
-            string typeId2 = "ST2";
-            string typeId3 = "ST3";
+            string hardSkills = Constants.Constants.HardSkills;
+            string softSkills = Constants.Constants.SoftSkills;
+            string certification = Constants.Constants.Certification;
 
-            var client = new RestClient("https://emsiservices.com/skills/versions/latest/skills?q=" + skill + "&typeIds=" + typeId + "%2C" + typeId2 + "%2C" + typeId3 + "&fields=id%2Cname");
+            var client = new RestClient($"https://emsiservices.com/skills/versions/latest/skills?typeIds= {hardSkills}%2C{softSkills}%2C{certification}&fields=id%2Cname&q={skill}");
             var request = new RestRequest(Method.GET);
-
+            string bearerToken = $"Bearer {token}";
+            request.AddHeader("Authorization", bearerToken);
             IRestResponse<Root> response = client.Execute<Root>(request);
             return response.Content;
         }
 
-        private string SkillsCacheManager(string skill)
+        private string SkillsManager(string skill)
         {
-            string key = "Token";
-            if (!this.cache.TryGetValue(key, out string accessToken))
-            {
-                var dataToken = this.PostEmsiToken();
-                accessToken = dataToken.Data.Access_token;
-                int expiresIn = dataToken.Data.Expires_in;
-
-                MemoryCacheEntryOptions cacheExpirationOptions = new MemoryCacheEntryOptions();
-
-                cacheExpirationOptions.AbsoluteExpiration = DateTime.Now.AddSeconds(expiresIn);
-                this.cache.Set(key, dataToken.Data.Access_token, cacheExpirationOptions);
-            }
-            else
-            {
-                accessToken = this.cache.Get("Token").ToString();
-            }
+            var dataToken = this.PostEmsiToken();
+            string accessToken = dataToken.Data.Access_token;
 
             string emsiSkills = this.GetEmsiSkills(accessToken, skill);
             return emsiSkills;

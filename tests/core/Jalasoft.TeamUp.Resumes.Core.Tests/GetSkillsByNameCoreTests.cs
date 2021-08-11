@@ -1,8 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Tests
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using Jalasoft.TeamUp.Resumes.DAL;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Moq;
@@ -12,11 +11,13 @@
     {
         private readonly Mock<ISkillsRepository> mockRepository;
         private readonly SkillsService skillsService;
+        private readonly SkillsApiRepository skillsApiRepository;
 
         public GetSkillsByNameCoreTests()
         {
             this.mockRepository = new Mock<ISkillsRepository>();
             this.skillsService = new SkillsService(this.mockRepository.Object);
+            this.skillsApiRepository = new SkillsApiRepository();
         }
 
         public static IEnumerable<Skill> GetTestSkills()
@@ -54,6 +55,20 @@
 
             // Assert
             Assert.Equal(3, result.Length);
+        }
+
+        [Fact]
+        public void GetSkillByName_Returns_EmsiSkills()
+        {
+            // Arrange
+            var emsiSkills = this.skillsApiRepository.GetSkills("Typescript");
+            this.mockRepository.Setup(repository => repository.GetSkills("Typescript")).Returns(emsiSkills);
+
+            // Act
+            var result = this.skillsService.GetSkills("Typescript");
+
+            // Assert
+            Assert.Single(result);
         }
     }
 }
