@@ -20,7 +20,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\models\Jalasoft.TeamUp.Resumes.Models\Jalasoft.TeamUp.Resumes.Models.csproj" />
-	  <ProjectReference Include="..\..\utils\Jalasoft.TeamUp.Resumes.Utils\Jalasoft.TeamUp.Resumes.Utils.csproj" />
 	  <ProjectReference Include="..\Jalasoft.TeamUp.Resumes.DAL.Interfaces\Jalasoft.TeamUp.Resumes.DAL.Interfaces.csproj" />
 	</ItemGroup>
 
