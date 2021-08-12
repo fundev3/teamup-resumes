@@ -42,7 +42,7 @@
         }
 
         [Fact]
-        public void GetResume_Returns_NotFound()
+        public void GetResume_InvalidResume_NotFound()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
@@ -53,7 +53,7 @@
 
             // Assert
             var notFoundObjectResult = Assert.IsType<ObjectResult>(response);
-            Assert.NotNull(notFoundObjectResult.StatusCode);
+            Assert.Equal(404, notFoundObjectResult.StatusCode);
         }
     }
 }

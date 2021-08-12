@@ -67,7 +67,7 @@
             var stubResume = new Resume()
             {
                 Id = Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"),
-                Title = "Name Example",
+                Title = string.Empty,
                 PersonalInformation = new Person()
                 {
                     FirstName = "Juan Jose",
@@ -98,7 +98,7 @@
                 CreationDate = DateTime.Now.AddDays(-10),
                 LastUpdate = DateTime.Now
             };
-            this.mockRepository.Setup(repository => repository.Add(stubResume)).Returns(new Resume);
+            this.mockRepository.Setup(repository => repository.Add(stubResume)).Returns(new Resume());
 
             Assert.Throws<FluentValidation.ValidationException>(() => this.resumeService.PostResumes(stubResume));
         }
