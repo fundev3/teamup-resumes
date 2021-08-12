@@ -7,7 +7,7 @@
     {
         public int Id { get; set; }
 
-        public string NameSkill { get; set; }
+        public string Name { get; set; }
 
         public List<Resume> Resumes { get; set; }
     }

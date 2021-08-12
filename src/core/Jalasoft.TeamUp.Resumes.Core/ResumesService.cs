@@ -16,7 +16,7 @@
             this.resumesRepository = resumesRepository;
         }
 
-        public Resume GetResume(Guid id)
+        public Resume GetResume(int id)
         {
             try
             {

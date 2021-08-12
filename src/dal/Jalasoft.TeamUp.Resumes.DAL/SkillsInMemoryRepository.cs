@@ -8,22 +8,22 @@
 
     public class SkillsInMemoryRepository : ISkillsRepository
     {
-        private static readonly Skill[] Skills = new Skill[]
+        private static readonly List<Skill> Skills = new List<Skill>
             {
                 new Skill
                         {
                             Id = 1,
-                            NameSkill = ".NET Core",
+                            Name = ".NET Core",
                         },
                 new Skill
                         {
                             Id = 2,
-                            NameSkill = "C#",
+                            Name = "C#",
                         },
                 new Skill
                         {
                             Id = 3,
-                            NameSkill = ".NET Framework",
+                            Name = ".NET Framework",
                         }
             };
 

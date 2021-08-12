@@ -5,20 +5,20 @@
 
     public class Resume
     {
-        public Guid Id { get; set; } // B error en ResumeServiceTest
+        public int Id { get; set; }
 
-        public string Title { get; set; } // B
+        public string Title { get; set; }
 
-        public Person Person { get; set; } // referenciado con Person
+        public Person Person { get; set; }
 
-        public Contact Contact { get; set; } // referenciado con Contact
+        public Contact Contact { get; set; }
 
-        public string Summary { get; set; } // B
+        public string Summary { get; set; }
 
-        public List<Skill> Skills { get; set; } // No
+        public List<Skill> Skills { get; set; }
 
-        public DateTime CreationDate { get; set; } // B
+        public DateTime CreationDate { get; set; }
 
-        public DateTime LastUpdate { get; set; } // B
+        public DateTime LastUpdate { get; set; }
     }
 }

@@ -25,7 +25,7 @@
         {
             var stubResume = new Resume
             {
-                Id = new Guid("dd05d77a-ca64-401a-be39-8e1ea84e2f83"),
+                Id = 1,
                 Title = "My Custom Title",
                 Person = new Person
                 {
@@ -46,12 +46,12 @@
                         new Skill
                         {
                             Id = 9,
-                            NameSkill = "C#"
+                            Name = "C#"
                         },
                         new Skill
                         {
                             Id = 10,
-                            NameSkill = "API"
+                            Name = "API"
                         }
                     },
                 CreationDate = DateTime.Now.AddDays(-10),

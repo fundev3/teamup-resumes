@@ -14,6 +14,7 @@
     public class ResumeSQLRepository : IResumeSQLRepository
     {
         private string connectionString;
+        private string splitValue = "s.Id";
 
         public ResumeSQLRepository()
         {
@@ -38,7 +39,7 @@
             return newObject;
         }
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -48,7 +49,7 @@
             IEnumerable<Resume> resumes;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                string sql = "select * from Resume r join Person p on r.IdPerson = p.Id join Contact c on r.IdContact = c.Id join Resume_Skill rs on r.Id = rs.IdResume join Skill s on rs.IdSkill = s.Id ";
+                string sql = "SELECT * FROM Resume r JOIN Person p on r.IdPerson = p.Id JOIN Contact c on r.IdContact = c.Id JOIN Resume_Skill rs on r.Id = rs.IdResume JOIN Skill s on rs.IdSkill = s.Id ";
 
                 var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(sql, (resume, person, contact, skill) =>
                 {
@@ -70,7 +71,7 @@
             return resumes;
         }
 
-        public Resume GetById(Guid id)
+        public Resume GetById(int id)
         {
             var sql = "SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume WHERE Id=@id";
             Resume resume = new Resume();
@@ -85,7 +86,7 @@
             return resume;
         }
 
-        public void Update(Guid id, Resume updateObject)
+        public void Update(int id, Resume updateObject)
         {
             throw new NotImplementedException();
         }

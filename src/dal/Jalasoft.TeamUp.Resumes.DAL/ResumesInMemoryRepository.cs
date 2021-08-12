@@ -12,7 +12,7 @@
             {
                 new Resume
                 {
-                    Id = new Guid("dd05d77a-ca64-401a-be39-8e1ea84e2f83"),
+                    Id = 1,
                     Title = "My Custom Title",
                     Person = new Person
                     {
@@ -33,12 +33,12 @@
                         new Skill
                         {
                             Id = 1,
-                            NameSkill = "C#"
+                            Name = "C#"
                         },
                         new Skill
                         {
                             Id = 2,
-                            NameSkill = "API"
+                            Name = "API"
                         }
                     },
                     CreationDate = DateTime.Now.AddDays(-10),
@@ -46,7 +46,7 @@
                 },
                 new Resume
                 {
-                    Id = new Guid("40b3f7e3-eaba-4b0f-bbef-5f5882af3ced"),
+                    Id = 2,
                     Title = "My Custom Title",
                     Person = new Person
                     {
@@ -67,12 +67,12 @@
                         new Skill
                         {
                             Id = 3,
-                            NameSkill = "C#"
+                            Name = "C#"
                         },
                         new Skill
                         {
                             Id = 4,
-                            NameSkill = "API"
+                            Name = "API"
                         }
                     },
                     CreationDate = DateTime.Now.AddDays(-10),
@@ -80,7 +80,7 @@
                 }
             }.ToList();
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -90,7 +90,7 @@
             return Resumes;
         }
 
-        public Resume GetById(Guid id)
+        public Resume GetById(int id)
         {
             foreach (Resume item in Resumes)
             {
@@ -109,7 +109,7 @@
             return resume;
         }
 
-        public void Update(Guid id, Resume updateObject)
+        public void Update(int id, Resume updateObject)
         {
             throw new NotImplementedException();
         }

@@ -25,7 +25,7 @@
             {
                 new Resume()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 1,
                     Title = "Guido Castro",
                     Contact = new Contact
                     {
@@ -48,18 +48,18 @@
                         new Skill
                         {
                             Id = 5,
-                            NameSkill = "C#"
+                            Name = "C#"
                         },
                         new Skill
                         {
                             Id = 6,
-                            NameSkill = "Javascript"
+                            Name = "Javascript"
                         },
                     }
                 },
                 new Resume()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 2,
                     Title = "Marcelo Ruiz",
                     Contact = new Contact
                     {
@@ -82,12 +82,12 @@
                         new Skill
                         {
                             Id = 7,
-                            NameSkill = "Figma"
+                            Name = "Figma"
                         },
                         new Skill
                         {
                             Id = 8,
-                            NameSkill = "HTML"
+                            Name = "HTML"
                         },
                     }
                 }
@@ -126,11 +126,11 @@
         public void GetResume_Returns_SingleResume()
         {
             // Arrange
-            var stubResume = new Resume { Id = Guid.NewGuid() };
-            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Returns(stubResume);
+            var stubResume = new Resume { Id = 1 };
+            this.mockRepository.Setup(repository => repository.GetById(1)).Returns(stubResume);
 
             // Act
-            var result = this.resumesService.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"));
+            var result = this.resumesService.GetResume(1);
 
             // Assert
             Assert.NotNull(result);
