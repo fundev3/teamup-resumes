@@ -2,12 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public interface ISkillsService
+    public interface IResumesSkillsService
     {
-        Skill[] GetSkills(string name);
-
-        Skill[] AddSkills(IEnumerable<Skill> skills);
+        ResumeSkill[] AddResumeSkills(IEnumerable<Skill> skills, Guid idResume);
     }
 }
