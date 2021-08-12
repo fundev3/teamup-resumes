@@ -36,7 +36,7 @@
         }
 
         [Fact]
-        public void PostResume_Returns_BadRequest()
+        public void PostResume_InvalidResume_BadRequest()
         {
             var request = this.mockHttpContext.Request;
             this.mockResumesService.Setup(service => service.PostResumes(null)).Throws(new ResumesException(ResumesErrors.BadRequest, new FluentValidation.ValidationException("BadRequest")));

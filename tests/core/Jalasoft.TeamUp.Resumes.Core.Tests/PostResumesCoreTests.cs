@@ -62,7 +62,7 @@
         }
 
         [Fact]
-        public void PostResume_Returns_ValidationException()
+        public void PostResume_InvalidResume_ValidationException()
         {
             var stubResume = new Resume()
             {
@@ -98,7 +98,7 @@
                 CreationDate = DateTime.Now.AddDays(-10),
                 LastUpdate = DateTime.Now
             };
-            this.mockRepository.Setup(repository => repository.Add(stubResume)).Throws(new FluentValidation.ValidationException("BadRequest"));
+            this.mockRepository.Setup(repository => repository.Add(stubResume)).Returns(new Resume);
 
             Assert.Throws<FluentValidation.ValidationException>(() => this.resumeService.PostResumes(stubResume));
         }

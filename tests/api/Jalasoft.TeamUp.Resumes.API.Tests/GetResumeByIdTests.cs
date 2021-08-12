@@ -42,7 +42,7 @@
         }
 
         [Fact]
-        public void GetResume_Returns_ThrowException404()
+        public void GetResume_Returns_NotFound()
         {
             // Arrange
             var request = this.mockHttpContext.Request;

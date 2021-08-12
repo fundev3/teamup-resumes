@@ -138,7 +138,7 @@
         }
 
         [Fact]
-        public void GetResume_Throws_ResumesException()
+        public void GetResume_InvalidResume_ResumesException()
         {
             // Arrange
             this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df"))).Throws(new ResumesException(ResumesErrors.NotFound, new Exception()));
