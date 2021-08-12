@@ -5,7 +5,7 @@
     using Jalasoft.TeamUp.Resumes.API.Controllers;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
@@ -27,7 +27,7 @@
         }
 
         [Fact]
-        public void GetResume_Returns_OkObjectResult()
+        public void GetResume_ValidId_Resume()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
@@ -42,18 +42,18 @@
         }
 
         [Fact]
-        public void GetResume_Returns_ThrowException404()
+        public void GetResume_InvalidResume_NotFound()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Throws(new ResumeException(ErrorsTypes.NotFoundError, new Exception()));
+            this.mockService.Setup(service => service.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Throws(new ResumesException(ResumesErrors.NotFound));
 
             // Act
             var response = this.getResume.Run(request, new Guid("5a7939fd-59de-44bd-a092-f5d8434584de"));
 
             // Assert
             var notFoundObjectResult = Assert.IsType<ObjectResult>(response);
-            Assert.NotNull(notFoundObjectResult.StatusCode);
+            Assert.Equal(404, notFoundObjectResult.StatusCode);
         }
     }
 }

@@ -3,7 +3,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
@@ -29,13 +29,21 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             try
             {
                 var resumes = this.resumesService.GetResumes();
+                if (resumes == null)
+                {
+                    throw new ResumesException(ResumesErrors.NotFound);
+                }
+
                 return new OkObjectResult(resumes);
             }
-            catch (ResumeException ex)
+            catch (ResumesException e)
             {
-                var error = new ObjectResult(ex.Error.ErrorMessage);
-                error.StatusCode = ex.Error.Code;
-                return error;
+                return e.Error;
+            }
+            catch (System.Exception e)
+            {
+                var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
+                return errorException.Error;
             }
         }
     }

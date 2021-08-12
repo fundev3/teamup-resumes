@@ -6,7 +6,7 @@
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Moq;
@@ -28,7 +28,7 @@
         }
 
         [Fact]
-        public void GetSkillByName_Returns_OkObjectResult()
+        public void GetSkillByName_ExistName_SkillsArray()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
