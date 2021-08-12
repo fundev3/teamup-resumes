@@ -28,25 +28,17 @@
 
         private IRestResponse<EmsiToken> PostEmsiToken()
         {
-            string clientId = Constants.Constants.ClientId;
-            string clientSecret = Constants.Constants.ClientSecret;
-            string scope = Constants.Constants.Scope;
-
             var client = new RestClient("https://auth.emsicloud.com/connect/token");
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", $"client_id={clientId}&client_secret={clientSecret}&grant_type=client_credentials&scope={scope}", ParameterType.RequestBody);
+            request.AddParameter("application/x-www-form-urlencoded", $"client_id={Constants.Constants.ClientId}&client_secret={Constants.Constants.ClientSecret}&grant_type=client_credentials&scope={Constants.Constants.Scope}", ParameterType.RequestBody);
             IRestResponse<EmsiToken> response = client.Execute<EmsiToken>(request);
             return response;
         }
 
         private string GetEmsiSkills(string token, string skill)
         {
-            string hardSkills = Constants.Constants.HardSkills;
-            string softSkills = Constants.Constants.SoftSkills;
-            string certification = Constants.Constants.Certification;
-
-            var client = new RestClient($"https://emsiservices.com/skills/versions/latest/skills?typeIds= {hardSkills}%2C{softSkills}%2C{certification}&fields=id%2Cname&q={skill}");
+            var client = new RestClient($"https://emsiservices.com/skills/versions/latest/skills?typeIds= {Constants.Constants.HardSkills}%2C{Constants.Constants.SoftSkills}%2C{Constants.Constants.Certification}&fields=id%2Cname&q={skill}");
             var request = new RestRequest(Method.GET);
             string bearerToken = $"Bearer {token}";
             request.AddHeader("Authorization", bearerToken);
@@ -57,9 +49,7 @@
         private string SkillsManager(string skill)
         {
             var dataToken = this.PostEmsiToken();
-            string accessToken = dataToken.Data.Access_token;
-
-            string emsiSkills = this.GetEmsiSkills(accessToken, skill);
+            string emsiSkills = this.GetEmsiSkills(dataToken.Data.Access_token, skill);
             return emsiSkills;
         }
     }

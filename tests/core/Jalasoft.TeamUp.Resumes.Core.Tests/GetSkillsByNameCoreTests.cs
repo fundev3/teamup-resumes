@@ -74,20 +74,5 @@
             // Assert
             Assert.Single(result);
         }
-
-        [Fact]
-        public void GetSkillByName_Returns_EmptyList()
-        {
-            // Arrange
-            var emsiSkills = this.skillsApiRepository.GetSkills("Julio");
-            this.mockRepository.Setup(repository => repository.GetSkills("Julio")).Returns(emsiSkills);
-
-            // Act
-            var result = this.skillsService.GetSkills("Julio");
-
-            // Assert
-            var notFoundObjectResult = Assert.IsType<ObjectResult>(result);
-            Assert.NotNull(notFoundObjectResult.StatusCode);
-        }
     }
 }
