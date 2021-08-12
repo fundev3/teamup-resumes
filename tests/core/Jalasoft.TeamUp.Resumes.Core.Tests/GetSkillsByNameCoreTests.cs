@@ -1,9 +1,13 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Tests
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Jalasoft.TeamUp.Resumes.DAL;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Microsoft.AspNetCore.Mvc;
     using Moq;
     using Xunit;
 
@@ -69,6 +73,21 @@
 
             // Assert
             Assert.Single(result);
+        }
+
+        [Fact]
+        public void GetSkillByName_Returns_EmptyList()
+        {
+            // Arrange
+            var emsiSkills = this.skillsApiRepository.GetSkills("Julio");
+            this.mockRepository.Setup(repository => repository.GetSkills("Julio")).Returns(emsiSkills);
+
+            // Act
+            var result = this.skillsService.GetSkills("Julio");
+
+            // Assert
+            var notFoundObjectResult = Assert.IsType<ObjectResult>(result);
+            Assert.NotNull(notFoundObjectResult.StatusCode);
         }
     }
 }

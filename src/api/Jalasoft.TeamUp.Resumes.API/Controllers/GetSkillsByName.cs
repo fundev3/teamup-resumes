@@ -3,6 +3,7 @@
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
@@ -28,9 +29,18 @@
         public IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/skills")] HttpRequest req)
         {
-            req.Query.TryGetValue("name", out StringValues name);
-            var skills = this.skillsService.GetSkills(name);
-            return new OkObjectResult(skills);
-        }
+            try
+            {
+                req.Query.TryGetValue("name", out StringValues name);
+                var skills = this.skillsService.GetSkills(name);
+                return new OkObjectResult(skills);
+            }
+            catch (ResumeException ex)
+            {
+                var error = new ObjectResult(ex.Error.ErrorMessage);
+                error.StatusCode = ex.Error.Code;
+                return error;
+            }
+}
     }
 }
