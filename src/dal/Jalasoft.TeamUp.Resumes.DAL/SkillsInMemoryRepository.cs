@@ -12,18 +12,18 @@
             {
                 new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
-                            Name = ".NET Core",
+                            Id = 1,
+                            NameSkill = ".NET Core",
                         },
                 new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
-                            Name = "C#",
+                            Id = 2,
+                            NameSkill = "C#",
                         },
                 new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
-                            Name = ".NET Framework",
+                            Id = 3,
+                            NameSkill = ".NET Framework",
                         }
             };
 
