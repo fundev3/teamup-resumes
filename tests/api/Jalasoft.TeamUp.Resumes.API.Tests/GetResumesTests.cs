@@ -22,7 +22,7 @@
         }
 
         [Fact]
-        public void GetResumes_Returns_OkObjectResult()
+        public void GetResumes_ItemsExists_Resume()
         {
             // Arrange
             var request = this.mockHttpContext.Request;

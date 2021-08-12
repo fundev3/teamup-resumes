@@ -97,7 +97,7 @@
         }
 
         [Fact]
-        public void GetResumes_Returns_EmptyResult()
+        public void GetResumes_NoItems_EmptyResult()
         {
             // Arrange
             var stubEmptyResumeList = new List<Resume>();
@@ -111,7 +111,7 @@
         }
 
         [Fact]
-        public void GetResumes_Returns_AllItemsResult()
+        public void GetResumes_ItemsExist_ResumesArray()
         {
             // Arrange
             this.mockRepository.Setup(repository => repository.GetAll()).Returns(GetTestResumes().ToList());
@@ -124,7 +124,7 @@
         }
 
         [Fact]
-        public void GetResume_Returns_SingleResume()
+        public void GetResume_ValidId_SingleResume()
         {
             // Arrange
             var stubResume = new Resume { Id = Guid.NewGuid() };
@@ -138,13 +138,15 @@
         }
 
         [Fact]
-        public void GetResume_InvalidResume_ResumesException()
+        public void GetResume_UnexistentID_ReturnNull()
         {
+            Resume resp = null;
+
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df"))).Throws(new ResumesException(ResumesErrors.NotFound, new Exception()));
+            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df"))).Returns(resp);
 
             // Assert
-            Assert.Throws<ResumesException>(() => this.resumesService.GetResume(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df")));
+            Assert.Null(this.resumesService.GetResume(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df")));
         }
     }
 }

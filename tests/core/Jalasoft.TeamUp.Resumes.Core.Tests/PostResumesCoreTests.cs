@@ -19,7 +19,7 @@
         }
 
         [Fact]
-        public void PostResumes_Returns_OkObjectResult()
+        public void PostResumes_ValidResume_Resume()
         {
             var stubResume = new Resume
             {

@@ -26,13 +26,14 @@
         }
 
         [Fact]
-        public void PostResume_Returns_CreateResume_Resume()
+        public void PostResume_ValidResume_Created()
         {
             var request = this.mockHttpContext.Request;
             this.mockResumesService.Setup(service => service.PostResumes(null)).Returns(new Resume());
             var response = this.postResume.CreateResume(request);
             var createdResult = Assert.IsType<CreatedResult>(response);
             Assert.IsType<Resume>(createdResult.Value);
+            Assert.Equal(201, createdResult.StatusCode);
         }
 
         [Fact]

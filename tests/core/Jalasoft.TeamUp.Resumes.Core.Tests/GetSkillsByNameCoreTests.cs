@@ -43,7 +43,7 @@
         }
 
         [Fact]
-        public void GetSkillByName_Returns_SkillsList()
+        public void GetSkillByName_ExistName_SkillsArray()
         {
             // Arrange
             var stubSkillList = GetTestSkills();

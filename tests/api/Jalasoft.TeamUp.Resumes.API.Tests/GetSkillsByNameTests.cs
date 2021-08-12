@@ -27,7 +27,7 @@
         }
 
         [Fact]
-        public void GetSkillByName_Returns_OkObjectResult()
+        public void GetSkillByName_ExistName_SkillsArray()
         {
             // Arrange
             var request = this.mockHttpContext.Request;

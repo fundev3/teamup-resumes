@@ -27,7 +27,7 @@
         }
 
         [Fact]
-        public void GetResume_Returns_OkObjectResult()
+        public void GetResume_ValidId_Resume()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
