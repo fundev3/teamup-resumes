@@ -29,13 +29,13 @@
                     Title = "Guido Castro",
                     Contact = new Contact
                     {
-                        Direction = "15 street",
+                        Address = "15 street",
                         Email = "guido.castro@fundacion-jala.org",
                         Phone = 123456789,
                     },
                     CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Guido",
                         LastName = "Castro",
@@ -43,16 +43,16 @@
                         Picture = "picture.jpg"
                     },
                     Summary = "I'm a great developer :-D",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 5,
                             NameSkill = "C#"
                         },
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 6,
                             NameSkill = "Javascript"
                         },
                     }
@@ -63,13 +63,13 @@
                     Title = "Marcelo Ruiz",
                     Contact = new Contact
                     {
-                        Direction = "16 street",
+                        Address = "16 street",
                         Email = "marcelo.ruiz@fundacion-jala.org",
                         Phone = 123456789,
                     },
                     CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Marcelo",
                         LastName = "Ruiz",
@@ -77,16 +77,16 @@
                         Picture = "picture.jpg"
                     },
                     Summary = "I'm a great ux :-D",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 7,
                             NameSkill = "Figma"
                         },
                         new Skill
                         {
-                            Id = Guid.NewGuid(),
+                            Id = 8,
                             NameSkill = "HTML"
                         },
                     }

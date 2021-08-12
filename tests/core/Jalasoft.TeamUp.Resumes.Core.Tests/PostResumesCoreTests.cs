@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.API.Tests
 {
     using System;
+    using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Core;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
@@ -26,7 +27,7 @@
             {
                 Id = new Guid("dd05d77a-ca64-401a-be39-8e1ea84e2f83"),
                 Title = "My Custom Title",
-                PersonalInformation = new Person
+                Person = new Person
                 {
                     FirstName = "Rodrigo",
                     LastName = "Baldivieso",
@@ -35,21 +36,21 @@
                 },
                 Contact = new Contact
                 {
-                    Direction = "Tarija Av.",
+                    Address = "Tarija Av.",
                     Email = "rodrigo.baldivieso@fundacion-jala.org",
                     Phone = 77669911
                 },
                 Summary = "Rodrigo's summary",
-                Skills = new Skill[]
+                Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
+                            Id = 9,
                             NameSkill = "C#"
                         },
                         new Skill
                         {
-                            Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
+                            Id = 10,
                             NameSkill = "API"
                         }
                     },

@@ -14,7 +14,7 @@
                 {
                     Id = new Guid("dd05d77a-ca64-401a-be39-8e1ea84e2f83"),
                     Title = "My Custom Title",
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Rodrigo",
                         LastName = "Baldivieso",
@@ -23,21 +23,21 @@
                     },
                     Contact = new Contact
                     {
-                        Direction = "Tarija Av.",
+                        Address = "Tarija Av.",
                         Email = "rodrigo.baldivieso@fundacion-jala.org",
                         Phone = 77669911
                     },
                     Summary = "Rodrigo's summary",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
+                            Id = 1,
                             NameSkill = "C#"
                         },
                         new Skill
                         {
-                            Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
+                            Id = 2,
                             NameSkill = "API"
                         }
                     },
@@ -48,7 +48,7 @@
                 {
                     Id = new Guid("40b3f7e3-eaba-4b0f-bbef-5f5882af3ced"),
                     Title = "My Custom Title",
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Paola",
                         LastName = "Quintanilla",
@@ -57,21 +57,21 @@
                     },
                     Contact = new Contact
                     {
-                        Direction = "Cochabamba Av.",
+                        Address = "Cochabamba Av.",
                         Email = "paola.quintanilla@fundacion-jala.org",
                         Phone = 77669911
                     },
                     Summary = "Paola's summary",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = new Guid("184bf2b8-abc1-47da-b383-d0e05ca57d4d"),
+                            Id = 3,
                             NameSkill = "C#"
                         },
                         new Skill
                         {
-                            Id = new Guid("0947a444-09c6-4281-894a-5e7a4acc38eb"),
+                            Id = 4,
                             NameSkill = "API"
                         }
                     },

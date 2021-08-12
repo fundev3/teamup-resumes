@@ -45,10 +45,26 @@
 
         public IEnumerable<Resume> GetAll()
         {
-            IEnumerable<Resume> resumes = new List<Resume>();
+            IEnumerable<Resume> resumes;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resumes = db.Query<Resume>("SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume");
+                string sql = "select * from Resume r join Person p on r.IdPerson = p.Id join Contact c on r.IdContact = c.Id join Resume_Skill rs on r.Id = rs.IdResume join Skill s on rs.IdSkill = s.Id ";
+
+                var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(sql, (resume, person, contact, skill) =>
+                {
+                    resume.Person = person;
+                    resume.Contact = contact;
+                    resume.Skills = new List<Skill>();
+                    resume.Skills.Add(skill);
+                    return resume;
+                });
+
+                resumes = resumesAux.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedResume = g.First();
+                    groupedResume.Skills = g.Select(p => p.Skills.Single()).ToList();
+                    return groupedResume;
+                });
             }
 
             return resumes;
