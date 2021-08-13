@@ -5,7 +5,7 @@
     using Jalasoft.TeamUp.Resumes.API.Controllers;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
@@ -27,7 +27,7 @@
         }
 
         [Fact]
-        public void GetResume_Returns_OkObjectResult()
+        public void GetResume_ValidId_Resume()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
@@ -42,7 +42,7 @@
         }
 
         [Fact]
-        public void GetResume_Returns_ThrowException404()
+        public void GetResume_InvalidResume_NotFound()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
@@ -53,7 +53,7 @@
 
             // Assert
             var notFoundObjectResult = Assert.IsType<ObjectResult>(response);
-            Assert.NotNull(notFoundObjectResult.StatusCode);
+            Assert.Equal(404, notFoundObjectResult.StatusCode);
         }
     }
 }

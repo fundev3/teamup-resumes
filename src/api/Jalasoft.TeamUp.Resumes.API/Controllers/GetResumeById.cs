@@ -4,7 +4,7 @@
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
@@ -29,17 +29,25 @@
         public IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes/{id:guid}")] HttpRequest req, int id)
         {
-            var result = new Resume();
             try
             {
+                var result = new Resume();
                 result = this.resumesService.GetResume(id);
+                if (result == null)
+                {
+                    throw new ResumesException(ResumesErrors.NotFound);
+                }
+
                 return new OkObjectResult(result);
             }
-            catch (ResumeException ex)
+            catch (ResumesException e)
             {
-                var error = new ObjectResult(ex.Error.ErrorMessage);
-                error.StatusCode = ex.Error.Code;
-                return error;
+                return e.Error;
+            }
+            catch (Exception ex)
+            {
+                var errorException = new ResumesException(ResumesErrors.InternalServerError, ex);
+                return errorException.Error;
             }
         }
     }
