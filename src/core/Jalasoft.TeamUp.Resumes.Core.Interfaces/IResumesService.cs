@@ -10,5 +10,7 @@
         Resume[] GetResumes();
 
         Resume PostResumes(Resume resume);
+
+        Resume UpdateResume(Resume resume);
     }
 }

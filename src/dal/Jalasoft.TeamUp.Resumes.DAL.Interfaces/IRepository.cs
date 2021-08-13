@@ -11,7 +11,7 @@
 
         public IEnumerable<T> GetAll();
 
-        public void Update(Guid id, T updateObject);
+        public T Update(Guid id, T updateObject);
 
         public void Delete(Guid id);
     }

@@ -10,12 +10,12 @@
 
     public class ResumesServiceTests
     {
-        private readonly Mock<IRepository<Resume>> mockRepository;
+        private readonly Mock<IResumeSQLRepository> mockRepository;
         private readonly ResumesService resumesService;
 
         public ResumesServiceTests()
         {
-            this.mockRepository = new Mock<IRepository<Resume>>();
+            this.mockRepository = new Mock<IResumeSQLRepository>();
             this.resumesService = new ResumesService(this.mockRepository.Object);
         }
 
@@ -47,12 +47,12 @@
                     {
                         new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
+                            // Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
+                            // Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
                             Name = "Javascript"
                         },
                     }
@@ -81,12 +81,12 @@
                     {
                         new Skill
                         {
-                            Id = "11111111-09c6-4281-894a-5e7a4acc38eb",
+                            // Id = "11111111-09c6-4281-894a-5e7a4acc38eb",
                             Name = "Figma"
                         },
                         new Skill
                         {
-                            Id = "22222222-abc1-47da-b383-d0e05ca57d4d",
+                            // Id = "22222222-abc1-47da-b383-d0e05ca57d4d",
                             Name = "HTML"
                         },
                     }

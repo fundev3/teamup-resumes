@@ -16,13 +16,11 @@
 
     public class PostResumeSkills
     {
-        private readonly IResumesSkillsService resumesSkillsService;
-        private readonly ISkillsService skillsService;
+        private readonly IResumesService resumesService;
 
-        public PostResumeSkills(IResumesSkillsService resumesSkillsService, ISkillsService skillsService)
+        public PostResumeSkills(IResumesService resumesService)
         {
-            this.skillsService = skillsService;
-            this.resumesSkillsService = resumesSkillsService;
+            this.resumesService = resumesService;
         }
 
         [FunctionName("PostResumeSkill")]
@@ -38,9 +36,8 @@
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
                 var skills = JsonConvert.DeserializeObject<List<Skill>>(requestBody);
 
-                var createSkills = this.skillsService.AddSkills(skills);
-                var createResumesSkills = this.resumesSkillsService.AddResumeSkills(skills, idResume);
-                return new CreatedResult("v1/resumes/{idResume}/skills", createResumesSkills);
+                var updateResume = this.resumesService.UpdateResume(new Resume() { Id = idResume, Skills = skills.ToArray() });
+                return new CreatedResult("v1/resumes/{idResume}/skills", updateResume.Skills);
             }
             catch (Exception ex)
             {

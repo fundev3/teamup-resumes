@@ -7,7 +7,5 @@
     public interface ISkillsRepository
     {
         public IEnumerable<Skill> GetSkills(string name);
-
-        public IEnumerable<Skill> AddSkills(IEnumerable<Skill> skills);
     }
 }

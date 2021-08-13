@@ -69,9 +69,38 @@
             return resume;
         }
 
-        public void Update(Guid id, Resume updateObject)
+        public Resume Update(Guid id, Resume updateObject)
         {
-            throw new NotImplementedException();
+            var sql = "INSERT INTO ResumeSkill ( ResumeId, SkillId ) VALUES ( @idResume, @idSkill )";
+            foreach (var skill in updateObject.Skills)
+            {
+                using (IDbConnection db = new SqlConnection(this.connectionString))
+                {
+                    db.Open();
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@idResume", id, DbType.Guid);
+                    parameter.Add("@idSkill", skill.Id, DbType.Int32);
+                    db.Execute(sql, parameter);
+                }
+            }
+
+            return updateObject;
+        }
+
+        public IEnumerable<Skill> AddSkills(IEnumerable<Skill> skills)
+        {
+            var sqlSave = "INSERT INTO Skill ( Name )  OUTPUT INSERTED.Id VALUES ( @Name )";
+            foreach (var skill in skills)
+            {
+                using (IDbConnection db = new SqlConnection(this.connectionString))
+                {
+                    db.Open();
+                    var idNewSkill = db.QuerySingle<int>(sqlSave, skill);
+                    skill.Id = idNewSkill;
+                }
+            }
+
+            return skills;
         }
     }
 }

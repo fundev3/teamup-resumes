@@ -1,7 +1,10 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+
+    // using FluentValidation.Results;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -9,9 +12,9 @@
 
     public class ResumesService : IResumesService
     {
-        private readonly IRepository<Resume> resumesRepository;
+        private readonly IResumeSQLRepository resumesRepository;
 
-        public ResumesService(IRepository<Resume> resumesRepository)
+        public ResumesService(IResumeSQLRepository resumesRepository)
         {
             this.resumesRepository = resumesRepository;
         }
@@ -60,6 +63,25 @@
             {
                 throw new ResumeException(ErrorsTypes.ServerError, ex);
             }
+        }
+
+        public Resume UpdateResume(Resume resume)
+        {
+            // SkillValidator skillValidator = new SkillValidator();
+            // var skillsForAdd = new List<Skill>();
+            // foreach (var skill in resume.Skills)
+            // {
+            //    ValidationResult v = skillValidator.Validate(skill);
+            //    foreach (var e in v.Errors)
+            //    {
+            //        if (e.ErrorCode == "Skill not found.")
+            //        {
+            //            skillsForAdd.Add(skill);
+            //        }
+            //    }
+            // }
+            // this.resumesRepository.AddSkills(skillsForAdd).ToArray();
+            return this.resumesRepository.Update(resume.Id, resume);
         }
     }
 }
