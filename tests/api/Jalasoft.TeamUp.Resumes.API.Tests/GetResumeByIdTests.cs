@@ -51,7 +51,7 @@
             this.mockService.Setup(service => service.GetResume(2)).Throws(resumesException);
 
             // Act
-            var response = this.getResume.Run(request, 2);
+            var response = this.getResume.Run(request, 1);
 
             // Assert
             var notFoundObjectResult = Assert.IsType<ObjectResult>(response);
