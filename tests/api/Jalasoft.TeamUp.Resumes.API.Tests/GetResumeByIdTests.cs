@@ -44,9 +44,11 @@
         [Fact]
         public void GetResume_InvalidResume_NotFound()
         {
+            ResumesException resumesException = new ResumesException(ResumesErrors.NotFound, new Exception());
+
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetResume(2)).Throws(new ResumeException(ErrorsTypes.NotFoundError, new Exception()));
+            this.mockService.Setup(service => service.GetResume(2)).Throws(resumesException);
 
             // Act
             var response = this.getResume.Run(request, 2);

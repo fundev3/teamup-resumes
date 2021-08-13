@@ -14,7 +14,6 @@
     public class ResumeSQLRepository : IResumeSQLRepository
     {
         private string connectionString;
-        private string splitValue = "s.Id";
 
         public ResumeSQLRepository()
         {
@@ -52,10 +51,10 @@
                 string sql = "SELECT r.Id, r.Title, r.Sumary, r.CreationDate, r.LastUpdate, r.IdPerson, r.IdContact, p.Id, p.FirstName, " +
                     "p.LastName, p.BirthDate, p.Picture, c.Id, c.Address, c.Email, c.Phone, rs.IdSkill, rs.IdResume, s.Id, s.Name " +
                     "FROM Resume r " +
-                    "JOIN Person p ON r.IdPerson = p.Id " +
-                    "JOIN Contact c ON r.IdContact = c.Id " +
-                    "JOIN Resume_Skill rs ON r.Id = rs.IdResume " +
-                    "JOIN Skill s ON rs.IdSkill = s.Id ";
+                    "INNER JOIN Person p ON r.IdPerson = p.Id " +
+                    "INNER JOIN Contact c ON r.IdContact = c.Id " +
+                    "INNER JOIN Resume_Skill rs ON r.Id = rs.IdResume " +
+                    "INNER JOIN Skill s ON rs.IdSkill = s.Id ";
 
                 var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(sql, (resume, person, contact, skill) =>
                 {

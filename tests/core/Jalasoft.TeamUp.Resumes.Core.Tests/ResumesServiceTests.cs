@@ -143,10 +143,10 @@
             Resume resp = null;
 
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df"))).Returns(resp);
+            this.mockRepository.Setup(repository => repository.GetById(1)).Returns(resp);
 
             // Assert
-            Assert.Null(this.resumesService.GetResume(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df")));
+            Assert.Null(this.resumesService.GetResume(1));
         }
     }
 }

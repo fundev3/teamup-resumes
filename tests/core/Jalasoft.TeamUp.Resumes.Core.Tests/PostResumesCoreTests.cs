@@ -67,9 +67,9 @@
         {
             var stubResume = new Resume()
             {
-                Id = Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"),
+                Id = 1,
                 Title = string.Empty,
-                PersonalInformation = new Person()
+                Person = new Person()
                 {
                     FirstName = "Juan Jose",
                     LastName = "Jimenez Javier",
@@ -79,20 +79,20 @@
                 Contact = new Contact()
                 {
                     Email = "Jose Ecos",
-                    Direction = "Calle Bolivar y Presidente Montes",
+                    Address = "Calle Bolivar y Presidente Montes",
                     Phone = 75422166
                 },
                 Summary = "Juan Jose Sumary",
-                Skills = new Skill[]
+                Skills = new List<Skill>
                     {
                         new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
+                            Id = 2,
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
+                            Id = 3,
                             Name = "API"
                         }
                     },
