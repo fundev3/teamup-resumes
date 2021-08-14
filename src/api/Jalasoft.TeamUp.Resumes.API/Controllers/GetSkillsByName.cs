@@ -3,7 +3,7 @@
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
@@ -35,12 +35,11 @@
                 var skills = this.skillsService.GetSkills(name);
                 return new OkObjectResult(skills);
             }
-            catch (ResumeException ex)
+            catch (ResumesException ex)
             {
-                var error = new ObjectResult(ex.Error.ErrorMessage);
-                error.StatusCode = ex.Error.Code;
+                var error = ex.Error;
                 return error;
             }
-}
+        }
     }
 }

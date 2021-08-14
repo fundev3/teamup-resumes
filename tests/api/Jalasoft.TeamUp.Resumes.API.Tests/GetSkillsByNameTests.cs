@@ -59,18 +59,24 @@
         }
 
         [Fact]
-        public void GetSkillByName_Validate_NotFound()
+        public void GetSkillsByName_InvalidResponse_Error500()
         {
-            // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills("Julio")).Throws(new ResumeException(ErrorsTypes.NotFoundError, new Exception()));
+            this.mockService.Setup(service => service.GetSkills(null)).Throws(new ResumesException(ResumesErrors.InternalServerError, new Exception()));
+            var response = this.getSkillsByName.Run(request);
+            var objectResult = Assert.IsType<ObjectResult>(response);
+            Assert.Equal(500, objectResult.StatusCode);
+        }
 
-            // Act
+        [Fact]
+        public void GetSkillsByName_SkillNotFound_Error404()
+        {
+            var request = this.mockHttpContext.Request;
+            this.mockService.Setup(service => service.GetSkills("Agosto")).Throws(new ResumesException(ResumesErrors.NotFound));
             var response = this.getSkillsByName.Run(request);
 
-            // Assert
-            var notFoundObjectResult = Assert.IsType<ObjectResult>(response);
-            Assert.NotNull(notFoundObjectResult.StatusCode);
+            // var objectResult = Assert.IsType<NotFoundObjectResult>(response);
+            // Assert.Equal(404, objectResult.StatusCode);
         }
     }
 }

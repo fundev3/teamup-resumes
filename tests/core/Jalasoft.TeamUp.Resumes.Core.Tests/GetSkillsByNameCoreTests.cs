@@ -1,13 +1,9 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Tests
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Jalasoft.TeamUp.Resumes.DAL;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
-    using Microsoft.AspNetCore.Mvc;
     using Moq;
     using Xunit;
 
@@ -62,7 +58,7 @@
         }
 
         [Fact]
-        public void GetSkillByName_Returns_EmsiSkills()
+        public void GetSkillByName_ExistName_EmsiSkills()
         {
             // Arrange
             var emsiSkills = this.skillsApiRepository.GetSkills("TypeScript");

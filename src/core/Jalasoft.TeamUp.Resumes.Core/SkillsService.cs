@@ -5,7 +5,7 @@
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
 
     public class SkillsService : ISkillsService
     {
@@ -18,25 +18,15 @@
 
         public Skill[] GetSkills(string name)
         {
-            try
+            var skills = this.skillsRepository.GetSkills(name);
+
+            if (skills.Count() != 0)
             {
-                var skills = this.skillsRepository.GetSkills(name);
-                if (skills.Count() != 0)
-                {
-                    return skills.ToArray();
-                }
-                else
-                {
-                    throw new ResumeException(ErrorsTypes.NotFoundError, new Exception());
-                }
+                return skills.ToArray();
             }
-            catch (ResumeException ex)
+            else
             {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                throw new ResumeException(ErrorsTypes.ServerError, ex);
+                throw new ResumesException(ResumesErrors.NotFound);
             }
         }
     }
