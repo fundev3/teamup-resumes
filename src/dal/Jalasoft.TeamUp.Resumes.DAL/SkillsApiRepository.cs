@@ -17,11 +17,6 @@
             string emsiSkills = this.SkillsManager(name);
             var response = JsonConvert.DeserializeObject<Root>(emsiSkills);
             List<Skill> skills = new List<Skill>();
-            if (response.Data.Count() == 0)
-            {
-                skills = null;
-            }
-
             foreach (var data in response.Data)
             {
                 var skill = new Skill

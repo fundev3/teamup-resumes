@@ -20,7 +20,7 @@
         {
             var skills = this.skillsRepository.GetSkills(name);
 
-            if (skills != null)
+            if (skills.Count() != 0)
             {
                 return skills.ToArray();
             }
