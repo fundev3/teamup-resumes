@@ -1,9 +1,11 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Tests
 {
+    using System;
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.DAL;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Moq;
     using Xunit;
 
@@ -69,6 +71,16 @@
 
             // Assert
             Assert.Single(result);
+        }
+
+        [Fact]
+        public void GetSkillsByName_NotExit_NameSkill()
+        {
+            // Arrange
+            this.mockRepository.Setup(repository => repository.GetSkills("September")).Throws(new ResumesException(ResumesErrors.NotFound));
+
+            // Assert
+            Assert.Throws<ResumesException>(() => this.skillsService.GetSkills("September"));
         }
     }
 }

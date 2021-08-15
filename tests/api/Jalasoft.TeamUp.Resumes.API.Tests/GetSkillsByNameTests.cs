@@ -69,14 +69,18 @@
         }
 
         [Fact]
-        public void GetSkillsByName_SkillNotFound_Error404()
+        public void GetSkillsByName_InvalidSkill_NameNotFound()
         {
+            // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills("Agosto")).Throws(new ResumesException(ResumesErrors.NotFound));
+            this.mockService.Setup(service => service.GetSkills("September")).Throws(new ResumesException(ResumesErrors.NotFound));
+
+            // Act
             var response = this.getSkillsByName.Run(request);
 
-            // var objectResult = Assert.IsType<NotFoundObjectResult>(response);
-            // Assert.Equal(404, objectResult.StatusCode);
+            // Assert
+            var notfoundObjectResult = Assert.IsType<OkObjectResult>(response);
+            notfoundObjectResult.Value.ToString();
         }
     }
 }
