@@ -65,10 +65,10 @@
             if (tokenContent == null)
             {
                 var emsiPostToken = this.PostEmsiToken();
-                int accessIn = emsiPostToken.Data.Expires_in;
+                double accessIn = emsiPostToken.Data.Expires_in;
                 tokenValue = emsiPostToken.Data.Access_token;
 
-                policy.AbsoluteExpiration = DateTimeOffset.Now.AddHours(accessIn);
+                policy.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(accessIn);
                 tokenContent = new CacheItem(tokenKey, tokenValue);
                 TokenCache.Set(tokenContent, policy);
             }
