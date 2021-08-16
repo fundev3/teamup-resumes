@@ -48,13 +48,14 @@
             IEnumerable<Resume> resumes;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                string sql = "SELECT r.Id, r.Title, r.Sumary, r.CreationDate, r.LastUpdate, r.IdPerson, r.IdContact, p.Id, p.FirstName, " +
-                    "p.LastName, p.BirthDate, p.Picture, c.Id, c.Address, c.Email, c.Phone, rs.IdSkill, rs.IdResume, s.Id, s.Name " +
-                    "FROM Resume r " +
-                    "INNER JOIN Person p ON r.IdPerson = p.Id " +
-                    "INNER JOIN Contact c ON r.IdContact = c.Id " +
-                    "INNER JOIN Resume_Skill rs ON r.Id = rs.IdResume " +
-                    "INNER JOIN Skill s ON rs.IdSkill = s.Id ";
+                string sql = "SELECT resume.Id, resume.Title, resume.Sumary, resume.CreationDate, resume.LastUpdate, resume.IdPerson, resume.IdContact, " +
+                    "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email, " +
+                    "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.Name " +
+                    "FROM Resume resume " +
+                    "INNER JOIN Person person ON resume.IdPerson = person.Id " +
+                    "INNER JOIN Contact contact ON resume.IdContact = contact.Id " +
+                    "INNER JOIN Resume_Skill resumeSkill ON resume.Id = resumeSkill.IdResume " +
+                    "INNER JOIN Skill skill ON resumeSkill.IdSkill = skill.Id";
 
                 var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(sql, (resume, person, contact, skill) =>
                 {
