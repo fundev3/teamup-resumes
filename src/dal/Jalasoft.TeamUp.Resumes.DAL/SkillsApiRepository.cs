@@ -1,7 +1,9 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Caching;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Newtonsoft.Json;
@@ -9,9 +11,11 @@
 
     public class SkillsApiRepository : ISkillsRepository
     {
+        private static readonly ObjectCache TokenCache = MemoryCache.Default;
+
         public IEnumerable<Skill> GetSkills(string name)
         {
-            string emsiSkills = this.SkillsManager(name);
+            string emsiSkills = this.SkillsCacheManager(name);
             var response = JsonConvert.DeserializeObject<Root>(emsiSkills);
             List<Skill> skills = new List<Skill>();
             if (response.Data.Count() == 0)
@@ -51,10 +55,30 @@
             return response.Content;
         }
 
-        private string SkillsManager(string name)
+        private string SkillsCacheManager(string name)
         {
-            var dataToken = this.PostEmsiToken();
-            string emsiSkills = this.GetEmsiSkills(dataToken.Data.Access_token, name);
+            string tokenKey = "Token";
+            string tokenValue = null;
+
+            CacheItem tokenContent = TokenCache.GetCacheItem(tokenKey);
+            CacheItemPolicy policy = new CacheItemPolicy();
+            if (tokenContent == null)
+            {
+                var emsiPostToken = this.PostEmsiToken();
+                int accessIn = emsiPostToken.Data.Expires_in;
+                tokenValue = emsiPostToken.Data.Access_token;
+
+                policy.AbsoluteExpiration = DateTimeOffset.Now.AddHours(accessIn);
+                tokenContent = new CacheItem(tokenKey, tokenValue);
+                TokenCache.Set(tokenContent, policy);
+            }
+            else
+            {
+                CacheItem result = TokenCache.GetCacheItem(tokenKey);
+                tokenValue = result.Value.ToString();
+            }
+
+            string emsiSkills = this.GetEmsiSkills(tokenValue, name);
             return emsiSkills;
         }
     }
