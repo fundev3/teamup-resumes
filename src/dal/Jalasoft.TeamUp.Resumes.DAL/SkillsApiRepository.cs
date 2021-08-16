@@ -1,10 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.Caching;
-    using System.Web;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Newtonsoft.Json;
@@ -17,6 +14,11 @@
             string emsiSkills = this.SkillsManager(name);
             var response = JsonConvert.DeserializeObject<Root>(emsiSkills);
             List<Skill> skills = new List<Skill>();
+            if (response.Data.Count() == 0)
+            {
+                skills = null;
+            }
+
             foreach (var data in response.Data)
             {
                 var skill = new Skill

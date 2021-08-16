@@ -40,6 +40,11 @@
                 var error = ex.Error;
                 return error;
             }
+            catch (System.Exception e)
+            {
+                var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
+                return errorException.Error;
+            }
         }
     }
 }

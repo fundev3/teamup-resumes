@@ -61,26 +61,24 @@
         [Fact]
         public void GetSkillsByName_InvalidResponse_Error500()
         {
-            var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills(null)).Throws(new ResumesException(ResumesErrors.InternalServerError, new Exception()));
-            var response = this.getSkillsByName.Run(request);
-            var objectResult = Assert.IsType<ObjectResult>(response);
-            Assert.Equal(500, objectResult.StatusCode);
-        }
-
-        [Fact]
-        public void GetSkillsByName_InvalidSkill_NameNotFound()
-        {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills("September")).Throws(new ResumesException(ResumesErrors.NotFound));
+            var res = this.mockService.Setup(service => service.GetSkills(null)).Throws(new ResumesException(ResumesErrors.InternalServerError, new Exception()));
 
             // Act
             var response = this.getSkillsByName.Run(request);
 
             // Assert
-            var notfoundObjectResult = Assert.IsType<OkObjectResult>(response);
-            notfoundObjectResult.Value.ToString();
+            var objectResult = Assert.IsType<ObjectResult>(response);
+            Assert.Equal(500, objectResult.StatusCode);
+        }
+
+        [Fact]
+        public void GetSkillsByName_InvalidSkill_NotFound()
+        {
+            var request = this.mockHttpContext.Request;
+            this.mockService.Setup(service => service.GetSkills("Julio")).Throws(new ResumesException(ResumesErrors.NotFound));
+            var response = this.getSkillsByName.Run(request);
         }
     }
 }
