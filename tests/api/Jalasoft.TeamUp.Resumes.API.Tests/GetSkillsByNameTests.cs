@@ -28,27 +28,12 @@
         }
 
         [Fact]
-        public void GetSkillByName_ExistName_SkillsArray()
-        {
-            // Arrange
-            var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills(".NET")).Returns(new Skill[2]);
-
-            // Act
-            var response = this.getSkillsByName.Run(request);
-
-            // Assert
-            var okObjectResult = Assert.IsType<OkObjectResult>(response);
-            Assert.IsType<Skill[]>(okObjectResult.Value);
-        }
-
-        [Fact]
         public void GetSkillByName_Returns_Skills()
         {
             // Arrange
-            var emsiSkills = this.skillsApiRepository.GetSkills("TypeScript");
+            var emsiSkills = this.skillsApiRepository.GetSkills("Typescript");
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills("TypeScript")).Returns(emsiSkills.ToArray());
+            this.mockService.Setup(service => service.GetSkills(null)).Returns(emsiSkills.ToArray());
 
             // Act
             var response = this.getSkillsByName.Run(request);

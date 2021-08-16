@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Runtime.Caching;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -18,11 +17,6 @@
             string emsiSkills = this.SkillsCacheManager(name);
             var response = JsonConvert.DeserializeObject<Root>(emsiSkills);
             List<Skill> skills = new List<Skill>();
-            if (response.Data.Count() == 0)
-            {
-                skills = null;
-            }
-
             foreach (var data in response.Data)
             {
                 var skill = new Skill

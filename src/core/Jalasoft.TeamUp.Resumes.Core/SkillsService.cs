@@ -19,14 +19,7 @@
         public Skill[] GetSkills(string name)
         {
             var skills = this.skillsRepository.GetSkills(name);
-            if (skills != null)
-            {
-                return skills.ToArray();
-            }
-            else
-            {
-                throw new ResumesException(ResumesErrors.NotFound);
-            }
+            return skills.ToArray();
         }
     }
 }

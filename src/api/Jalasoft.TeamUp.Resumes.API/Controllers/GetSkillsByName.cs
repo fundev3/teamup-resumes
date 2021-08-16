@@ -33,7 +33,14 @@
             {
                 req.Query.TryGetValue("name", out StringValues name);
                 var skills = this.skillsService.GetSkills(name);
-                return new OkObjectResult(skills);
+                if (skills.Length != 0)
+                {
+                    return new OkObjectResult(skills);
+                }
+                else
+                {
+                    throw new ResumesException(ResumesErrors.NotFound);
+                }
             }
             catch (ResumesException ex)
             {
