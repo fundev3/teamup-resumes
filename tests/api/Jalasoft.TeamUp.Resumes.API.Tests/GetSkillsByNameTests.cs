@@ -78,10 +78,14 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetSkills("Julio")).Throws(new ResumesException(ResumesErrors.NotFound));
+            this.mockService.Setup(service => service.GetSkills(null)).Throws(new ResumesException(ResumesErrors.NotFound));
 
             // Act
             var response = this.getSkillsByName.Run(request);
+
+            // Assert
+            var notFound = Assert.IsType<ObjectResult>(response);
+            Assert.Equal(404, notFound.StatusCode);
         }
     }
 }
