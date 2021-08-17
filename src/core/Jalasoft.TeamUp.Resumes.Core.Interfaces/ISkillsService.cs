@@ -7,7 +7,5 @@
     public interface ISkillsService
     {
         Skill[] GetSkills(string name);
-
-        Skill[] AddSkills(IEnumerable<Skill> skills);
     }
 }

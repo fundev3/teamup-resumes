@@ -95,7 +95,7 @@
                 using (IDbConnection db = new SqlConnection(this.connectionString))
                 {
                     db.Open();
-                    var idNewSkill = db.QuerySingle<int>(sqlSave, skill);
+                    var idNewSkill = db.QuerySingle<string>(sqlSave, skill);
                     skill.Id = idNewSkill;
                 }
             }

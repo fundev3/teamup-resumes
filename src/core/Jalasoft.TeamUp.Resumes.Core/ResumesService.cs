@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
-    // using FluentValidation.Results;
+    using FluentValidation;
+    using FluentValidation.Results;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
+    using Jalasoft.TeamUp.Resumes.Core.Validators;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.Utils.Exceptions;
 
     public class ResumesService : IResumesService
     {
@@ -21,66 +21,45 @@
 
         public Resume GetResume(Guid id)
         {
-            try
             {
                 var resume = this.resumesRepository.GetById(id);
-                if (resume == null)
-                {
-                    throw new ResumeException(ErrorsTypes.NotFoundError, new Exception());
-                }
-
                 return resume;
-            }
-            catch (ResumeException ex)
-            {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                throw new ResumeException(ErrorsTypes.ServerError, ex);
             }
         }
 
         public Resume[] GetResumes()
         {
-            try
-            {
-                return this.resumesRepository.GetAll().ToArray();
-            }
-            catch (Exception ex)
-            {
-                throw new ResumeException(ErrorsTypes.ServerError, ex);
-            }
+            var resumes = this.resumesRepository.GetAll().ToArray();
+            return resumes;
         }
 
         public Resume PostResumes(Resume resume)
         {
-            try
-            {
-                return this.resumesRepository.Add(resume);
-            }
-            catch (Exception ex)
-            {
-                throw new ResumeException(ErrorsTypes.ServerError, ex);
-            }
+            resume.Id = Guid.NewGuid();
+            ResumeValidator validator = new ResumeValidator();
+            validator.ValidateAndThrow(resume);
+            var result = this.resumesRepository.Add(resume);
+            return result;
         }
 
         public Resume UpdateResume(Resume resume)
         {
-            // SkillValidator skillValidator = new SkillValidator();
-            // var skillsForAdd = new List<Skill>();
-            // foreach (var skill in resume.Skills)
-            // {
-            //    ValidationResult v = skillValidator.Validate(skill);
-            //    foreach (var e in v.Errors)
-            //    {
-            //        if (e.ErrorCode == "Skill not found.")
-            //        {
-            //            skillsForAdd.Add(skill);
-            //        }
-            //    }
-            // }
-            // this.resumesRepository.AddSkills(skillsForAdd).ToArray();
+            SkillValidator skillValidator = new SkillValidator();
+            var skillsForAdd = new List<Skill>();
+            foreach (var skill in resume.Skills)
+            {
+                ValidationResult validation = skillValidator.Validate(skill);
+                foreach (var e in validation.Errors)
+                {
+                    if (e.ErrorCode == "Skill not found.")
+                    {
+                        skillsForAdd.Add(skill);
+                    }
+                }
+            }
+
+            this.resumesRepository.AddSkills(skillsForAdd);
+
             return this.resumesRepository.Update(resume.Id, resume);
         }
     }

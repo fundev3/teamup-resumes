@@ -12,27 +12,26 @@
     using Moq;
     using Xunit;
 
-    public class PostResumeSkillsTests
+    public class UpdateResumeTests
     {
         private readonly Mock<IResumesService> mockResumesService;
         private readonly DefaultHttpContext mockHttpContext;
-        private readonly PostResumeSkills postResumeSkills;
+        private readonly PutResume postResumeSkills;
 
-        public PostResumeSkillsTests()
+        public UpdateResumeTests()
         {
             this.mockResumesService = new Mock<IResumesService>();
             this.mockHttpContext = new DefaultHttpContext();
-            this.postResumeSkills = new PostResumeSkills(this.mockResumesService.Object);
+            this.postResumeSkills = new PutResume(this.mockResumesService.Object);
         }
 
         [Fact]
-        public void PostResume_Returns_CreateResult_Resume()
+        public void UpdateResume_Returns_OkObjectResult()
         {
             var request = this.mockHttpContext.Request;
-            this.mockResumesService.Setup(service => service.UpdateResume(new Resume())).Returns(new Resume());
-            var response = this.postResumeSkills.CreateResumeSkills(request, Guid.NewGuid());
-            var createdResult = Assert.IsType<CreatedResult>(response);
-            Assert.IsType<Resume>(createdResult.Value);
+            this.mockResumesService.Setup(service => service.UpdateResume(It.IsAny<Resume>())).Returns(new Resume());
+            var response = this.postResumeSkills.UpdateResume(request, Guid.Parse("FD5BB199-3ED6-4519-BBCE-5FA7A2C40329"));
+            var createdResult = Assert.IsType<OkObjectResult>(response);
         }
     }
 }

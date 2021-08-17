@@ -20,10 +20,5 @@
         {
             return this.skillsRepository.GetSkills(name).ToArray();
         }
-
-        public Skill[] AddSkills(IEnumerable<Skill> skills)
-        {
-            return this.skillsRepository.AddSkills(skills).ToArray();
-        }
     }
 }
