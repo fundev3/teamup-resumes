@@ -50,7 +50,7 @@
             {
                 string sql = "SELECT resume.Id, resume.Title, resume.Sumary, resume.CreationDate, resume.LastUpdate, resume.IdPerson, resume.IdContact, " +
                     "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email, " +
-                    "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.Name " +
+                    "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.EmsiId, skill.Name " +
                     "FROM Resume resume " +
                     "INNER JOIN Person person ON resume.IdPerson = person.Id " +
                     "INNER JOIN Contact contact ON resume.IdContact = contact.Id " +
