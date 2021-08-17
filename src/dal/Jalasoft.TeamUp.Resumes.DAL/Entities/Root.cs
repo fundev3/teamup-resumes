@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class Root
+    internal class Root
     {
         public List<Attribution> Attributions { get; set; }
 

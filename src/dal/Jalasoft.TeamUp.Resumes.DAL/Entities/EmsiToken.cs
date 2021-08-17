@@ -1,6 +1,6 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Models
 {
-    public class EmsiToken
+    internal class EmsiToken
     {
         public string Access_token { get; set; }
 
