@@ -48,12 +48,12 @@
                     {
                         new Skill
                         {
-                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Id = 1,
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Id = 2,
                             Name = "Javascript"
                         },
                     }
@@ -82,12 +82,12 @@
                     {
                         new Skill
                         {
-                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Id = 1,
                             Name = "Figma"
                         },
                         new Skill
                         {
-                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Id = 2,
                             Name = "HTML"
                         },
                     }
