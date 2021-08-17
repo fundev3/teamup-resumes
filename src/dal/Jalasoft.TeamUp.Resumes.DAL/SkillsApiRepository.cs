@@ -66,9 +66,12 @@
                 tokenContent = new CacheItem(tokenKey, tokenValue);
                 TokenCache.Set(tokenContent, policy);
             }
+            else
+            {
+                CacheItem result = TokenCache.GetCacheItem(tokenKey);
+                tokenValue = result.Value.ToString();
+            }
 
-            CacheItem result = TokenCache.GetCacheItem(tokenKey);
-            tokenValue = result.Value.ToString();
             string emsiSkills = this.GetEmsiSkills(tokenValue, name);
             return emsiSkills;
         }
