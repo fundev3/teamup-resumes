@@ -33,7 +33,6 @@
 
         public Resume PostResumes(Resume resume)
         {
-            resume.Id = 1;
             ResumeValidator validator = new ResumeValidator();
             validator.ValidateAndThrow(resume);
             var result = this.resumesRepository.Add(resume);
