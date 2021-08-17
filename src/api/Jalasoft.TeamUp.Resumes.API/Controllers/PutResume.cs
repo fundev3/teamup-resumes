@@ -25,20 +25,20 @@
         }
 
         [FunctionName("UpdateResume")]
-        [OpenApiOperation(operationId: "CreateResumeSkills", tags: new[] { "ResumeSkill" })]
-        [OpenApiRequestBody("application/json", typeof(List<Skill>), Description = "JSON request body containing { Id, Name }")]
-        [OpenApiParameter(name: "idResume", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The resume identifier.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
+        [OpenApiOperation(operationId: "UpdateResume", tags: new[] { "Resumes" })]
+        [OpenApiRequestBody("application/json", typeof(List<Skill>), Description = "JSON request body containing list of skills")]
+        [OpenApiParameter(name: "idResume", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The resume identifier.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
         public IActionResult UpdateResume(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/resumes/{idResume}/skills")] HttpRequest req, int idResume)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "v1/resumes/{idResume}/skills")] HttpRequest req, int idResume)
         {
             try
             {
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
-                var skills = JsonConvert.DeserializeObject<List<Skill>>(requestBody);
+                var skills = JsonConvert.DeserializeObject<Skill[]>(requestBody);
 
-                var updateResume = this.resumesService.UpdateResume(new Resume() { Id = idResume, Skills = skills?.ToArray() });
-                return new OkObjectResult(updateResume?.Skills);
+                var updateResume = this.resumesService.UpdateResume(new Resume() { Id = idResume, Skills = skills });
+                return new OkObjectResult(updateResume);
             }
             catch (Exception e)
             {

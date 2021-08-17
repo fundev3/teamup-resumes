@@ -71,7 +71,7 @@
 
         public Resume Update(Resume updateObject)
         {
-            var sql = "INSERT INTO ResumeSkill ( IdResume, IdSkill ) VALUES ( @idResume, @idSkill )";
+            var sql = "INSERT INTO Resume_Skill ( IdResume, IdSkill ) VALUES ( @idResume, @idSkill )";
             foreach (var skill in updateObject.Skills)
             {
                 using (IDbConnection db = new SqlConnection(this.connectionString))
@@ -87,20 +87,37 @@
             return updateObject;
         }
 
-        public IEnumerable<Skill> AddSkills(IEnumerable<Skill> skills)
+        public IEnumerable<Skill> AddSkills(Skill[] skills)
         {
-            var sqlSave = "INSERT INTO Skill ( Name, EmsiId )  OUTPUT INSERTED.Id VALUES ( @Name, @EmsiId )";
+            var sql = "INSERT INTO Skill ( Name, EmsiId )  OUTPUT INSERTED.Id VALUES ( @name, @emsiId )";
             foreach (var skill in skills)
             {
                 using (IDbConnection db = new SqlConnection(this.connectionString))
                 {
                     db.Open();
-                    var idNewSkill = db.QuerySingle<int>(sqlSave, skill);
-                    skill.Id = idNewSkill;
+                    DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@name", skill.Name, DbType.AnsiString);
+                    parameter.Add("@emsiId", skill.EmsiId, DbType.AnsiString);
+                    skill.Id = db.QuerySingle<int>(sql, parameter);
                 }
             }
 
             return skills;
+        }
+
+        public Skill SearchSkill(string emsiId)
+        {
+            var skill = new Skill();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sql = "SELECT Id, EmsiId, Name FROM Skill WHERE EmsiId=@emsiId";
+                db.Open();
+                DynamicParameters parameter = new DynamicParameters();
+                parameter.Add("@emsiId", emsiId, DbType.AnsiString);
+                skill = db.QuerySingleOrDefault<Skill>(sql, parameter);
+            }
+
+            return skill;
         }
     }
 }

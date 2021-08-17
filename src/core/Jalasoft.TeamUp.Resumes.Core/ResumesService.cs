@@ -12,9 +12,9 @@
 
     public class ResumesService : IResumesService
     {
-        private readonly IResumeSQLRepository resumesRepository;
+        private readonly IResumesInMemoryRepository resumesRepository;
 
-        public ResumesService(IResumeSQLRepository resumesRepository)
+        public ResumesService(IResumesInMemoryRepository resumesRepository)
         {
             this.resumesRepository = resumesRepository;
         }
@@ -43,21 +43,21 @@
 
         public Resume UpdateResume(Resume resume)
         {
-            SkillValidator skillValidator = new SkillValidator();
+            SkillValidator skillValidator = new SkillValidator(this.resumesRepository);
             var skillsForAdd = new List<Skill>();
             foreach (var skill in resume.Skills)
             {
-                ValidationResult validation = skillValidator.Validate(skill);
-                foreach (var e in validation.Errors)
+                try
                 {
-                    if (e.ErrorCode == "Skill not found.")
-                    {
-                        skillsForAdd.Add(skill);
-                    }
+                    skillValidator.ValidateAndThrow(skill);
+                }
+                catch (ValidationException e)
+                {
+                    skillsForAdd.Add(skill);
                 }
             }
 
-            this.resumesRepository.AddSkills(skillsForAdd);
+            this.resumesRepository.AddSkills(skillsForAdd.ToArray());
 
             return this.resumesRepository.Update(resume);
         }

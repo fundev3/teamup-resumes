@@ -27,11 +27,6 @@
                         }
             };
 
-        public IEnumerable<Skill> AddSkills(IEnumerable<Skill> skills)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Skill> GetSkills(string name)
         {
             return Skills;

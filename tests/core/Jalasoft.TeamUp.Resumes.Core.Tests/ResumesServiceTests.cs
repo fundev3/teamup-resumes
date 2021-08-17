@@ -11,12 +11,12 @@
 
     public class ResumesServiceTests
     {
-        private readonly Mock<IResumeSQLRepository> mockRepository;
+        private readonly Mock<IResumesInMemoryRepository> mockRepository;
         private readonly ResumesService resumesService;
 
         public ResumesServiceTests()
         {
-            this.mockRepository = new Mock<IResumeSQLRepository>();
+            this.mockRepository = new Mock<IResumesInMemoryRepository>();
             this.resumesService = new ResumesService(this.mockRepository.Object);
         }
 

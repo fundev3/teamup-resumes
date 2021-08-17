@@ -13,12 +13,11 @@
     {
         private readonly ResumesService resumesService;
 
-        private readonly Mock<IResumeSQLRepository> mockResumeRepository;
+        private readonly Mock<IResumesInMemoryRepository> mockResumeRepository;
 
         public UpdateResumeCoreTests()
         {
-            Environment.SetEnvironmentVariable("SQLConnetionString", "Server = MISKYS; DataBase = TeamUp; User ID = AppConnection; Password=123;");
-            this.mockResumeRepository = new Mock<IResumeSQLRepository>();
+            this.mockResumeRepository = new Mock<IResumesInMemoryRepository>();
             this.resumesService = new ResumesService(this.mockResumeRepository.Object);
         }
 
@@ -48,7 +47,7 @@
         }
 
         [Fact]
-        public void PostResumes_Returns_Resume()
+        public void UpdateResume_Returns_Resume()
         {
             this.mockResumeRepository.Setup(repository => repository.Update(It.IsAny<Resume>())).Returns(UpdateResumeCoreTests.GetResume());
             var result = this.resumesService.UpdateResume(UpdateResumeCoreTests.GetResume());

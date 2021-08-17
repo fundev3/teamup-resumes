@@ -1,41 +1,30 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Validators
 {
-    using System;
-    using System.Data;
-    using System.Data.SqlClient;
-    using Dapper;
     using FluentValidation;
+    using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
     public class SkillValidator : AbstractValidator<Skill>
     {
-        private string connectionString;
+        private readonly IResumesInMemoryRepository resumesRepository;
 
-        public SkillValidator()
+        public SkillValidator(IResumesInMemoryRepository resumesRepository)
         {
-            this.connectionString = Environment.GetEnvironmentVariable("SQLConnetionString", EnvironmentVariableTarget.Process);
+            this.resumesRepository = resumesRepository;
             this.RuleFor(x => x)
                 .Must(this.FoundSkill).WithErrorCode("Skill not found.");
         }
 
         private bool FoundSkill(Skill skill)
         {
-            using (IDbConnection db = new SqlConnection(this.connectionString))
+            var result = this.resumesRepository.SearchSkill(skill.EmsiId);
+            if (result != null)
             {
-                var sql = "SELECT Id FROM Skill WHERE EmsiId=@emsiId";
-                db.Open();
-                DynamicParameters parameter = new DynamicParameters();
-                parameter.Add("@emsiId", skill.EmsiId, DbType.String);
-                var id = db.QuerySingleOrDefault(sql, parameter);
-                if (id == null)
-                {
-                    return false;
-                }
-
-                skill.Id = id;
+                skill.Id = result.Id;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }

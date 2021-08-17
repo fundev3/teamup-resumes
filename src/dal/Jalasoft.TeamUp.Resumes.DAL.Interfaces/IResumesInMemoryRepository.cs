@@ -6,5 +6,8 @@
 
     public interface IResumesInMemoryRepository : IRepository<Resume>
     {
+        IEnumerable<Skill> AddSkills(Skill[] skills);
+
+        Skill SearchSkill(string emsiId);
     }
 }

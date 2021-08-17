@@ -80,6 +80,22 @@
                 }
             }.ToList();
 
+        private static readonly List<Skill> Skills = new Skill[]
+            {
+                new Skill
+                {
+                    Id = 1,
+                    EmsiId = "1",
+                    Name = "c#"
+                },
+                new Skill
+                {
+                    Id = 2,
+                    EmsiId = "2",
+                    Name = "React"
+                }
+            }.ToList();
+
         public void Delete(int id)
         {
             throw new NotImplementedException();
@@ -111,7 +127,31 @@
 
         public Resume Update(Resume updateObject)
         {
-            throw new NotImplementedException();
+            var resume = Resumes.Find(x => x.Id == updateObject.Id);
+
+            var skills = resume.Skills.ToList();
+            foreach (var skill in updateObject.Skills)
+            {
+                skills.Add(skill);
+            }
+
+            resume.Skills = skills.ToArray();
+            return resume;
+        }
+
+        public IEnumerable<Skill> AddSkills(Skill[] skills)
+        {
+            foreach (var skill in skills)
+            {
+                Skills.Add(skill);
+            }
+
+            return skills;
+        }
+
+        public Skill SearchSkill(string emsiId)
+        {
+            return Skills.Find(x => x.EmsiId == emsiId);
         }
     }
 }
