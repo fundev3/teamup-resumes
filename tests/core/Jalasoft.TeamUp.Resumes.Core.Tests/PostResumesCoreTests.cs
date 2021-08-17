@@ -44,14 +44,14 @@
                     {
                         new Skill
                         {
-                            Id = 9,
+                            Id = "KS120P86XDXZJT3B7KVJ",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 10,
-                            Name = "API"
-                        }
+                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Name = "Javascript"
+                        },
                     },
                 CreationDate = DateTime.Now.AddDays(-10),
                 LastUpdate = DateTime.Now
