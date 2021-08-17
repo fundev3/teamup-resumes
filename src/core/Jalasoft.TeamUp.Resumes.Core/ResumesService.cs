@@ -19,7 +19,7 @@
             this.resumesRepository = resumesRepository;
         }
 
-        public Resume GetResume(Guid id)
+        public Resume GetResume(int id)
         {
             {
                 var resume = this.resumesRepository.GetById(id);
@@ -35,7 +35,6 @@
 
         public Resume PostResumes(Resume resume)
         {
-            resume.Id = Guid.NewGuid();
             ResumeValidator validator = new ResumeValidator();
             validator.ValidateAndThrow(resume);
             var result = this.resumesRepository.Add(resume);
@@ -60,7 +59,7 @@
 
             this.resumesRepository.AddSkills(skillsForAdd);
 
-            return this.resumesRepository.Update(resume.Id, resume);
+            return this.resumesRepository.Update(resume);
         }
     }
 }

@@ -30,7 +30,7 @@
         {
             var request = this.mockHttpContext.Request;
             this.mockResumesService.Setup(service => service.UpdateResume(It.IsAny<Resume>())).Returns(new Resume());
-            var response = this.postResumeSkills.UpdateResume(request, Guid.Parse("FD5BB199-3ED6-4519-BBCE-5FA7A2C40329"));
+            var response = this.postResumeSkills.UpdateResume(request, 1);
             var createdResult = Assert.IsType<OkObjectResult>(response);
         }
     }

@@ -30,7 +30,7 @@
         [OpenApiParameter(name: "idResume", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The resume identifier.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
         public IActionResult UpdateResume(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/resumes/{idResume}/skills")] HttpRequest req, Guid idResume)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/resumes/{idResume}/skills")] HttpRequest req, int idResume)
         {
             try
             {

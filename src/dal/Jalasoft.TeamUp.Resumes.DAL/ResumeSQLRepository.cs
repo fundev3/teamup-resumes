@@ -38,7 +38,7 @@
             return newObject;
         }
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -54,7 +54,7 @@
             return resumes;
         }
 
-        public Resume GetById(Guid id)
+        public Resume GetById(int id)
         {
             var sql = "SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume WHERE Id=@id";
             Resume resume = new Resume();
@@ -69,16 +69,16 @@
             return resume;
         }
 
-        public Resume Update(Guid id, Resume updateObject)
+        public Resume Update(Resume updateObject)
         {
-            var sql = "INSERT INTO ResumeSkill ( ResumeId, SkillId ) VALUES ( @idResume, @idSkill )";
+            var sql = "INSERT INTO ResumeSkill ( IdResume, IdSkill ) VALUES ( @idResume, @idSkill )";
             foreach (var skill in updateObject.Skills)
             {
                 using (IDbConnection db = new SqlConnection(this.connectionString))
                 {
                     db.Open();
                     DynamicParameters parameter = new DynamicParameters();
-                    parameter.Add("@idResume", id, DbType.Guid);
+                    parameter.Add("@idResume", updateObject.Id, DbType.Int32);
                     parameter.Add("@idSkill", skill.Id, DbType.Int32);
                     db.Execute(sql, parameter);
                 }
@@ -89,13 +89,13 @@
 
         public IEnumerable<Skill> AddSkills(IEnumerable<Skill> skills)
         {
-            var sqlSave = "INSERT INTO Skill ( Name )  OUTPUT INSERTED.Id VALUES ( @Name )";
+            var sqlSave = "INSERT INTO Skill ( Name, EmsiId )  OUTPUT INSERTED.Id VALUES ( @Name, @EmsiId )";
             foreach (var skill in skills)
             {
                 using (IDbConnection db = new SqlConnection(this.connectionString))
                 {
                     db.Open();
-                    var idNewSkill = db.QuerySingle<string>(sqlSave, skill);
+                    var idNewSkill = db.QuerySingle<int>(sqlSave, skill);
                     skill.Id = idNewSkill;
                 }
             }

@@ -7,12 +7,12 @@
     {
         public T Add(T newObject);
 
-        public T GetById(Guid id);
+        public T GetById(int id);
 
         public IEnumerable<T> GetAll();
 
-        public T Update(Guid id, T updateObject);
+        public T Update(T updateObject);
 
-        public void Delete(Guid id);
+        public void Delete(int id);
     }
 }

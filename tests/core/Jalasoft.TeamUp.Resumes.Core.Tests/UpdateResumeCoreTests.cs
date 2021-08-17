@@ -28,19 +28,19 @@
             {
                 new Skill
                 {
-                    Id = "123",
+                    Id = 1,
                     Name = "c#"
                 },
                 new Skill
                 {
-                    Id = "124",
+                    Id = 1,
                     Name = "devopsTest"
                 }
             };
 
             var resume = new Resume()
             {
-                Id = Guid.Parse("D906C800-BFCD-4637-A8D6-518ACCF47D87"),
+                Id = 1,
                 Skills = stubSkill
             };
 
@@ -50,7 +50,7 @@
         [Fact]
         public void PostResumes_Returns_Resume()
         {
-            this.mockResumeRepository.Setup(repository => repository.Update(It.IsAny<Guid>(), It.IsAny<Resume>())).Returns(UpdateResumeCoreTests.GetResume());
+            this.mockResumeRepository.Setup(repository => repository.Update(It.IsAny<Resume>())).Returns(UpdateResumeCoreTests.GetResume());
             var result = this.resumesService.UpdateResume(UpdateResumeCoreTests.GetResume());
             Assert.IsType<Resume>(result);
             Assert.IsType<Skill[]>(result.Skills);

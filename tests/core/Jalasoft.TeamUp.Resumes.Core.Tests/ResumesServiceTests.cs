@@ -26,7 +26,7 @@
             {
                 new Resume()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 3,
                     Title = "Guido Castro",
                     Contact = new Contact
                     {
@@ -60,7 +60,7 @@
                 },
                 new Resume()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 4,
                     Title = "Marcelo Ruiz",
                     Contact = new Contact
                     {
@@ -82,12 +82,12 @@
                     {
                         new Skill
                         {
-                            // Id = "11111111-09c6-4281-894a-5e7a4acc38eb",
+                            Id = 1,
                             Name = "Figma"
                         },
                         new Skill
                         {
-                            // Id = "22222222-abc1-47da-b383-d0e05ca57d4d",
+                            Id = 2,
                             Name = "HTML"
                         },
                     }
@@ -127,11 +127,11 @@
         public void GetResume_ValidId_SingleResume()
         {
             // Arrange
-            var stubResume = new Resume { Id = Guid.NewGuid() };
-            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Returns(stubResume);
+            var stubResume = new Resume { Id = 1 };
+            this.mockRepository.Setup(repository => repository.GetById(1)).Returns(stubResume);
 
             // Act
-            var result = this.resumesService.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"));
+            var result = this.resumesService.GetResume(1);
 
             // Assert
             Assert.NotNull(result);
@@ -143,10 +143,10 @@
             Resume resp = null;
 
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df"))).Returns(resp);
+            this.mockRepository.Setup(repository => repository.GetById(81)).Returns(resp);
 
             // Assert
-            Assert.Null(this.resumesService.GetResume(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df")));
+            Assert.Null(this.resumesService.GetResume(81));
         }
     }
 }

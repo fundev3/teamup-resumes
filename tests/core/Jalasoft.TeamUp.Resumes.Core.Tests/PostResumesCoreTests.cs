@@ -23,7 +23,7 @@
         {
             var stubResume = new Resume
             {
-                Id = new Guid("dd05d77a-ca64-401a-be39-8e1ea84e2f83"),
+                Id = 1,
                 Title = "My Custom Title",
                 PersonalInformation = new Person
                 {
@@ -43,12 +43,12 @@
                     {
                         new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
+                            Id = 1,
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
+                            Id = 2,
                             Name = "API"
                         }
                     },
@@ -66,7 +66,7 @@
         {
             var stubResume = new Resume()
             {
-                Id = Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"),
+                Id = 2,
                 Title = string.Empty,
                 PersonalInformation = new Person()
                 {
@@ -86,12 +86,12 @@
                     {
                         new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
+                            Id = 1,
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
+                            Id = 2,
                             Name = "API"
                         }
                     },

@@ -14,23 +14,25 @@
         public SkillValidator()
         {
             this.connectionString = Environment.GetEnvironmentVariable("SQLConnetionString", EnvironmentVariableTarget.Process);
-            this.RuleFor(x => x.Name)
+            this.RuleFor(x => x)
                 .Must(this.FoundSkill).WithErrorCode("Skill not found.");
         }
 
-        private bool FoundSkill(string name)
+        private bool FoundSkill(Skill skill)
         {
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                var sql = "SELECT Id FROM Skill WHERE Name=@name";
+                var sql = "SELECT Id FROM Skill WHERE EmsiId=@emsiId";
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
-                parameter.Add("@name", name, DbType.String);
+                parameter.Add("@emsiId", skill.EmsiId, DbType.String);
                 var id = db.QuerySingleOrDefault(sql, parameter);
                 if (id == null)
                 {
                     return false;
                 }
+
+                skill.Id = id;
             }
 
             return true;
