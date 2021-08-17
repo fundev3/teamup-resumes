@@ -1,6 +1,6 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Models
 {
-    public class Skill
+    internal class Data
     {
         public string Id { get; set; }
 

@@ -1,11 +1,11 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
+    using Jalasoft.TeamUp.Resumes.ResumesException;
 
     public class SkillsService : ISkillsService
     {
@@ -18,7 +18,8 @@
 
         public Skill[] GetSkills(string name)
         {
-            return this.skillsRepository.GetSkills(name).ToArray();
+            var skills = this.skillsRepository.GetSkills(name);
+            return skills.ToArray();
         }
     }
 }

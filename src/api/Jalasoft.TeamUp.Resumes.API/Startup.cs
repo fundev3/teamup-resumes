@@ -25,7 +25,7 @@ namespace Jalasoft.TeamUp.Resumes.API
             builder.Services.AddScoped<IRepository<Resume>, ResumesInMemoryRepository>();
             #endif
             builder.Services.AddScoped<ISkillsService, SkillsService>();
-            builder.Services.AddScoped<ISkillsRepository, SkillsInMemoryRepository>();
+            builder.Services.AddScoped<ISkillsRepository, SkillsApiRepository>();
         }
     }
 }
