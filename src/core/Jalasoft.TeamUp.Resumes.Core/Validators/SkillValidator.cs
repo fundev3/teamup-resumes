@@ -17,10 +17,9 @@
 
         private bool FoundSkill(Skill skill)
         {
-            var result = this.resumesRepository.SearchSkill(skill.EmsiId);
+            var result = this.resumesRepository.SearchSkill(skill.Id);
             if (result != null)
             {
-                skill.Id = result.Id;
                 return true;
             }
 

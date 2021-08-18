@@ -12,17 +12,17 @@
             {
                 new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = ".NET Core",
                         },
                 new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "C#",
                         },
                 new Skill
                         {
-                            Id = 3,
+                            Id = "3",
                             Name = ".NET Framework",
                         }
             };

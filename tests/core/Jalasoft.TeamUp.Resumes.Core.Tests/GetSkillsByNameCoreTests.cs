@@ -28,17 +28,17 @@
             {
                 new Skill
                 {
-                    Id = 1,
+                    Id = "1",
                     Name = ".NET Framework"
                 },
                 new Skill
                 {
-                    Id = 2,
+                    Id = "2",
                     Name = "Cisco Networking"
                 },
                 new Skill
                 {
-                    Id = 3,
+                    Id = "3",
                     Name = "Visual Basic .NET (Programming Language)"
                 },
             };

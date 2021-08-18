@@ -32,12 +32,12 @@
                     {
                         new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "API"
                         }
                     },
@@ -66,12 +66,12 @@
                     {
                         new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "API"
                         }
                     },
@@ -84,14 +84,12 @@
             {
                 new Skill
                 {
-                    Id = 1,
-                    EmsiId = "1",
+                    Id = "1",
                     Name = "c#"
                 },
                 new Skill
                 {
-                    Id = 2,
-                    EmsiId = "2",
+                    Id = "2",
                     Name = "React"
                 }
             }.ToList();
@@ -154,9 +152,9 @@
             return skills;
         }
 
-        public Skill SearchSkill(string emsiId)
+        public Skill SearchSkill(string id)
         {
-            return Skills.Find(x => x.EmsiId == emsiId);
+            return Skills.Find(x => x.Id == id);
         }
     }
 }

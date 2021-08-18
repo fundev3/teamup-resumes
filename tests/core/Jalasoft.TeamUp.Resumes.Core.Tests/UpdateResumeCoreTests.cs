@@ -24,12 +24,12 @@
             {
                 new Skill
                 {
-                    Id = 1,
+                    Id = "1",
                     Name = "c#"
                 },
                 new Skill
                 {
-                    Id = 1,
+                    Id = "2",
                     Name = "devopsTest"
                 }
             };

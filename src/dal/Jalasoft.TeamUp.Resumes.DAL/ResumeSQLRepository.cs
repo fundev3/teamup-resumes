@@ -79,7 +79,7 @@
                     db.Open();
                     DynamicParameters parameter = new DynamicParameters();
                     parameter.Add("@idResume", updateObject.Id, DbType.Int32);
-                    parameter.Add("@idSkill", skill.Id, DbType.Int32);
+                    parameter.Add("@idSkill", skill.Id, DbType.AnsiString);
                     db.Execute(sql, parameter);
                 }
             }
@@ -89,31 +89,31 @@
 
         public IEnumerable<Skill> AddSkills(Skill[] skills)
         {
-            var sql = "INSERT INTO Skill ( Name, EmsiId )  OUTPUT INSERTED.Id VALUES ( @name, @emsiId )";
+            var sql = "INSERT INTO Skill ( Id, Name )  OUTPUT INSERTED.Id VALUES ( @id, @name )";
             foreach (var skill in skills)
             {
                 using (IDbConnection db = new SqlConnection(this.connectionString))
                 {
                     db.Open();
                     DynamicParameters parameter = new DynamicParameters();
+                    parameter.Add("@id", skill.Id, DbType.AnsiString);
                     parameter.Add("@name", skill.Name, DbType.AnsiString);
-                    parameter.Add("@emsiId", skill.EmsiId, DbType.AnsiString);
-                    skill.Id = db.QuerySingle<int>(sql, parameter);
+                    db.Execute(sql, parameter);
                 }
             }
 
             return skills;
         }
 
-        public Skill SearchSkill(string emsiId)
+        public Skill SearchSkill(string id)
         {
             var skill = new Skill();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                var sql = "SELECT Id, EmsiId, Name FROM Skill WHERE EmsiId=@emsiId";
+                var sql = "SELECT Id, Name FROM Skill WHERE Id=@id";
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
-                parameter.Add("@emsiId", emsiId, DbType.AnsiString);
+                parameter.Add("@id", id, DbType.AnsiString);
                 skill = db.QuerySingleOrDefault<Skill>(sql, parameter);
             }
 
