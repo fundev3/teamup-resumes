@@ -51,7 +51,7 @@
                 {
                     skillValidator.ValidateAndThrow(skill);
                 }
-                catch (ValidationException e)
+                catch (ValidationException)
                 {
                     skillsForAdd.Add(skill);
                 }

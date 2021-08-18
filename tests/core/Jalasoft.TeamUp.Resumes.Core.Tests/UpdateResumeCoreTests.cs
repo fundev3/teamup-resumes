@@ -1,9 +1,6 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Tests
 {
-    using System;
-    using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Core;
-    using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Moq;
@@ -47,12 +44,21 @@
         }
 
         [Fact]
-        public void UpdateResume_Returns_Resume()
+        public void UpdateResume_ExistentId_Resume()
         {
             this.mockResumeRepository.Setup(repository => repository.Update(It.IsAny<Resume>())).Returns(UpdateResumeCoreTests.GetResume());
             var result = this.resumesService.UpdateResume(UpdateResumeCoreTests.GetResume());
             Assert.IsType<Resume>(result);
             Assert.IsType<Skill[]>(result.Skills);
+        }
+
+        [Fact]
+        public void UpdateResume_UnexistentId_Null()
+        {
+            Resume resume = null;
+            this.mockResumeRepository.Setup(repository => repository.Update(It.IsAny<Resume>())).Returns(resume);
+            var result = this.resumesService.UpdateResume(UpdateResumeCoreTests.GetResume());
+            Assert.Null(result);
         }
     }
 }

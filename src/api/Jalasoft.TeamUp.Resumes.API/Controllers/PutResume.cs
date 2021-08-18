@@ -38,6 +38,12 @@
                 var skills = JsonConvert.DeserializeObject<Skill[]>(requestBody);
 
                 var updateResume = this.resumesService.UpdateResume(new Resume() { Id = idResume, Skills = skills });
+
+                if (updateResume == null)
+                {
+                    return new ResumesException(ResumesErrors.NotFound).Error;
+                }
+
                 return new OkObjectResult(updateResume);
             }
             catch (Exception e)

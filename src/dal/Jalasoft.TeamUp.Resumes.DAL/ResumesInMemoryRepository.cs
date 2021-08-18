@@ -129,6 +129,11 @@
         {
             var resume = Resumes.Find(x => x.Id == updateObject.Id);
 
+            if (resume == null)
+            {
+                return resume;
+            }
+
             var skills = resume.Skills.ToList();
             foreach (var skill in updateObject.Skills)
             {
