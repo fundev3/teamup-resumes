@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Jalasoft.TeamUp.Resumes.Models;
 
     public interface IRepository<T>
     {
@@ -14,5 +15,7 @@
         public void Update(int id, T updateObject);
 
         public void Delete(int id);
+
+        public IEnumerable<Resume> GetByName(string name);
     }
 }

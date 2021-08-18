@@ -38,5 +38,11 @@
             var result = this.resumesRepository.Add(resume);
             return result;
         }
+
+        public Resume[] GetByName(string name)
+        {
+            var resumes = this.resumesRepository.GetByName(name);
+            return resumes.ToArray();
+        }
     }
 }

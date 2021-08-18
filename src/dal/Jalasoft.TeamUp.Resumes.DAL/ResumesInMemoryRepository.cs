@@ -113,5 +113,10 @@
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Resume> GetByName(string name)
+        {
+            return Resumes;
+        }
     }
 }

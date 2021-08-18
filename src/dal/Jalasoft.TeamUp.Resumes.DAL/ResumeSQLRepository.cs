@@ -97,5 +97,18 @@
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Resume> GetByName(string name)
+        {
+            List<Resume> resumes = new List<Resume>();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Resumes_Get_By_Name";
+                var values = new { Title = name };
+                resumes = db.Query<Resume>(sp, values, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return resumes;
+        }
     }
 }
