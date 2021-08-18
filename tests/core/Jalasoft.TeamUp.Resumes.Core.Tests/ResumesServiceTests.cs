@@ -26,17 +26,17 @@
             {
                 new Resume()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 1,
                     Title = "Guido Castro",
                     Contact = new Contact
                     {
-                        Direction = "15 street",
+                        Address = "15 street",
                         Email = "guido.castro@fundacion-jala.org",
                         Phone = 123456789,
                     },
                     CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Guido",
                         LastName = "Castro",
@@ -44,33 +44,33 @@
                         Picture = "picture.jpg"
                     },
                     Summary = "I'm a great developer :-D",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Id = 1,
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Id = 2,
                             Name = "Javascript"
                         },
                     }
                 },
                 new Resume()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 2,
                     Title = "Marcelo Ruiz",
                     Contact = new Contact
                     {
-                        Direction = "16 street",
+                        Address = "16 street",
                         Email = "marcelo.ruiz@fundacion-jala.org",
                         Phone = 123456789,
                     },
                     CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Marcelo",
                         LastName = "Ruiz",
@@ -78,16 +78,16 @@
                         Picture = "picture.jpg"
                     },
                     Summary = "I'm a great ux :-D",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Id = 1,
                             Name = "Figma"
                         },
                         new Skill
                         {
-                            Id = "KS120P86XDXZJT3B7KVJ",
+                            Id = 2,
                             Name = "HTML"
                         },
                     }
@@ -127,11 +127,11 @@
         public void GetResume_ValidId_SingleResume()
         {
             // Arrange
-            var stubResume = new Resume { Id = Guid.NewGuid() };
-            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Returns(stubResume);
+            var stubResume = new Resume { Id = 1 };
+            this.mockRepository.Setup(repository => repository.GetById(1)).Returns(stubResume);
 
             // Act
-            var result = this.resumesService.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"));
+            var result = this.resumesService.GetResume(1);
 
             // Assert
             Assert.NotNull(result);
@@ -143,10 +143,10 @@
             Resume resp = null;
 
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetById(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df"))).Returns(resp);
+            this.mockRepository.Setup(repository => repository.GetById(1)).Returns(resp);
 
             // Assert
-            Assert.Null(this.resumesService.GetResume(Guid.Parse("4a7939fd-59de-44bd-a092-f5d8434584df")));
+            Assert.Null(this.resumesService.GetResume(1));
         }
     }
 }

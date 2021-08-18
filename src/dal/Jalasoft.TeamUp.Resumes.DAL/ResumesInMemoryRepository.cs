@@ -12,9 +12,9 @@
             {
                 new Resume
                 {
-                    Id = new Guid("dd05d77a-ca64-401a-be39-8e1ea84e2f83"),
+                    Id = 1,
                     Title = "My Custom Title",
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Rodrigo",
                         LastName = "Baldivieso",
@@ -23,21 +23,21 @@
                     },
                     Contact = new Contact
                     {
-                        Direction = "Tarija Av.",
+                        Address = "Tarija Av.",
                         Email = "rodrigo.baldivieso@fundacion-jala.org",
                         Phone = 77669911
                     },
                     Summary = "Rodrigo's summary",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
+                            Id = 1,
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
+                            Id = 2,
                             Name = "API"
                         }
                     },
@@ -46,9 +46,9 @@
                 },
                 new Resume
                 {
-                    Id = new Guid("40b3f7e3-eaba-4b0f-bbef-5f5882af3ced"),
+                    Id = 2,
                     Title = "My Custom Title",
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Paola",
                         LastName = "Quintanilla",
@@ -57,21 +57,21 @@
                     },
                     Contact = new Contact
                     {
-                        Direction = "Cochabamba Av.",
+                        Address = "Cochabamba Av.",
                         Email = "paola.quintanilla@fundacion-jala.org",
                         Phone = 77669911
                     },
                     Summary = "Paola's summary",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
-                            Id = "184bf2b8-abc1-47da-b383-d0e05ca57d4d",
+                            Id = 3,
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = "0947a444-09c6-4281-894a-5e7a4acc38eb",
+                            Id = 4,
                             Name = "API"
                         }
                     },
@@ -80,7 +80,7 @@
                 }
             }.ToList();
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -90,7 +90,7 @@
             return Resumes;
         }
 
-        public Resume GetById(Guid id)
+        public Resume GetById(int id)
         {
             foreach (Resume item in Resumes)
             {
@@ -109,7 +109,7 @@
             return resume;
         }
 
-        public void Update(Guid id, Resume updateObject)
+        public void Update(int id, Resume updateObject)
         {
             throw new NotImplementedException();
         }

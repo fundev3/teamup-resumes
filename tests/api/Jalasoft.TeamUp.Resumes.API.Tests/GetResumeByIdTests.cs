@@ -31,10 +31,10 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Returns(new Resume());
+            this.mockService.Setup(service => service.GetResume(1)).Returns(new Resume());
 
             // Act
-            var response = this.getResume.Run(request, new Guid("5a7939fd-59de-44bd-a092-f5d8434584de"));
+            var response = this.getResume.Run(request, 1);
 
             // Assert
             var okObjectResult = Assert.IsType<OkObjectResult>(response);
@@ -44,12 +44,14 @@
         [Fact]
         public void GetResume_InvalidResume_NotFound()
         {
+            ResumesException resumesException = new ResumesException(ResumesErrors.NotFound, new Exception());
+
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetResume(Guid.Parse("5a7939fd-59de-44bd-a092-f5d8434584de"))).Throws(new ResumesException(ResumesErrors.NotFound));
+            this.mockService.Setup(service => service.GetResume(2)).Throws(resumesException);
 
             // Act
-            var response = this.getResume.Run(request, new Guid("5a7939fd-59de-44bd-a092-f5d8434584de"));
+            var response = this.getResume.Run(request, 1);
 
             // Assert
             var notFoundObjectResult = Assert.IsType<ObjectResult>(response);

@@ -8,21 +8,24 @@
 
     public class SkillsInMemoryRepository : ISkillsRepository
     {
-        private static readonly Skill[] Skills = new Skill[]
+        private static readonly List<Skill> Skills = new List<Skill>
             {
                 new Skill
                         {
-                            Id = "KS1200B62W5ZF38RJ7TD",
+                            Id = 1,
+                            EmsiId = "KS120P86XDXZJT3B7KVJ",
                             Name = ".NET Framework"
                         },
                 new Skill
                         {
-                            Id = "ESA0523F4BCB6FF01890",
+                            Id = 2,
+                            EmsiId = "KS122P86XDXZJT3B7KVJ",
                             Name = "Cisco Networking"
                         },
                 new Skill
                         {
-                            Id = "KS126JW72Q0ST3JKR5K0",
+                            Id = 3,
+                            EmsiId = "KS121P86XDXZJT3B7KVJ",
                             Name = "Visual Basic .NET (Programming Language)"
                         },
             };

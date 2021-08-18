@@ -5,7 +5,7 @@
 
     public interface IResumesService
     {
-        public Resume GetResume(Guid id);
+        public Resume GetResume(int id);
 
         Resume[] GetResumes();
 

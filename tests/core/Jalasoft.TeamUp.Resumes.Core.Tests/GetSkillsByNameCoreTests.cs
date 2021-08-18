@@ -28,17 +28,17 @@
             {
                 new Skill
                 {
-                    Id = "KS1200B62W5ZF38RJ7TD",
+                    Id = 1,
                     Name = ".NET Framework"
                 },
                 new Skill
                 {
-                    Id = "ESA0523F4BCB6FF01890",
+                    Id = 2,
                     Name = "Cisco Networking"
                 },
                 new Skill
                 {
-                    Id = "KS126JW72Q0ST3JKR5K0",
+                    Id = 3,
                     Name = "Visual Basic .NET (Programming Language)"
                 },
             };
