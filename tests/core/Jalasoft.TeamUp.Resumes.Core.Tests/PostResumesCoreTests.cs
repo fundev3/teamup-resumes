@@ -49,7 +49,7 @@
                         new Skill
                         {
                             Id = 2,
-                            Name = "API"
+                            Name = "Javascript"
                         }
                     },
                 CreationDate = DateTime.Now.AddDays(-10),
