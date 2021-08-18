@@ -6,9 +6,9 @@
 
     public class SkillValidator : AbstractValidator<Skill>
     {
-        private readonly IResumesInMemoryRepository resumesRepository;
+        private readonly IResumesRepository resumesRepository;
 
-        public SkillValidator(IResumesInMemoryRepository resumesRepository)
+        public SkillValidator(IResumesRepository resumesRepository)
         {
             this.resumesRepository = resumesRepository;
             this.RuleFor(x => x)

@@ -12,9 +12,9 @@
 
     public class ResumesService : IResumesService
     {
-        private readonly IResumesInMemoryRepository resumesRepository;
+        private readonly IResumesRepository resumesRepository;
 
-        public ResumesService(IResumesInMemoryRepository resumesRepository)
+        public ResumesService(IResumesRepository resumesRepository)
         {
             this.resumesRepository = resumesRepository;
         }

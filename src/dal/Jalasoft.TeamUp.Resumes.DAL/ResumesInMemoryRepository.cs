@@ -6,7 +6,7 @@
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public class ResumesInMemoryRepository : IResumesInMemoryRepository
+    public class ResumesInMemoryRepository : IResumesRepository
     {
         private static readonly List<Resume> Resumes = new Resume[]
             {

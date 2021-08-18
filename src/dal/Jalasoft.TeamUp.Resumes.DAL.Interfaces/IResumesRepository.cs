@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public interface IResumesInMemoryRepository : IRepository<Resume>
+    public interface IResumesRepository : IRepository<Resume>
     {
         IEnumerable<Skill> AddSkills(Skill[] skills);
 
