@@ -10,7 +10,5 @@
         public string Name { get; set; }
 
         public string EmsiId { get; set; }
-
-        public List<Resume> Resumes { get; set; }
     }
 }
