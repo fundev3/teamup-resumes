@@ -10,8 +10,9 @@
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Microsoft.Extensions.Configuration;
+    using Z.Dapper.Plus;
 
-    public class ResumeSQLRepository : IResumeSQLRepository
+    public class ResumeSQLRepository : IResumesRepository
     {
         private string connectionString;
 
@@ -118,9 +119,24 @@
             return resume[0];
         }
 
-        public void Update(int id, Resume updateObject)
+        public Resume Update(Resume updateObject)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
+        {
+            var storeProcedure = "Resume_Skill_Update";
+            var createTempTable = "CREATE TABLE #SkillTemp(Id INT, Name Varchar(20))";
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                db.Execute(createTempTable);
+                DapperPlusManager.Entity<Skill>().Table("#SkillTemp");
+                db.BulkInsert(skills);
+                db.Query(storeProcedure, commandType: CommandType.StoredProcedure);
+            }
+
+            return skills;
         }
     }
 }

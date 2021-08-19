@@ -12,22 +12,19 @@
             {
                 new Skill
                         {
-                            Id = 1,
-                            EmsiId = "KS120P86XDXZJT3B7KVJ",
-                            Name = ".NET Framework"
+                            Id = "1",
+                            Name = ".NET Core",
                         },
                 new Skill
                         {
-                            Id = 2,
-                            EmsiId = "KS122P86XDXZJT3B7KVJ",
-                            Name = "Cisco Networking"
+                            Id = "2",
+                            Name = "C#",
                         },
                 new Skill
                         {
-                            Id = 3,
-                            EmsiId = "KS121P86XDXZJT3B7KVJ",
-                            Name = "Visual Basic .NET (Programming Language)"
-                        },
+                            Id = "3",
+                            Name = ".NET Framework",
+                        }
             };
 
         public IEnumerable<Skill> GetSkills(string name)

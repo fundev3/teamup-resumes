@@ -6,7 +6,7 @@
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public class ResumesInMemoryRepository : IResumesInMemoryRepository
+    public class ResumesInMemoryRepository : IResumesRepository
     {
         private static readonly List<Resume> Resumes = new Resume[]
             {
@@ -32,12 +32,12 @@
                     {
                         new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "API"
                         }
                     },
@@ -66,17 +66,31 @@
                     {
                         new Skill
                         {
-                            Id = 3,
+                            Id = "1",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 4,
+                            Id = "2",
                             Name = "API"
                         }
                     },
                     CreationDate = DateTime.Now.AddDays(-10),
                     LastUpdate = DateTime.Now
+                }
+            }.ToList();
+
+        private static readonly List<Skill> Skills = new Skill[]
+            {
+                new Skill
+                {
+                    Id = "1",
+                    Name = "c#"
+                },
+                new Skill
+                {
+                    Id = "2",
+                    Name = "React"
                 }
             }.ToList();
 
@@ -109,7 +123,26 @@
             return resume;
         }
 
-        public void Update(int id, Resume updateObject)
+        public Resume Update(Resume updateObject)
+        {
+            var resume = Resumes.Find(x => x.Id == updateObject.Id);
+
+            if (resume == null)
+            {
+                return resume;
+            }
+
+            var skills = resume.Skills.ToList();
+            foreach (var skill in updateObject.Skills)
+            {
+                skills.Add(skill);
+            }
+
+            resume.Skills = skills;
+            return resume;
+        }
+
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
             throw new NotImplementedException();
         }

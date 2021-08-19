@@ -4,7 +4,8 @@
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public interface IResumeSQLRepository : IRepository<Resume>
+    public interface IResumesRepository : IRepository<Resume>
     {
+        IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills);
     }
 }

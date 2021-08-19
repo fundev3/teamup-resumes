@@ -11,11 +11,11 @@
     public class PostResumesCoreTests
     {
         private readonly ResumesService resumeService;
-        private readonly Mock<IRepository<Resume>> mockRepository;
+        private readonly Mock<IResumesRepository> mockRepository;
 
         public PostResumesCoreTests()
         {
-            this.mockRepository = new Mock<IRepository<Resume>>();
+            this.mockRepository = new Mock<IResumesRepository>();
             this.resumeService = new ResumesService(this.mockRepository.Object);
         }
 
@@ -44,14 +44,14 @@
                     {
                         new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "Javascript"
-                        },
+                        }
                     },
                 CreationDate = DateTime.Now.AddDays(-10),
                 LastUpdate = DateTime.Now
@@ -87,12 +87,12 @@
                     {
                         new Skill
                         {
-                            Id = 2,
+                            Id = "1",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 3,
+                            Id = "2",
                             Name = "API"
                         }
                     },
