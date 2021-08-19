@@ -23,11 +23,11 @@
 
         [FunctionName("GetResumeById")]
         [OpenApiOperation(operationId: "GetResumeById", tags: new[] { "Resumes" })]
-        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The resume identifier.")]
+        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The resume identifier.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes/{id:guid}")] HttpRequest req, int id)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes/{id:int}")] HttpRequest req, int id)
         {
             try
             {
