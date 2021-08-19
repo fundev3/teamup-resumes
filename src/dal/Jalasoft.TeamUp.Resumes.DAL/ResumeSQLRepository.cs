@@ -50,7 +50,7 @@
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 string sql = "SELECT resume.Id, resume.Title, resume.Sumary, resume.CreationDate, resume.LastUpdate, resume.IdPerson, resume.IdContact, " +
-                    "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email, " +
+                    "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture, contact.Id, contact.Address, contact.Email, " +
                     "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.EmsiId, skill.Name " +
                     "FROM Resume resume " +
                     "INNER JOIN Person person ON resume.IdPerson = person.Id " +
@@ -80,17 +80,42 @@
 
         public Resume GetById(int id)
         {
-            var sql = "SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume WHERE Id=@id";
-            Resume resume = new Resume();
+            List<Resume> resume = new List<Resume>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
+                var sql = "SELECT res.Id, res.Title, res.Sumary, res.CreationDate, res.LastUpdate, res.IdPerson, res.IdContact," +
+                        "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email," +
+                        "contact.Phone, resSkill.IdSkill, resSkill.Idresume, skill.Id, skill.EmsiId, skill.Name " +
+                        "FROM resume res " +
+                        "INNER JOIN Person person ON res.IdPerson = person.Id " +
+                        "INNER JOIN Contact contact ON res.IdContact = contact.Id " +
+                        "INNER JOIN resume_Skill resSkill ON res.Id = resSkill.Idresume " +
+                        "INNER JOIN Skill skill ON resSkill.IdSkill = skill.Id " +
+                        "WHERE res.Id = 3";
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
                 parameter.Add("@id", id, DbType.Int32);
-                resume = db.QuerySingle(sql, parameter);
+                var parameters = new { id = 6 };
+                var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(
+                    sql,
+                    (resume, person, contact, skill) =>
+                    {
+                        resume.Person = person;
+                        resume.Contact = contact;
+                        resume.Skills = new List<Skill>();
+                        resume.Skills.Add(skill);
+                        return resume;
+                    }, parameters);
+
+                resume = resumesAux.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedResume = g.First();
+                    groupedResume.Skills = g.Select(p => p.Skills.Single()).ToList();
+                    return groupedResume;
+                }).ToList();
             }
 
-            return resume;
+            return resume[0];
         }
 
         public void Update(int id, Resume updateObject)
