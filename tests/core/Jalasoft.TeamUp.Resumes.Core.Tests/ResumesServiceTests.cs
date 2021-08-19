@@ -26,17 +26,17 @@
             {
                 new Resume()
                 {
-                    Id = 3,
+                    Id = 1,
                     Title = "Guido Castro",
                     Contact = new Contact
                     {
-                        Direction = "15 street",
+                        Address = "15 street",
                         Email = "guido.castro@fundacion-jala.org",
                         Phone = 123456789,
                     },
                     CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Guido",
                         LastName = "Castro",
@@ -44,7 +44,7 @@
                         Picture = "picture.jpg"
                     },
                     Summary = "I'm a great developer :-D",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
@@ -60,17 +60,17 @@
                 },
                 new Resume()
                 {
-                    Id = 4,
+                    Id = 2,
                     Title = "Marcelo Ruiz",
                     Contact = new Contact
                     {
-                        Direction = "16 street",
+                        Address = "16 street",
                         Email = "marcelo.ruiz@fundacion-jala.org",
                         Phone = 123456789,
                     },
                     CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Marcelo",
                         LastName = "Ruiz",
@@ -78,7 +78,7 @@
                         Picture = "picture.jpg"
                     },
                     Summary = "I'm a great ux :-D",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
@@ -143,10 +143,10 @@
             Resume resp = null;
 
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetById(81)).Returns(resp);
+            this.mockRepository.Setup(repository => repository.GetById(1)).Returns(resp);
 
             // Assert
-            Assert.Null(this.resumesService.GetResume(81));
+            Assert.Null(this.resumesService.GetResume(1));
         }
     }
 }

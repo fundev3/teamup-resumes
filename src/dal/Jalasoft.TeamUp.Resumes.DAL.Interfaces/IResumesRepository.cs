@@ -6,8 +6,6 @@
 
     public interface IResumesRepository : IRepository<Resume>
     {
-        IEnumerable<Skill> AddSkills(Skill[] skills);
-
-        Skill SearchSkill(string emsiId);
+        IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills);
     }
 }

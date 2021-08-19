@@ -8,7 +8,7 @@
 
     public class SkillsInMemoryRepository : ISkillsRepository
     {
-        private static readonly Skill[] Skills = new Skill[]
+        private static readonly List<Skill> Skills = new List<Skill>
             {
                 new Skill
                         {

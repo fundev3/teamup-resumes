@@ -1,10 +1,8 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FluentValidation;
-    using FluentValidation.Results;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Core.Validators;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
@@ -41,25 +39,13 @@
             return result;
         }
 
-        public Resume UpdateResume(Resume resume)
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
-            SkillValidator skillValidator = new SkillValidator(this.resumesRepository);
-            var skillsForAdd = new List<Skill>();
-            foreach (var skill in resume.Skills)
-            {
-                try
-                {
-                    skillValidator.ValidateAndThrow(skill);
-                }
-                catch (ValidationException)
-                {
-                    skillsForAdd.Add(skill);
-                }
-            }
+            var skillValidator = new SkillValidator();
 
-            this.resumesRepository.AddSkills(skillsForAdd.ToArray());
+            skillValidator.ValidateAndThrow(skills);
 
-            return this.resumesRepository.Update(resume);
+            return this.resumesRepository.UpdateResumeSkill(idResume, skills).ToList();
         }
     }
 }

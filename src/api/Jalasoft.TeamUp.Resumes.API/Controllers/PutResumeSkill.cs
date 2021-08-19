@@ -15,17 +15,17 @@
     using Microsoft.OpenApi.Models;
     using Newtonsoft.Json;
 
-    public class PutResume
+    public class PutResumeSkill
     {
         private readonly IResumesService resumesService;
 
-        public PutResume(IResumesService resumesService)
+        public PutResumeSkill(IResumesService resumesService)
         {
             this.resumesService = resumesService;
         }
 
-        [FunctionName("UpdateResume")]
-        [OpenApiOperation(operationId: "UpdateResume", tags: new[] { "Resumes" })]
+        [FunctionName("UpdateResumeSkill")]
+        [OpenApiOperation(operationId: "UpdateResumeSkill", tags: new[] { "ResumeSkills" })]
         [OpenApiRequestBody("application/json", typeof(List<Skill>), Description = "JSON request body containing list of skills")]
         [OpenApiParameter(name: "idResume", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The resume identifier.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
@@ -37,7 +37,7 @@
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
                 var skills = JsonConvert.DeserializeObject<Skill[]>(requestBody);
 
-                var updateResume = this.resumesService.UpdateResume(new Resume() { Id = idResume, Skills = skills });
+                var updateResume = this.resumesService.UpdateResumeSkill(idResume, skills);
 
                 if (updateResume == null)
                 {

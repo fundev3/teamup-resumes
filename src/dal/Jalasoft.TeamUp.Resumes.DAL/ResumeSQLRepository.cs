@@ -10,6 +10,7 @@
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Microsoft.Extensions.Configuration;
+    using Z.Dapper.Plus;
 
     public class ResumeSQLRepository : IResumesRepository
     {
@@ -27,6 +28,7 @@
             {
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
+
                 parameter.Add("@id", newObject.Id, DbType.Int32);
                 parameter.Add("@title", newObject.Title, DbType.AnsiString, ParameterDirection.Input, 30);
                 parameter.Add("@summary", newObject.Summary, DbType.AnsiString, ParameterDirection.Input, 150);
@@ -45,10 +47,33 @@
 
         public IEnumerable<Resume> GetAll()
         {
-            IEnumerable<Resume> resumes = new List<Resume>();
+            IEnumerable<Resume> resumes;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                resumes = db.Query<Resume>("SELECT Id, Title, Sumary, CreationDate, LastUpdate FROM Resume");
+                string sql = "SELECT resume.Id, resume.Title, resume.Sumary, resume.CreationDate, resume.LastUpdate, resume.IdPerson, resume.IdContact, " +
+                    "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email, " +
+                    "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.EmsiId, skill.Name " +
+                    "FROM Resume resume " +
+                    "INNER JOIN Person person ON resume.IdPerson = person.Id " +
+                    "INNER JOIN Contact contact ON resume.IdContact = contact.Id " +
+                    "INNER JOIN Resume_Skill resumeSkill ON resume.Id = resumeSkill.IdResume " +
+                    "INNER JOIN Skill skill ON resumeSkill.IdSkill = skill.Id";
+
+                var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(sql, (resume, person, contact, skill) =>
+                {
+                    resume.Person = person;
+                    resume.Contact = contact;
+                    resume.Skills = new List<Skill>();
+                    resume.Skills.Add(skill);
+                    return resume;
+                });
+
+                resumes = resumesAux.GroupBy(p => p.Id).Select(g =>
+                {
+                    var groupedResume = g.First();
+                    groupedResume.Skills = g.Select(p => p.Skills.Single()).ToList();
+                    return groupedResume;
+                });
             }
 
             return resumes;
@@ -71,53 +96,22 @@
 
         public Resume Update(Resume updateObject)
         {
-            var sql = "INSERT INTO Resume_Skill ( IdResume, IdSkill ) VALUES ( @idResume, @idSkill )";
-            foreach (var skill in updateObject.Skills)
-            {
-                using (IDbConnection db = new SqlConnection(this.connectionString))
-                {
-                    db.Open();
-                    DynamicParameters parameter = new DynamicParameters();
-                    parameter.Add("@idResume", updateObject.Id, DbType.Int32);
-                    parameter.Add("@idSkill", skill.Id, DbType.AnsiString);
-                    db.Execute(sql, parameter);
-                }
-            }
-
-            return updateObject;
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Skill> AddSkills(Skill[] skills)
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
-            var sql = "INSERT INTO Skill ( Id, Name )  OUTPUT INSERTED.Id VALUES ( @id, @name )";
-            foreach (var skill in skills)
+            var storeProcedure = "Resume_Skill_Update";
+            var createTempTable = "CREATE TABLE #SkillTemp(Id INT, Name Varchar(20))";
+            using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                using (IDbConnection db = new SqlConnection(this.connectionString))
-                {
-                    db.Open();
-                    DynamicParameters parameter = new DynamicParameters();
-                    parameter.Add("@id", skill.Id, DbType.AnsiString);
-                    parameter.Add("@name", skill.Name, DbType.AnsiString);
-                    db.Execute(sql, parameter);
-                }
+                db.Execute(createTempTable);
+                DapperPlusManager.Entity<Skill>().Table("#SkillTemp");
+                db.BulkInsert(skills);
+                db.Query(storeProcedure, commandType: CommandType.StoredProcedure);
             }
 
             return skills;
-        }
-
-        public Skill SearchSkill(string id)
-        {
-            var skill = new Skill();
-            using (IDbConnection db = new SqlConnection(this.connectionString))
-            {
-                var sql = "SELECT Id, Name FROM Skill WHERE Id=@id";
-                db.Open();
-                DynamicParameters parameter = new DynamicParameters();
-                parameter.Add("@id", id, DbType.AnsiString);
-                skill = db.QuerySingleOrDefault<Skill>(sql, parameter);
-            }
-
-            return skill;
         }
     }
 }

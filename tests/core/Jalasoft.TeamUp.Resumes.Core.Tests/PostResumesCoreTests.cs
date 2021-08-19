@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.API.Tests
 {
     using System;
+    using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Core;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -25,7 +26,7 @@
             {
                 Id = 1,
                 Title = "My Custom Title",
-                PersonalInformation = new Person
+                Person = new Person
                 {
                     FirstName = "Rodrigo",
                     LastName = "Baldivieso",
@@ -34,12 +35,12 @@
                 },
                 Contact = new Contact
                 {
-                    Direction = "Tarija Av.",
+                    Address = "Tarija Av.",
                     Email = "rodrigo.baldivieso@fundacion-jala.org",
                     Phone = 77669911
                 },
                 Summary = "Rodrigo's summary",
-                Skills = new Skill[]
+                Skills = new List<Skill>()
                     {
                         new Skill
                         {
@@ -66,9 +67,9 @@
         {
             var stubResume = new Resume()
             {
-                Id = 2,
+                Id = 1,
                 Title = string.Empty,
-                PersonalInformation = new Person()
+                Person = new Person()
                 {
                     FirstName = "Juan Jose",
                     LastName = "Jimenez Javier",
@@ -78,11 +79,11 @@
                 Contact = new Contact()
                 {
                     Email = "Jose Ecos",
-                    Direction = "Calle Bolivar y Presidente Montes",
+                    Address = "Calle Bolivar y Presidente Montes",
                     Phone = 75422166
                 },
                 Summary = "Juan Jose Sumary",
-                Skills = new Skill[]
+                Skills = new List<Skill>
                     {
                         new Skill
                         {

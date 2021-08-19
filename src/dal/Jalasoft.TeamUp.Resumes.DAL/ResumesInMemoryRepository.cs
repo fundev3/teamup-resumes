@@ -14,7 +14,7 @@
                 {
                     Id = 1,
                     Title = "My Custom Title",
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Rodrigo",
                         LastName = "Baldivieso",
@@ -23,12 +23,12 @@
                     },
                     Contact = new Contact
                     {
-                        Direction = "Tarija Av.",
+                        Address = "Tarija Av.",
                         Email = "rodrigo.baldivieso@fundacion-jala.org",
                         Phone = 77669911
                     },
                     Summary = "Rodrigo's summary",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
@@ -48,7 +48,7 @@
                 {
                     Id = 2,
                     Title = "My Custom Title",
-                    PersonalInformation = new Person
+                    Person = new Person
                     {
                         FirstName = "Paola",
                         LastName = "Quintanilla",
@@ -57,12 +57,12 @@
                     },
                     Contact = new Contact
                     {
-                        Direction = "Cochabamba Av.",
+                        Address = "Cochabamba Av.",
                         Email = "paola.quintanilla@fundacion-jala.org",
                         Phone = 77669911
                     },
                     Summary = "Paola's summary",
-                    Skills = new Skill[]
+                    Skills = new List<Skill>()
                     {
                         new Skill
                         {
@@ -138,23 +138,13 @@
                 skills.Add(skill);
             }
 
-            resume.Skills = skills.ToArray();
+            resume.Skills = skills;
             return resume;
         }
 
-        public IEnumerable<Skill> AddSkills(Skill[] skills)
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
-            foreach (var skill in skills)
-            {
-                Skills.Add(skill);
-            }
-
-            return skills;
-        }
-
-        public Skill SearchSkill(string id)
-        {
-            return Skills.Find(x => x.Id == id);
+            throw new NotImplementedException();
         }
     }
 }

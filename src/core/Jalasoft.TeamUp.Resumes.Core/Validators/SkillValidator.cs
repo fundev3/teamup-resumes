@@ -1,29 +1,23 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Validators
 {
+    using System.Collections.Generic;
     using FluentValidation;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
 
-    public class SkillValidator : AbstractValidator<Skill>
+    public class SkillValidator : AbstractValidator<Skill[]>
     {
-        private readonly IResumesRepository resumesRepository;
-
-        public SkillValidator(IResumesRepository resumesRepository)
+        public SkillValidator()
         {
-            this.resumesRepository = resumesRepository;
-            this.RuleFor(x => x)
-                .Must(this.FoundSkill).WithErrorCode("Skill not found.");
-        }
-
-        private bool FoundSkill(Skill skill)
-        {
-            var result = this.resumesRepository.SearchSkill(skill.Id);
-            if (result != null)
+            this.RuleForEach(skills => skills).NotNull().ChildRules(orders =>
             {
-                return true;
-            }
-
-            return false;
+                orders.RuleFor(skill => skill.Name).NotNull();
+                orders.RuleFor(skill => skill.Name).NotEmpty();
+                orders.RuleFor(skill => skill.Name).MaximumLength(50);
+                orders.RuleFor(skill => skill.Id).NotNull();
+                orders.RuleFor(skill => skill.Id).NotEmpty();
+                orders.RuleFor(skill => skill.Id).MaximumLength(50);
+            });
         }
     }
 }
