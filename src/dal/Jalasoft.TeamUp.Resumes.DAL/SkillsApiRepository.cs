@@ -21,7 +21,7 @@
             {
                 var skill = new Skill
                 {
-                    EmsiId = data.Id,
+                    Id = data.Id,
                     Name = data.Name
                 };
                 skills.Add(skill);

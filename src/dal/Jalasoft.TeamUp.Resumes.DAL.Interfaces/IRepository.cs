@@ -12,7 +12,7 @@
 
         public IEnumerable<T> GetAll();
 
-        public void Update(int id, T updateObject);
+        public T Update(T updateObject);
 
         public void Delete(int id);
 

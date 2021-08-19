@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core.Interfaces
 {
     using System;
+    using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.Models;
 
     public interface IResumesService
@@ -10,6 +11,8 @@
         Resume[] GetResumes();
 
         Resume PostResumes(Resume resume);
+
+        IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills);
 
         Resume[] GetByName(string name);
     }

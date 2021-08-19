@@ -1,6 +1,6 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
-    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
@@ -10,9 +10,9 @@
 
     public class ResumesService : IResumesService
     {
-        private readonly IRepository<Resume> resumesRepository;
+        private readonly IResumesRepository resumesRepository;
 
-        public ResumesService(IRepository<Resume> resumesRepository)
+        public ResumesService(IResumesRepository resumesRepository)
         {
             this.resumesRepository = resumesRepository;
         }
@@ -37,6 +37,15 @@
             validator.ValidateAndThrow(resume);
             var result = this.resumesRepository.Add(resume);
             return result;
+        }
+
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
+        {
+            var skillValidator = new SkillValidator();
+
+            skillValidator.ValidateAndThrow(skills);
+
+            return this.resumesRepository.UpdateResumeSkill(idResume, skills).ToList();
         }
 
         public Resume[] GetByName(string name)
