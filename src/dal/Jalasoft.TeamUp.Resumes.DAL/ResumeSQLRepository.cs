@@ -96,7 +96,7 @@
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
                 parameter.Add("@id", id, DbType.Int32);
-                var parameters = new { id = 6 };
+                var parameters = new { id = id };
                 var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(
                     sql,
                     (resume, person, contact, skill) =>
