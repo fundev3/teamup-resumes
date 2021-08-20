@@ -47,5 +47,11 @@
 
             return this.resumesRepository.UpdateResumeSkill(idResume, skills).ToList();
         }
+
+        public Resume[] GetByName(string name)
+        {
+            var resumes = this.resumesRepository.GetByName(name);
+            return resumes.ToArray();
+        }
     }
 }

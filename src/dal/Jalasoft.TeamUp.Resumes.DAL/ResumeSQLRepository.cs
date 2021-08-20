@@ -92,7 +92,7 @@
                         "INNER JOIN Contact contact ON res.IdContact = contact.Id " +
                         "INNER JOIN resume_Skill resSkill ON res.Id = resSkill.Idresume " +
                         "INNER JOIN Skill skill ON resSkill.IdSkill = skill.Id " +
-                        "WHERE res.Id = 3";
+                        "WHERE res.Id = @id";
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
                 parameter.Add("@id", id, DbType.Int32);
@@ -128,15 +128,29 @@
         {
             var storeProcedure = "Resume_Skill_Update";
             var createTempTable = "CREATE TABLE #SkillTemp(Id INT, Name Varchar(20))";
+            var value = new { idResue = idResume };
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 db.Execute(createTempTable);
                 DapperPlusManager.Entity<Skill>().Table("#SkillTemp");
                 db.BulkInsert(skills);
-                db.Query(storeProcedure, commandType: CommandType.StoredProcedure);
+                db.Query(storeProcedure, value, commandType: CommandType.StoredProcedure);
             }
 
             return skills;
+        }
+
+        public IEnumerable<Resume> GetByName(string name)
+        {
+            List<Resume> resumes = new List<Resume>();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Resumes_Get_By_Name";
+                var values = new { Title = name };
+                resumes = db.Query<Resume>(sp, values, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return resumes;
         }
     }
 }
