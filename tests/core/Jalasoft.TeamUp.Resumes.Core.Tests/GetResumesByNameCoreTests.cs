@@ -11,12 +11,12 @@
 
     public class GetResumesByNameCoreTests
     {
-        private readonly Mock<IRepository<Resume>> mockRepository;
+        private readonly Mock<IResumesRepository> mockRepository;
         private readonly ResumesService resumesService;
 
         public GetResumesByNameCoreTests()
         {
-            this.mockRepository = new Mock<IRepository<Resume>>();
+            this.mockRepository = new Mock<IResumesRepository>();
             this.resumesService = new ResumesService(this.mockRepository.Object);
         }
 
@@ -48,12 +48,12 @@
                     {
                         new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "Javascript"
                         },
                     }
@@ -82,12 +82,12 @@
                     {
                         new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = "Figma"
                         },
                         new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "HTML"
                         },
                     }

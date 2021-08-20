@@ -54,12 +54,12 @@
                     {
                         new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = "C#"
                         },
                         new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "Javascript"
                         },
                     }
@@ -88,12 +88,12 @@
                     {
                         new Skill
                         {
-                            Id = 1,
+                            Id = "1",
                             Name = "Figma"
                         },
                         new Skill
                         {
-                            Id = 2,
+                            Id = "2",
                             Name = "HTML"
                         },
                     }
