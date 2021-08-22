@@ -23,7 +23,7 @@
 
         public Resume Add(Resume newObject)
         {
-            var sql = "INSERT INTO Resume ( Id, Title, Sumary, CreationDate, LastUpdate ) VALUES (@id, @title, @summary, @creationdate, @lastupdate)";
+            var sql = "INSERT INTO Resume ( Id, Title, Summary, CreationDate, LastUpdate ) VALUES (@id, @title, @summary, @creationdate, @lastupdate)";
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 db.Open();
@@ -50,7 +50,7 @@
             IEnumerable<Resume> resumes;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                string sql = "SELECT resume.Id, resume.Title, resume.Sumary, resume.CreationDate, resume.LastUpdate, resume.IdPerson, resume.IdContact, " +
+                string sql = "SELECT resume.Id, resume.Title, resume.Summary, resume.CreationDate, resume.LastUpdate, resume.IdPerson, resume.IdContact, " +
                     "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture, contact.Id, contact.Address, contact.Email, " +
                     "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.EmsiId, skill.Name " +
                     "FROM Resume resume " +
@@ -84,7 +84,7 @@
             List<Resume> resume = new List<Resume>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                var sql = "SELECT res.Id, res.Title, res.Sumary, res.CreationDate, res.LastUpdate, res.IdPerson, res.IdContact," +
+                var sql = "SELECT res.Id, res.Title, res.Summary, res.CreationDate, res.LastUpdate, res.IdPerson, res.IdContact," +
                         "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email," +
                         "contact.Phone, resSkill.IdSkill, resSkill.Idresume, skill.Id, skill.EmsiId, skill.Name " +
                         "FROM resume res " +
