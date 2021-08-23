@@ -1,6 +1,8 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.API.Tests
 {
     using System.Collections.Generic;
+    using FluentValidation;
+    using FluentValidation.Results;
     using Jalasoft.TeamUp.Resumes.API.Controllers;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -34,18 +36,19 @@
         }
 
         [Fact]
-        public void UpdateResume_UnexistentId_Error404()
+        public void UpdateResume_UnexistentId_NotFound()
         {
             var request = this.mockHttpContext.Request;
-            IEnumerable<Skill> resume = null;
-            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(resume);
+            var error = new ValidationFailure("Resume", "Object Doesn't exist");
+            error.ErrorCode = "404";
+            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Throws(new ValidationException(new List<ValidationFailure>() { error }));
             var response = this.putResume.UpdateResume(request, 1);
             var updatedResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(404, updatedResult.StatusCode);
         }
 
         [Fact]
-        public void UpdateResume_UnexpectedError_Error500()
+        public void UpdateResume_UnexpectedError_InternalError()
         {
             var request = this.mockHttpContext.Request;
             this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Throws(new ResumesException(ResumesErrors.InternalServerError));

@@ -86,7 +86,7 @@
             {
                 var sql = "SELECT res.Id, res.Title, res.Sumary, res.CreationDate, res.LastUpdate, res.IdPerson, res.IdContact," +
                         "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email," +
-                        "contact.Phone, resSkill.IdSkill, resSkill.Idresume, skill.Id, skill.EmsiId, skill.Name " +
+                        "contact.Phone, resSkill.IdSkill, resSkill.Idresume, skill.Id, skill.Name " +
                         "FROM resume res " +
                         "INNER JOIN Person person ON res.IdPerson = person.Id " +
                         "INNER JOIN Contact contact ON res.IdContact = contact.Id " +
@@ -116,7 +116,7 @@
                 }).ToList();
             }
 
-            return resume[0];
+            return resume.ToList().Count != 0 ? resume[0] : null;
         }
 
         public Resume Update(Resume updateObject)
@@ -127,13 +127,15 @@
         public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var storeProcedure = "Resume_Skill_Update";
-            var createTempTable = "CREATE TABLE #SkillTemp(Id INT, Name Varchar(20))";
+            var createTempTable = "CREATE TABLE #SkillTemp(Id Varchar(20), Name Varchar(20))";
+            var value = new { idResume = idResume };
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
+                db.Open();
                 db.Execute(createTempTable);
                 DapperPlusManager.Entity<Skill>().Table("#SkillTemp");
                 db.BulkInsert(skills);
-                db.Query(storeProcedure, commandType: CommandType.StoredProcedure);
+                db.Query(storeProcedure, value, commandType: CommandType.StoredProcedure);
             }
 
             return skills;

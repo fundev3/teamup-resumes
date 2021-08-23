@@ -3,7 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net;
+    using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Jalasoft.TeamUp.Resumes.ResumesException;
@@ -39,12 +41,18 @@
 
                 var updateResume = this.resumesService.UpdateResumeSkill(idResume, skills);
 
-                if (updateResume == null)
+                return new OkObjectResult(updateResume);
+            }
+            catch (ValidationException exVal)
+            {
+                ResumesErrors error = ResumesErrors.BadRequest;
+                if (exVal.Errors.ToArray()[0].ErrorCode == "404")
                 {
-                    return new ResumesException(ResumesErrors.NotFound).Error;
+                    error = ResumesErrors.NotFound;
                 }
 
-                return new OkObjectResult(updateResume);
+                var errorException = new ResumesException(error, exVal);
+                return errorException.Error;
             }
             catch (Exception e)
             {
