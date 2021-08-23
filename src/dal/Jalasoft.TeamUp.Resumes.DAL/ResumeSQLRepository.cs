@@ -94,8 +94,6 @@
                         "INNER JOIN Skill skill ON resSkill.IdSkill = skill.Id " +
                         "WHERE res.Id = @id";
                 db.Open();
-                DynamicParameters parameter = new DynamicParameters();
-                parameter.Add("@id", id, DbType.Int32);
                 var parameters = new { id = id };
                 var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(
                     sql,
