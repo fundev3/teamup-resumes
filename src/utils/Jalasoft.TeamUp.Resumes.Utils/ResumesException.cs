@@ -42,11 +42,6 @@
                     this.Error = new ObjectResult(this.BaseError);
                     this.Error.StatusCode = (int)ResumesErrors.InternalServerError;
                     break;
-                case ResumesErrors.NotFound:
-                    this.BaseError.Message = "Object not found";
-                    this.Error = new ObjectResult(this.BaseError);
-                    this.Error.StatusCode = (int)ResumesErrors.NotFound;
-                    break;
                 default:
                     break;
             }

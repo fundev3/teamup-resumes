@@ -52,7 +52,7 @@
             {
                 string sql = "SELECT resume.Id, resume.Title, resume.Sumary, resume.CreationDate, resume.LastUpdate, resume.IdPerson, resume.IdContact, " +
                     "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture, contact.Id, contact.Address, contact.Email, " +
-                    "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.EmsiId, skill.Name " +
+                    "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.Name " +
                     "FROM Resume resume " +
                     "INNER JOIN Person person ON resume.IdPerson = person.Id " +
                     "INNER JOIN Contact contact ON resume.IdContact = contact.Id " +
@@ -129,13 +129,19 @@
             var storeProcedure = "Resume_Skill_Update";
             var createTempTable = "CREATE TABLE #SkillTemp(Id Varchar(20), Name Varchar(20))";
             var value = new { idResume = idResume };
+            bool resumeExist;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 db.Open();
                 db.Execute(createTempTable);
                 DapperPlusManager.Entity<Skill>().Table("#SkillTemp");
                 db.BulkInsert(skills);
-                db.Query(storeProcedure, value, commandType: CommandType.StoredProcedure);
+                resumeExist = db.QuerySingle<bool>(storeProcedure, value, commandType: CommandType.StoredProcedure);
+            }
+
+            if (!resumeExist)
+            {
+                skills = new Skill[0];
             }
 
             return skills;

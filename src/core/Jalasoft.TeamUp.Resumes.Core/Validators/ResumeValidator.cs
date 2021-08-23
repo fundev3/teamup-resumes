@@ -10,20 +10,17 @@
         {
             this.RuleFor(resume => resume.Id)
                 .NotEmpty()
-                .NotNull()
-                .WithErrorCode("400");
+                .NotNull();
 
             this.RuleFor(resume => resume.Title)
                 .NotEmpty()
                 .NotNull()
-                .MaximumLength(160)
-                .WithErrorCode("400");
+                .MaximumLength(160);
 
             this.RuleFor(resume => resume.Summary)
                 .NotEmpty()
                 .NotNull()
-                .MaximumLength(160)
-                .WithErrorCode("400");
+                .MaximumLength(160);
         }
     }
 }

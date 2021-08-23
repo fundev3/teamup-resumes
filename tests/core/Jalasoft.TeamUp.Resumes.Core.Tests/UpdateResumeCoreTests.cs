@@ -22,7 +22,7 @@
             this.resumesService = new ResumesService(this.mockResumeRepository.Object);
         }
 
-        public static List<Skill> GetSkills()
+        public List<Skill> GetSkills()
         {
             var stubSkill = new List<Skill>()
             {
@@ -44,21 +44,17 @@
         [Fact]
         public void UpdateResume_ExistentId_Resume()
         {
-            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(UpdateResumeCoreTests.GetSkills());
-            this.mockResumeRepository.Setup(repository => repository.GetById(It.IsAny<int>())).Returns(new Resume());
-            var result = this.resumesService.UpdateResumeSkill(2, UpdateResumeCoreTests.GetSkills().ToArray());
+            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(this.GetSkills());
+            var result = this.resumesService.UpdateResumeSkill(2, this.GetSkills().ToArray());
             Assert.IsType<Skill[]>(result.ToArray());
         }
 
         [Fact]
         public void UpdateResume_UnexistentId_ValidationException()
         {
-            Resume resume = null;
-            var error = new ValidationFailure("Resume", "Object Doesn't exist");
-            error.ErrorCode = "404";
-            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Throws(new ValidationException(new List<ValidationFailure>() { error }));
-            this.mockResumeRepository.Setup(repository => repository.GetById(It.IsAny<int>())).Returns(resume);
-            Assert.Throws<ValidationException>(() => this.resumesService.UpdateResumeSkill(1, UpdateResumeCoreTests.GetSkills().ToArray()));
+            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(new Skill[0]);
+            var result = this.resumesService.UpdateResumeSkill(7, this.GetSkills().ToArray());
+            Assert.IsType<Skill[]>(result.ToArray());
         }
     }
 }

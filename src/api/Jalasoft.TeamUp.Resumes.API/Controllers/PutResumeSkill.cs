@@ -30,8 +30,8 @@
         [OpenApiOperation(operationId: "UpdateResumeSkill", tags: new[] { "ResumeSkills" })]
         [OpenApiRequestBody("application/json", typeof(List<Skill>), Description = "JSON request body containing list of skills")]
         [OpenApiParameter(name: "idResume", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The resume identifier.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
-        public IActionResult UpdateResume(
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(List<Skill>), Description = "Successful response")]
+        public IActionResult UpdateResumeSkill(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "v1/resumes/{idResume}/skills")] HttpRequest req, int idResume)
         {
             try
@@ -39,19 +39,22 @@
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
                 var skills = JsonConvert.DeserializeObject<Skill[]>(requestBody);
 
-                var updateResume = this.resumesService.UpdateResumeSkill(idResume, skills);
+                var result = this.resumesService.UpdateResumeSkill(idResume, skills);
 
-                return new OkObjectResult(updateResume);
+                if (result.Count() == 0)
+                {
+                    throw new ResumesException(ResumesErrors.NotFound);
+                }
+
+                return new OkObjectResult(result);
+            }
+            catch (ResumesException e)
+            {
+                return e.Error;
             }
             catch (ValidationException exVal)
             {
-                ResumesErrors error = ResumesErrors.BadRequest;
-                if (exVal.Errors.ToArray()[0].ErrorCode == "404")
-                {
-                    error = ResumesErrors.NotFound;
-                }
-
-                var errorException = new ResumesException(error, exVal);
+                var errorException = new ResumesException(ResumesErrors.BadRequest, exVal);
                 return errorException.Error;
             }
             catch (Exception e)
