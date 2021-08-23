@@ -103,7 +103,7 @@
         }
 
         [Fact]
-        public void GetResumeByName_ValidId_Resume()
+        public void GetResumeByName_ValidName_Resume()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
