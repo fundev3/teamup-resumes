@@ -42,7 +42,6 @@
         public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var skillValidator = new SkillValidator();
-
             skillValidator.ValidateAndThrow(skills);
 
             return this.resumesRepository.UpdateResumeSkill(idResume, skills).ToList();
