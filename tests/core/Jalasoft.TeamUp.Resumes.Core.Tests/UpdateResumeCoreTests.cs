@@ -50,7 +50,7 @@
         }
 
         [Fact]
-        public void UpdateResume_UnexistentId_ValidationException()
+        public void UpdateResume_UnexistentId_EmptyList()
         {
             this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(new Skill[0]);
             var result = this.resumesService.UpdateResumeSkill(7, this.GetSkills().ToArray());
