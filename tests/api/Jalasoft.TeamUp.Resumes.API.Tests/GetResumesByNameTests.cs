@@ -122,10 +122,10 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetByName("Julio")).Throws(new ResumesException(ResumesErrors.NotFound));
+            this.mockService.Setup(service => service.GetByName("prueba")).Throws(new ResumesException(ResumesErrors.NotFound));
 
             // Act
-            var response = this.getResumesByName.Run(request, "Julio");
+            var response = this.getResumesByName.Run(request, "prueba");
 
             // Assert
             var notFound = Assert.IsType<ObjectResult>(response);

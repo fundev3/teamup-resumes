@@ -23,14 +23,15 @@
 
         [FunctionName("GetResumesByName")]
         [OpenApiOperation(operationId: "GetResumesByName", tags: new[] { "Resumes" })]
-        [OpenApiParameter(name: "name", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The name of the skill to search by.")]
+        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The name of the skill to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes/{name}")] HttpRequest req, string name)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes-by-name")] HttpRequest req)
         {
             try
             {
+                req.Query.TryGetValue("name", out StringValues name);
                 var resumes = this.resumesService.GetByName(name);
                 if (resumes.Length == 0)
                 {
