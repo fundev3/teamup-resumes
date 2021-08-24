@@ -3,7 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net;
+    using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Jalasoft.TeamUp.Resumes.ResumesException;
@@ -26,10 +28,10 @@
 
         [FunctionName("UpdateResumeSkill")]
         [OpenApiOperation(operationId: "UpdateResumeSkill", tags: new[] { "ResumeSkills" })]
-        [OpenApiRequestBody("application/json", typeof(List<Skill>), Description = "JSON request body containing list of skills")]
+        [OpenApiRequestBody("application/json", typeof(Skill[]), Description = "JSON request body containing list of skills")]
         [OpenApiParameter(name: "idResume", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The resume identifier.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
-        public IActionResult UpdateResume(
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill[]), Description = "Successful response")]
+        public IActionResult UpdateResumeSkill(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "v1/resumes/{idResume}/skills")] HttpRequest req, int idResume)
         {
             try
@@ -37,14 +39,23 @@
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
                 var skills = JsonConvert.DeserializeObject<Skill[]>(requestBody);
 
-                var updateResume = this.resumesService.UpdateResumeSkill(idResume, skills);
+                var result = this.resumesService.UpdateResumeSkill(idResume, skills);
 
-                if (updateResume == null)
+                if (result.Count() == 0)
                 {
-                    return new ResumesException(ResumesErrors.NotFound).Error;
+                    throw new ResumesException(ResumesErrors.NotFound);
                 }
 
-                return new OkObjectResult(updateResume);
+                return new OkObjectResult(result);
+            }
+            catch (ResumesException e)
+            {
+                return e.Error;
+            }
+            catch (ValidationException exVal)
+            {
+                var errorException = new ResumesException(ResumesErrors.BadRequest, exVal);
+                return errorException.Error;
             }
             catch (Exception e)
             {

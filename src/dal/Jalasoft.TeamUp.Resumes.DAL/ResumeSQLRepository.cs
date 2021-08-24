@@ -125,6 +125,7 @@ namespace Jalasoft.TeamUp.Resumes.DAL
         {
             var storeProcedure = "Resume_Skill_Update";
             var createTempTable = "CREATE TABLE #SkillTemp(Id Varchar(20), Name Varchar(50))";
+            
             var value = new { idResume = idResume };
             bool resumeExist;
             using (IDbConnection db = new SqlConnection(this.connectionString))
