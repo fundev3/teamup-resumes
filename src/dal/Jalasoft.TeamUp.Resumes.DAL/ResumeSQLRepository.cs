@@ -23,18 +23,17 @@
 
         public Resume Add(Resume newObject)
         {
-            var sql = "INSERT INTO Resume ( Id, Title, Summary, CreationDate, LastUpdate ) VALUES (@id, @title, @summary, @creationdate, @lastupdate)";
+            var sql = "INSERT INTO Resume ( Title, Summary, CreationDate, LastUpdate ) VALUES (@title, @summary, @creationdate, @lastupdate)";
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 db.Open();
                 DynamicParameters parameter = new DynamicParameters();
 
-                parameter.Add("@id", newObject.Id, DbType.Int32);
                 parameter.Add("@title", newObject.Title, DbType.AnsiString, ParameterDirection.Input, 30);
                 parameter.Add("@summary", newObject.Summary, DbType.AnsiString, ParameterDirection.Input, 150);
                 parameter.Add("@creationdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
                 parameter.Add("@lastupdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
-                db.Execute(sql, parameter);
+                newObject.Id = db.QuerySingle<int>(sql, parameter);
             }
 
             return newObject;
@@ -85,7 +84,7 @@
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 var sql = "SELECT res.Id, res.Title, res.Summary, res.CreationDate, res.LastUpdate, res.IdPerson, res.IdContact," +
-                        "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email," +
+                        "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture, contact.Id, contact.Address, contact.Email," +
                         "contact.Phone, resSkill.IdSkill, resSkill.Idresume, skill.Id, skill.Name " +
                         "FROM resume res " +
                         "INNER JOIN Person person ON res.IdPerson = person.Id " +
@@ -125,7 +124,7 @@
         public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var storeProcedure = "Resume_Skill_Update";
-            var createTempTable = "CREATE TABLE #SkillTemp(Id Varchar(20), Name Varchar(20))";
+            var createTempTable = "CREATE TABLE #SkillTemp(Id Varchar(20), Name Varchar(50))";
             var value = new { idResume = idResume };
             bool resumeExist;
             using (IDbConnection db = new SqlConnection(this.connectionString))
