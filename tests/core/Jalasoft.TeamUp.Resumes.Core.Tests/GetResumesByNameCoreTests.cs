@@ -117,7 +117,7 @@
             this.mockRepository.Setup(repository => repository.GetAll()).Returns(GetTestResumes().ToList());
 
             // Act
-            var result = this.resumesService.GetResumes();
+            var result = this.resumesService.GetResumes(null);
 
             // Assert
             Assert.Equal(2, result.Length);

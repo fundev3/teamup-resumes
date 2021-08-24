@@ -7,5 +7,7 @@
     public interface IResumesRepository : IRepository<Resume>
     {
         IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills);
+
+        IEnumerable<Resume> GetBySkill(string skill);
     }
 }
