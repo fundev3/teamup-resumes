@@ -38,21 +38,6 @@
         }
 
         [Fact]
-        public void GetResumes_InvalidResume_NotFound()
-        {
-            // Arrange
-            var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetByName("noExist")).Throws(new ResumesException(ResumesErrors.NotFound));
-
-            // Act
-            var response = this.getResumes.Run(request);
-
-            // Assert
-            var notFound = Assert.IsType<ObjectResult>(response);
-            Assert.Equal(404, notFound.StatusCode);
-        }
-
-        [Fact]
         public void GetResumes_InvalidResponse_Error500()
         {
             // Arrange
@@ -65,6 +50,21 @@
             // Assert
             var objectResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(500, objectResult.StatusCode);
+        }
+
+        [Fact]
+        public void GetResumes_InvalidResume_NotFound()
+        {
+            // Arrange
+            var request = this.mockHttpContext.Request;
+            this.mockService.Setup(service => service.GetByName("none")).Throws(new ResumesException(ResumesErrors.NotFound));
+
+            // Act
+            var response = this.getResumes.Run(request);
+
+            // Assert
+            var notFound = Assert.IsType<ObjectResult>(response);
+            Assert.Equal(404, notFound.StatusCode);
         }
     }
 }
