@@ -125,26 +125,26 @@
 
         public Resume Update(Resume updateObject)
         {
-            var resume = Resumes.Find(x => x.Id == updateObject.Id);
-
-            if (resume == null)
-            {
-                return resume;
-            }
-
-            var skills = resume.Skills.ToList();
-            foreach (var skill in updateObject.Skills)
-            {
-                skills.Add(skill);
-            }
-
-            resume.Skills = skills;
-            return resume;
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
-            throw new NotImplementedException();
+            var resume = Resumes.Find(x => x.Id == idResume);
+
+            if (resume == null)
+            {
+                return new Skill[0];
+            }
+
+            var skillsUpdate = resume.Skills.ToList();
+            foreach (var skill in skills)
+            {
+                skillsUpdate.Add(skill);
+            }
+
+            resume.Skills = skillsUpdate;
+            return resume.Skills;
         }
 
         public IEnumerable<Resume> GetByName(string name)

@@ -52,7 +52,7 @@
             {
                 string sql = "SELECT resume.Id, resume.Title, resume.Summary, resume.CreationDate, resume.LastUpdate, resume.IdPerson, resume.IdContact, " +
                     "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture, contact.Id, contact.Address, contact.Email, " +
-                    "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.EmsiId, skill.Name " +
+                    "contact.Phone, resumeSkill.IdSkill, resumeSkill.IdResume, skill.Id, skill.Name " +
                     "FROM Resume resume " +
                     "INNER JOIN Person person ON resume.IdPerson = person.Id " +
                     "INNER JOIN Contact contact ON resume.IdContact = contact.Id " +
@@ -86,7 +86,7 @@
             {
                 var sql = "SELECT res.Id, res.Title, res.Summary, res.CreationDate, res.LastUpdate, res.IdPerson, res.IdContact," +
                         "person.Id, person.FirstName, person.LastName, person.BirthDate, person.Picture,	contact.Id, contact.Address, contact.Email," +
-                        "contact.Phone, resSkill.IdSkill, resSkill.Idresume, skill.Id, skill.EmsiId, skill.Name " +
+                        "contact.Phone, resSkill.IdSkill, resSkill.Idresume, skill.Id, skill.Name " +
                         "FROM resume res " +
                         "INNER JOIN Person person ON res.IdPerson = person.Id " +
                         "INNER JOIN Contact contact ON res.IdContact = contact.Id " +
@@ -94,8 +94,6 @@
                         "INNER JOIN Skill skill ON resSkill.IdSkill = skill.Id " +
                         "WHERE res.Id = @id";
                 db.Open();
-                DynamicParameters parameter = new DynamicParameters();
-                parameter.Add("@id", id, DbType.Int32);
                 var parameters = new { id = id };
                 var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(
                     sql,
@@ -116,7 +114,7 @@
                 }).ToList();
             }
 
-            return resume[0];
+            return resume.ToList().Count != 0 ? resume[0] : null;
         }
 
         public Resume Update(Resume updateObject)
@@ -127,14 +125,21 @@
         public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var storeProcedure = "Resume_Skill_Update";
-            var createTempTable = "CREATE TABLE #SkillTemp(Id INT, Name Varchar(20))";
-            var value = new { idResue = idResume };
+            var createTempTable = "CREATE TABLE #SkillTemp(Id Varchar(20), Name Varchar(20))";
+            var value = new { idResume = idResume };
+            bool resumeExist;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
+                db.Open();
                 db.Execute(createTempTable);
                 DapperPlusManager.Entity<Skill>().Table("#SkillTemp");
                 db.BulkInsert(skills);
-                db.Query(storeProcedure, value, commandType: CommandType.StoredProcedure);
+                resumeExist = db.QuerySingle<bool>(storeProcedure, value, commandType: CommandType.StoredProcedure);
+            }
+
+            if (!resumeExist)
+            {
+                skills = new Skill[0];
             }
 
             return skills;
