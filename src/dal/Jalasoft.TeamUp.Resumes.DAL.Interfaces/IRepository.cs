@@ -17,5 +17,7 @@
         public void Delete(int id);
 
         public IEnumerable<Resume> GetByName(string name);
+
+        public IEnumerable<Resume> GetBySkill(string skill);
     }
 }

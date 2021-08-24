@@ -151,5 +151,10 @@
         {
             return Resumes;
         }
+
+        public IEnumerable<Resume> GetBySkill(string skill)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

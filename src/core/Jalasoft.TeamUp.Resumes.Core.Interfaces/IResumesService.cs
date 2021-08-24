@@ -15,5 +15,7 @@
         IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills);
 
         Resume[] GetByName(string name);
+
+        Resume[] GetBySkill(string skill);
     }
 }

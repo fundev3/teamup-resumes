@@ -52,5 +52,11 @@
             var resumes = this.resumesRepository.GetByName(name);
             return resumes.ToArray();
         }
+
+        public Resume[] GetBySkill(string skill)
+        {
+            var resumes = this.resumesRepository.GetBySkill(skill);
+            return resumes.ToArray();
+        }
     }
 }
