@@ -176,15 +176,5 @@
             // Assert
             Assert.Equal(2, result.Length);
         }
-
-        [Fact]
-        public void GetResumesBySkill_NotExist_Skill()
-        {
-            // Arrange
-            this.mockRepository.Setup(repository => repository.GetBySkill("VB actions")).Throws(new ResumesException(ResumesErrors.NotFound));
-
-            // Assert
-            Assert.Throws<ResumesException>(() => this.resumesService.GetResumes("VB actions"));
-        }
     }
 }
