@@ -4,12 +4,10 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
-    using System.IO;
     using System.Linq;
     using Dapper;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Microsoft.Extensions.Configuration;
     using Z.Dapper.Plus;
 
     public class ResumeSQLRepository : IResumesRepository
