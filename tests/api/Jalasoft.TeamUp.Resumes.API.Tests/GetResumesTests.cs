@@ -53,7 +53,7 @@
         }
 
         [Fact]
-        public void GetResumes_InvalidResponse_Error500()
+        public void GetResumes_InvalidResponse_InternalError()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
