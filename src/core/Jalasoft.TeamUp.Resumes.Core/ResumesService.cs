@@ -25,10 +25,16 @@
             }
         }
 
-        public Resume[] GetResumes()
+        public Resume[] GetResumes(string value)
         {
-            var resumes = this.resumesRepository.GetAll().ToArray();
-            return resumes;
+            if (!string.IsNullOrEmpty(value))
+            {
+                return this.resumesRepository.GetBySkill(value).ToArray();
+            }
+            else
+            {
+                return this.resumesRepository.GetAll().ToArray();
+            }
         }
 
         public Resume PostResumes(Resume resume)
@@ -50,12 +56,6 @@
         public Resume[] GetByName(string name)
         {
             var resumes = this.resumesRepository.GetByName(name);
-            return resumes.ToArray();
-        }
-
-        public Resume[] GetBySkill(string skill)
-        {
-            var resumes = this.resumesRepository.GetBySkill(skill);
             return resumes.ToArray();
         }
     }

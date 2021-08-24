@@ -9,12 +9,12 @@
     using Moq;
     using Xunit;
 
-    public class ResumesServiceTests
+    public class GetResumesServiceTests
     {
         private readonly Mock<IResumesRepository> mockRepository;
         private readonly ResumesService resumesService;
 
-        public ResumesServiceTests()
+        public GetResumesServiceTests()
         {
             this.mockRepository = new Mock<IResumesRepository>();
             this.resumesService = new ResumesService(this.mockRepository.Object);
@@ -104,7 +104,7 @@
             this.mockRepository.Setup(repository => repository.GetAll()).Returns(stubEmptyResumeList);
 
             // Act
-            var result = this.resumesService.GetResumes();
+            var result = this.resumesService.GetResumes(It.IsAny<string>());
 
             // Assert
             Assert.Empty(result);
@@ -117,7 +117,7 @@
             this.mockRepository.Setup(repository => repository.GetAll()).Returns(GetTestResumes().ToList());
 
             // Act
-            var result = this.resumesService.GetResumes();
+            var result = this.resumesService.GetResumes(It.IsAny<string>());
 
             // Assert
             Assert.Equal(2, result.Length);
@@ -147,6 +147,44 @@
 
             // Assert
             Assert.Null(this.resumesService.GetResume(1));
+        }
+
+        // -----------------------------------------
+        [Fact]
+        public void GetResumesBySkill_NoItems_EmptyResult()
+        {
+            // Arrange
+            var stubEmptyResumeList = new List<Resume>();
+            this.mockRepository.Setup(repository => repository.GetBySkill("C#")).Returns(stubEmptyResumeList);
+
+            // Act
+            var result = this.resumesService.GetResumes("C#");
+
+            // Assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetResumesBySkill_ItemsExist_ResumesArray()
+        {
+            // Arrange
+            this.mockRepository.Setup(repository => repository.GetBySkill("C#")).Returns(GetTestResumes().ToList());
+
+            // Act
+            var result = this.resumesService.GetResumes("C#");
+
+            // Assert
+            Assert.Equal(2, result.Length);
+        }
+
+        [Fact]
+        public void GetResumesBySkill_NotExist_Skill()
+        {
+            // Arrange
+            this.mockRepository.Setup(repository => repository.GetBySkill("VB actions")).Throws(new ResumesException(ResumesErrors.NotFound));
+
+            // Assert
+            Assert.Throws<ResumesException>(() => this.resumesService.GetResumes("VB actions"));
         }
     }
 }

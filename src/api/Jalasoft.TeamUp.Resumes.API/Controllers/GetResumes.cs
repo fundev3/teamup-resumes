@@ -9,6 +9,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+    using Microsoft.Extensions.Primitives;
     using Microsoft.OpenApi.Models;
 
     public class GetResumes
@@ -22,13 +23,16 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
         [FunctionName("GetResumes")]
         [OpenApiOperation(operationId: "GetResumes", tags: new[] { "Resumes" })]
+        [OpenApiParameter(name: "skill", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The name of the skill to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume[]), Description = "Successful response")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes")] HttpRequest req)
         {
             try
             {
-                var resumes = this.resumesService.GetResumes();
+                string skill = req.Query["skill"];
+                var resumes = this.resumesService.GetResumes(skill);
                 if (resumes == null)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
@@ -36,9 +40,10 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
                 return new OkObjectResult(resumes);
             }
-            catch (ResumesException e)
+            catch (ResumesException ex)
             {
-                return e.Error;
+                var error = ex.Error;
+                return error;
             }
             catch (System.Exception e)
             {

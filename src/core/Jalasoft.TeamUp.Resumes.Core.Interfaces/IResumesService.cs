@@ -8,14 +8,12 @@
     {
         public Resume GetResume(int id);
 
-        Resume[] GetResumes();
+        Resume[] GetResumes(string value);
 
         Resume PostResumes(Resume resume);
 
         IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills);
 
         Resume[] GetByName(string name);
-
-        Resume[] GetBySkill(string skill);
     }
 }
