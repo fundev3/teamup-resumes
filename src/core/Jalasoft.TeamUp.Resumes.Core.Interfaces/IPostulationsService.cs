@@ -7,5 +7,9 @@ namespace Jalasoft.TeamUp.Resumes.Core.Interfaces
         Postulation PostPostulation(Postulation postulation);
 
         Postulation[] GetPostulations(string value);
+
+        Postulation GetPostulation(int id);
+
+        Postulation[] GetPostulationsByProjectId(string projectId);
     }
 }

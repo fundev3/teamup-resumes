@@ -22,6 +22,12 @@ namespace Jalasoft.TeamUp.Resumes.Core
                 return this.postulationsRepository.GetPostulationsResumeId(value).ToArray();
         }
 
+        public Postulation[] GetPostulationsByProjectId(string projectId)
+        {
+            var postulations = this.postulationsRepository.GetAllByProjectId(projectId);
+            return postulations.ToArray();
+        }
+
         public Postulation PostPostulation(Postulation postulation)
         {
             var postulationValidator = new PostulationValidator();
