@@ -67,7 +67,7 @@
                         new Skill
                         {
                             Id = "1",
-                            Name = "C#"
+                            Name = "C++"
                         },
                         new Skill
                         {
@@ -150,6 +150,21 @@
         public IEnumerable<Resume> GetByName(string name)
         {
             return Resumes;
+        }
+
+        public IEnumerable<Resume> GetBySkill(string skill)
+        {
+            List<Resume> result = new List<Resume>();
+            foreach (Resume item in Resumes)
+            {
+                var find = item.Skills.Find(x => x.Name == skill);
+                if (find != null)
+                {
+                    result.Add(item);
+                }
+            }
+
+            return result;
         }
     }
 }
