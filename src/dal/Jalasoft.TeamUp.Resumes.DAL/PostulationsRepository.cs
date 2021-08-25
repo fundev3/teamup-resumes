@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     using Dapper;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -48,6 +49,19 @@
         public IEnumerable<Postulation> GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Postulation> GetAllByProjectId(string projectId)
+        {
+            List<Postulation> postulations = new List<Postulation>();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Postulations_Get_By_ProjectId";
+                var values = new { ProjectId = projectId };
+                postulations = db.Query<Postulation>(sp, values, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return postulations;
         }
 
         public Postulation GetById(int id)

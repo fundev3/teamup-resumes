@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
+    using System.Linq;
     using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Core.Validators;
@@ -24,6 +25,12 @@
         public Postulation[] GetPostulations()
         {
             throw new NotImplementedException();
+        }
+
+        public Postulation[] GetPostulationsByProjectId(string projectId)
+        {
+            var postulations = this.postulationsRepository.GetAllByProjectId(projectId);
+            return postulations.ToArray();
         }
 
         public Postulation PostPostulation(Postulation postulation)

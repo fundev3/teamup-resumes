@@ -9,5 +9,7 @@
         Postulation GetPostulation(int id);
 
         Postulation[] GetPostulations();
+
+        Postulation[] GetPostulationsByProjectId(string projectId);
     }
 }
