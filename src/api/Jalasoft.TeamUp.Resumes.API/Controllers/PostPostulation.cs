@@ -40,7 +40,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
                 var input = JsonConvert.DeserializeObject<Postulation>(requestBody);
                 createResume = this.postulationsService.PostPostulation(input);
-                return new CreatedResult("v1/postulation/:id", createResume);
+                return new CreatedResult("v1/postulations/:id", createResume);
             }
             catch (ValidationException exVal)
             {
