@@ -17,6 +17,11 @@ namespace Jalasoft.TeamUp.Resumes.Core
             this.postulationsRepository = postulationsRepository;
         }
 
+        public Postulation GetPostulation(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Postulation[] GetPostulations(string value)
         {
                 return this.postulationsRepository.GetPostulationsResumeId(value).ToArray();
