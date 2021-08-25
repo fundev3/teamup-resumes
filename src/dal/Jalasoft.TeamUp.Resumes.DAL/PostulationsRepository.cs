@@ -26,17 +26,17 @@
                 resumeId = postulation.ResumeId,
                 projectName = postulation.ProjectName,
                 resumeName = postulation.ResumeName,
-                pictureName = postulation.Picture,
-                startDate = postulation.StartDate,
-                expireDate = postulation.ExpireDate,
-                status = postulation.Status
+                picture = postulation.Picture,
+                creationDate = postulation.CreationDate,
+                lastUpdate = postulation.LastDate,
+                state = postulation.State
             };
 
             // Postulation result = new Postulation();
             // var sql = "INSERT INTO Resume ( ProjectId, ResumeId, ProjectName, ResumeName, CreationDate, LastUpdate ) VALUES (@projectId, @resumeId, @projectName, @resumeName, @creationdate, @lastupdate)";
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                postulation.Id = db.QuerySingle<int>(storeProcedure, values, commandType: CommandType.StoredProcedure);
+                db.Execute(storeProcedure, values, commandType: CommandType.StoredProcedure);
 
                 // db.Open();
                 // DynamicParameters parameter = new DynamicParameters();

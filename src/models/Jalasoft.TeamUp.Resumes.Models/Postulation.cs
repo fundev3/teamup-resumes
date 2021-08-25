@@ -16,10 +16,10 @@
 
         public string Picture { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public DateTime ExpireDate { get; set; }
+        public DateTime LastDate { get; set; }
 
-        public string Status { get; set; }
+        public string State { get; set; }
     }
 }

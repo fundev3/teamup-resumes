@@ -34,11 +34,11 @@
                 .NotEmpty()
                 .NotNull();
 
-            this.RuleFor(postulation => postulation.StartDate)
+            this.RuleFor(postulation => postulation.CreationDate)
                 .NotEmpty()
                 .NotNull();
 
-            this.RuleFor(postulation => postulation.ExpireDate)
+            this.RuleFor(postulation => postulation.LastDate)
                 .NotEmpty()
                 .NotNull();
         }

@@ -29,7 +29,7 @@
             this.mockPostulationsService.Setup(service => service.PostPostulation(null)).Returns(new Postulation());
             var response = this.postPostulation.Run(request);
             var createdResult = Assert.IsType<CreatedResult>(response);
-            Assert.IsType<Resume>(createdResult.Value);
+            Assert.IsType<Postulation>(createdResult.Value);
             Assert.Equal(201, createdResult.StatusCode);
         }
 

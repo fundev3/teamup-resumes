@@ -29,9 +29,9 @@
                 ProjectName = "TeamUp",
                 ResumeName = "Jorge Lopez",
                 Picture = "test",
-                StartDate = DateTime.Now.AddDays(-10),
-                ExpireDate = DateTime.Now,
-                Status = "Applied"
+                CreationDate = DateTime.Now.AddDays(-10),
+                LastDate = DateTime.Now,
+                State = "Applied"
             };
 
             this.mockPostulation.Setup(repository => repository.Add(stubPostulation)).Returns(new Postulation());
@@ -49,9 +49,9 @@
                 ProjectName = string.Empty,
                 ResumeName = string.Empty,
                 Picture = string.Empty,
-                StartDate = DateTime.Now.AddDays(-10),
-                ExpireDate = DateTime.Now,
-                Status = "Applied"
+                CreationDate = DateTime.Now.AddDays(-10),
+                LastDate = DateTime.Now,
+                State = "Applied"
             };
 
             this.mockPostulation.Setup(repository => repository.Add(stubPostulation)).Returns(new Postulation());
