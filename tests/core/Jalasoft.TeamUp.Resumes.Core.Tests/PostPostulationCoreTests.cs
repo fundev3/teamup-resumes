@@ -28,7 +28,7 @@
                 ResumeId = 1,
                 ProjectName = "TeamUp",
                 ResumeName = "Jorge Lopez",
-                PictureName = "test",
+                Picture = "test",
                 StartDate = DateTime.Now.AddDays(-10),
                 ExpireDate = DateTime.Now,
                 Status = "Applied"
@@ -48,7 +48,7 @@
                 ResumeId = 1,
                 ProjectName = string.Empty,
                 ResumeName = string.Empty,
-                PictureName = string.Empty,
+                Picture = string.Empty,
                 StartDate = DateTime.Now.AddDays(-10),
                 ExpireDate = DateTime.Now,
                 Status = "Applied"
