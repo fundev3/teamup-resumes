@@ -1,5 +1,6 @@
 namespace Jalasoft.TeamUp.Resumes.API.Controllers
 {
+    using System;
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -23,6 +24,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
         [FunctionName("GetResumes")]
         [OpenApiOperation(operationId: "GetResumes", tags: new[] { "Resumes" })]
+        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The name of the resume to search by.")]
         [OpenApiParameter(name: "skill", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The name of the skill to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
@@ -32,10 +34,33 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             try
             {
                 string skill = req.Query["skill"];
-                var resumes = this.resumesService.GetResumes(skill);
-                if (resumes == null)
+
+                // var resumes_ = this.resumesService.GetResumes(skill);
+                req.Query.TryGetValue("name", out StringValues name);
+                Resume[] resumes = null;
+                if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(skill))
                 {
-                    throw new ResumesException(ResumesErrors.NotFound);
+                    resumes = this.resumesService.GetResumes(null);
+                    if (resumes == null)
+                    {
+                        throw new ResumesException(ResumesErrors.NotFound);
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        resumes = this.resumesService.GetResumes(skill);
+                    }
+                    else
+                    {
+                        resumes = this.resumesService.GetByName(name);
+                    }
+
+                    if (resumes.Length == 0)
+                    {
+                        throw new ResumesException(ResumesErrors.NotFound);
+                    }
                 }
 
                 return new OkObjectResult(resumes);

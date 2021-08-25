@@ -15,7 +15,5 @@
         public T Update(T updateObject);
 
         public void Delete(int id);
-
-        public IEnumerable<Resume> GetByName(string name);
     }
 }
