@@ -34,17 +34,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             {
                 req.Query.TryGetValue("projectId", out StringValues projectId);
                 var postulations = this.postulationsService.GetPostulationsByProjectId(projectId);
-                if (postulations.Length == 0)
-                {
-                    throw new ResumesException(ResumesErrors.NotFound);
-                }
-
                 return new OkObjectResult(postulations);
-            }
-            catch (ResumesException ex)
-            {
-                var error = ex.Error;
-                return error;
             }
             catch (System.Exception e)
             {
