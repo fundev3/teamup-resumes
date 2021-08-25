@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Models
+namespace Jalasoft.TeamUp.Resumes.Models
 {
     using System;
 
@@ -6,7 +6,7 @@
     {
         public int Id { get; set; }
 
-        public Guid ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         public int ResumeId { get; set; }
 

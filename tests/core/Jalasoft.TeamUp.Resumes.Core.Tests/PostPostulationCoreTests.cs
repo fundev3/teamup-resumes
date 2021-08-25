@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Core.Tests
+namespace Jalasoft.TeamUp.Resumes.Core.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -24,11 +24,11 @@
         {
             var stubPostulation = new Postulation
             {
-                ProjectId = Guid.NewGuid(),
+                ProjectId = "12332",
                 ResumeId = 1,
                 ProjectName = "TeamUp",
                 ResumeName = "Jorge Lopez",
-                Picture = "test",
+                Picture = "test.png",
                 CreationDate = DateTime.Now.AddDays(-10),
                 LastUpdate = DateTime.Now,
                 State = "Applied"
@@ -44,7 +44,7 @@
         {
             var stubPostulation = new Postulation
             {
-                ProjectId = Guid.NewGuid(),
+                ProjectId = "1235",
                 ResumeId = 1,
                 ProjectName = string.Empty,
                 ResumeName = string.Empty,

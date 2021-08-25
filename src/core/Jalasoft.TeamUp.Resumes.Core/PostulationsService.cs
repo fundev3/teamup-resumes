@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Core
+namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
     using System.Linq;
