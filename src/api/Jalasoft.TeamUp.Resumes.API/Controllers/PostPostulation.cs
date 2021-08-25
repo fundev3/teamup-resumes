@@ -4,7 +4,6 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Net;
-    using System.Threading.Tasks;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Jalasoft.TeamUp.Resumes.ResumesException;
@@ -13,8 +12,6 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-    using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
-    using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
     using Newtonsoft.Json;
 
