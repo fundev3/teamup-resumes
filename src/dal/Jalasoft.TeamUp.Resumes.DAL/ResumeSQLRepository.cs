@@ -21,7 +21,7 @@
 
         public Resume Add(Resume newObject)
         {
-            var sql = "INSERT INTO Resume ( Title, Summary, CreationDate, LastUpdate ) VALUES (@title, @summary, @creationdate, @lastupdate)";
+            var sql = "INSERT INTO Resume ( Title, Summary, CreationDate, LastUpdate ) Output Inserted.Id VALUES (@title, @summary, @creationdate, @lastupdate)";
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 db.Open();

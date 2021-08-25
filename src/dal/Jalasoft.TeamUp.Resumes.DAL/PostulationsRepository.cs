@@ -34,7 +34,7 @@
 
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                db.Execute(storeProcedure, values, commandType: CommandType.StoredProcedure);
+                postulation.Id = db.QuerySingle<int>(storeProcedure, values, commandType: CommandType.StoredProcedure);
             }
 
             return postulation;
