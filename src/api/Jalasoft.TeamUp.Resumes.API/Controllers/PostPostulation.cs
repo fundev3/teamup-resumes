@@ -1,10 +1,9 @@
 namespace Jalasoft.TeamUp.Resumes.API.Controllers
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Net;
-    using System.Threading.Tasks;
+    using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Jalasoft.TeamUp.Resumes.ResumesException;
@@ -13,8 +12,6 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-    using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
-    using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
     using Newtonsoft.Json;
 
@@ -36,11 +33,11 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         {
             try
             {
-                Postulation createResume = new Postulation();
+                Postulation createPostulation = new Postulation();
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
                 var input = JsonConvert.DeserializeObject<Postulation>(requestBody);
-                createResume = this.postulationsService.PostPostulation(input);
-                return new CreatedResult("v1/postulations/:id", createResume);
+                createPostulation = this.postulationsService.PostPostulation(input);
+                return new CreatedResult("v1/postulations/:id", createPostulation);
             }
             catch (ValidationException exVal)
             {

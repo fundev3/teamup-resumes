@@ -8,39 +8,26 @@
         public PostulationValidator()
         {
             this.RuleFor(postulation => postulation.ProjectId)
-                .NotEmpty()
-                .NotNull();
+                .NotEmpty();
 
             this.RuleFor(postulation => postulation.ResumeId)
-                .NotEmpty()
-                .NotNull();
+                .NotEmpty();
 
             this.RuleFor(postulation => postulation.ProjectName)
-                .NotEmpty()
-                .NotNull()
-                .MaximumLength(50);
+                .Length(3, 15)
+                .Matches("^[a-zñ A-ZÑ]+$")
+                .NotEmpty();
 
             this.RuleFor(postulation => postulation.ResumeName)
-                .NotEmpty()
-                .NotNull()
-                .MaximumLength(50);
+                .Length(3, 15)
+                .Matches("^[a-zñ A-ZÑ]+$")
+                .NotEmpty();
 
             this.RuleFor(postulation => postulation.State)
-                .NotEmpty()
-                .NotNull()
-                .MaximumLength(20);
+                .Matches("^(Applied|Rejected|Accepted|Canceled)$");
 
             this.RuleFor(postulation => postulation.Picture)
-                .NotEmpty()
-                .NotNull();
-
-            this.RuleFor(postulation => postulation.CreationDate)
-                .NotEmpty()
-                .NotNull();
-
-            this.RuleFor(postulation => postulation.LastDate)
-                .NotEmpty()
-                .NotNull();
+                .Matches("[^\\s]+(.*?)\\.(jpg|jpeg|png|JPG|JPEG|PNG)$");
         }
     }
 }

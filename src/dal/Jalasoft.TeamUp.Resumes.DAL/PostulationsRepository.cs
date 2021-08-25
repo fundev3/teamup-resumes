@@ -27,8 +27,8 @@
                 projectName = postulation.ProjectName,
                 resumeName = postulation.ResumeName,
                 picture = postulation.Picture,
-                creationDate = postulation.CreationDate,
-                lastUpdate = postulation.LastDate,
+                creationDate = DateTime.Now,
+                lastUpdate = DateTime.Now,
                 state = postulation.State
             };
 

@@ -24,13 +24,13 @@
         {
             var stubPostulation = new Postulation
             {
-                ProjectId = Guid.NewGuid(),
+                ProjectId = "12332",
                 ResumeId = 1,
                 ProjectName = "TeamUp",
                 ResumeName = "Jorge Lopez",
                 Picture = "test",
                 CreationDate = DateTime.Now.AddDays(-10),
-                LastDate = DateTime.Now,
+                LastUpdate = DateTime.Now,
                 State = "Applied"
             };
 
@@ -44,13 +44,13 @@
         {
             var stubPostulation = new Postulation
             {
-                ProjectId = Guid.NewGuid(),
+                ProjectId = "1235",
                 ResumeId = 1,
                 ProjectName = string.Empty,
                 ResumeName = string.Empty,
                 Picture = string.Empty,
                 CreationDate = DateTime.Now.AddDays(-10),
-                LastDate = DateTime.Now,
+                LastUpdate = DateTime.Now,
                 State = "Applied"
             };
 
