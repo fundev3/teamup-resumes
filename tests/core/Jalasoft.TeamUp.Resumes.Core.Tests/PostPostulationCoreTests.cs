@@ -28,7 +28,7 @@
                 ResumeId = 1,
                 ProjectName = "TeamUp",
                 ResumeName = "Jorge Lopez",
-                Picture = "test",
+                Picture = "test.png",
                 CreationDate = DateTime.Now.AddDays(-10),
                 LastUpdate = DateTime.Now,
                 State = "Applied"
