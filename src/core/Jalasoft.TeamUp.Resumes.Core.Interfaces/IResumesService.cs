@@ -8,7 +8,7 @@
     {
         public Resume GetResume(int id);
 
-        Resume[] GetResumes();
+        Resume[] GetResumes(string value);
 
         Resume PostResumes(Resume resume);
 

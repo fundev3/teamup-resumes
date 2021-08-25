@@ -154,5 +154,18 @@
 
             return resumes;
         }
+
+        public IEnumerable<Resume> GetBySkill(string skill)
+        {
+            List<Resume> resumes = new List<Resume>();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Resumes_Get_By_Skill";
+                var values = new { Skill = skill };
+                resumes = db.Query<Resume>(sp, values, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return resumes;
+        }
     }
 }
