@@ -66,13 +66,13 @@ namespace Jalasoft.TeamUp.Resumes.DAL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Postulation> GetPostulationsById(string id)
+        public IEnumerable<Postulation> GetPostulationsResumeId(string resumeId)
         {
             List<Postulation> postulations = new List<Postulation>();
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 var sp = "Get_postulations_by_ld";
-                var values = new { Id = id };
+                var values = new { Id = resumeId };
                 postulations = db.Query<Postulation>(sp, values, commandType: CommandType.StoredProcedure).ToList();
             }
 

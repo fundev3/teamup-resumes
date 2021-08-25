@@ -26,21 +26,10 @@
             {
                 new Postulation()
                 {
-                    ProjectId = Guid.NewGuid(),
+                    ProjectId = "1231231273687812",
                     ResumeId = 1,
                     ProjectName = "TeamUp",
                     ResumeName = "Jorge Lopez",
-                    Picture = "test",
-                    CreationDate = DateTime.Now.AddDays(-10),
-                    LastUpdate = DateTime.Now,
-                    State = "Applied"
-                },
-                new Postulation()
-                {
-                    ProjectId = Guid.NewGuid(),
-                    ResumeId = 2,
-                    ProjectName = "CoreProject",
-                    ResumeName = "Alex Flores",
                     Picture = "test",
                     CreationDate = DateTime.Now.AddDays(-10),
                     LastUpdate = DateTime.Now,
@@ -51,37 +40,10 @@
         }
 
         [Fact]
-        public void GetResumes_NoItems_EmptyResult()
+        public void GetPostulationsByResumeId_ValidResumeId_Postulations()
         {
             // Arrange
-            var stubEmptyPostulationList = new List<Postulation>();
-            this.mockRepository.Setup(repository => repository.GetPostulationsById(It.IsAny<string>())).Returns(stubEmptyPostulationList);
-
-            // Act
-            var result = this.postulationService.GetPostulations(It.IsAny<string>());
-
-            // Assert
-            Assert.Empty(result);
-        }
-
-        [Fact]
-        public void GetResumes_ItemsExist_ResumesArray()
-        {
-            // Arrange
-            this.mockRepository.Setup(repository => repository.GetPostulationsById(null)).Returns(GetTestPostulations().ToList());
-
-            // Act
-            var result = this.postulationService.GetPostulations(It.IsAny<string>());
-
-            // Assert
-            Assert.Equal(2, result.Length);
-        }
-
-        [Fact]
-        public void GetResume_ValidId_SingleResume()
-        {
-            // Arrange
-            this.mockRepository.Setup(repository => repository.GetPostulationsById(It.IsAny<string>())).Returns(GetTestPostulations);
+            this.mockRepository.Setup(repository => repository.GetPostulationsResumeId(It.IsAny<string>())).Returns(GetTestPostulations);
 
             // Act
             var result = this.postulationService.GetPostulations(It.IsAny<string>());
@@ -91,16 +53,17 @@
         }
 
         [Fact]
-        public void GetResumesBySkill_ItemsExist_ResumesArray()
+        public void GetPostulationsByResumeId_InvalidResumeId_ValidationException()
         {
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetPostulationsById(It.IsAny<string>())).Returns(GetTestPostulations().ToList());
+            var stubEmptyProjectList = new List<Postulation>();
+            this.mockRepository.Setup(repository => repository.GetPostulationsResumeId(It.IsAny<string>())).Returns(stubEmptyProjectList);
 
             // Act
             var result = this.postulationService.GetPostulations(It.IsAny<string>());
 
             // Assert
-            Assert.Equal(2, result.Length);
+            Assert.Empty(result);
         }
     }
 }

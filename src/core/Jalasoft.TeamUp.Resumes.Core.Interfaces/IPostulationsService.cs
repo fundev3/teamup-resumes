@@ -5,7 +5,7 @@ namespace Jalasoft.TeamUp.Resumes.Core.Interfaces
     public interface IPostulationsService
     {
         Postulation PostPostulation(Postulation postulation);
-      
+
         Postulation[] GetPostulations(string value);
     }
 }

@@ -24,7 +24,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
         [FunctionName("GetPostulationsByResumeId")]
         [OpenApiOperation(operationId: "GetPostulationsByResumeId", tags: new[] { "Postulations" })]
-        [OpenApiParameter(name: "id", In = ParameterLocation.Query, Required = false, Type = typeof(int), Description = "The resume identifier.")]
+        [OpenApiParameter(name: "resumeId", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The resume identifier.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
@@ -32,9 +32,10 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         {
             try
             {
-                string id = req.Query["id"];
-                var result = this.postulationService.GetPostulations(id);
-                if (result == null)
+                string resumeId = req.Query["resumeId"];
+                Postulation[] result = null;
+                result = this.postulationService.GetPostulations(resumeId);
+                if (result.Length == 0)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
                 }

@@ -19,14 +19,7 @@ namespace Jalasoft.TeamUp.Resumes.Core
 
         public Postulation[] GetPostulations(string value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                return this.postulationsRepository.GetPostulationsById(null).ToArray();
-            }
-            else
-            {
-                return this.postulationsRepository.GetPostulationsById(value).ToArray();
-            }
+                return this.postulationsRepository.GetPostulationsResumeId(value).ToArray();
         }
 
         public Postulation PostPostulation(Postulation postulation)

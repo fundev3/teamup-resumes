@@ -25,21 +25,7 @@
         }
 
         [Fact]
-        public void GetPostulations_ItemsExists_Postulation()
-        {
-            // Arrange
-            var request = this.mockHttpContext.Request;
-
-            // Act
-            var response = this.getPostulations.Run(request);
-
-            // Assert
-            var okObjectResult = Assert.IsType<OkObjectResult>(response);
-            Assert.IsType<Postulation[]>(okObjectResult.Value);
-        }
-
-        [Fact]
-        public void GetPostulations_WithQueryParam_()
+        public void GetPostulationsByResumeId_ValidProjectId_OkObjectResult()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
@@ -54,22 +40,7 @@
         }
 
         [Fact]
-        public void GetPostulationsById_ValidId_Postulation()
-        {
-            // Arrange
-            var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetPostulations(It.IsAny<string>())).Returns(new Postulation[10]);
-
-            // Act
-            var response = this.getPostulations.Run(request);
-
-            // Assert
-            var okObjectResult = Assert.IsType<OkObjectResult>(response);
-            Assert.IsType<Postulation[]>(okObjectResult.Value);
-        }
-
-        [Fact]
-        public void GetPostulations_InvalidResponse_InternalError()
+        public void GetPostulationsByResumeId_UnexpectedError_InternalError()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
@@ -84,7 +55,7 @@
         }
 
         [Fact]
-        public void GetPostulations_InvalidSkill_NotFound()
+        public void GetPostulationsByResumeId_InvalidProjectId_BadRequest()
         {
             // Arrange
             var request = this.mockHttpContext.Request;

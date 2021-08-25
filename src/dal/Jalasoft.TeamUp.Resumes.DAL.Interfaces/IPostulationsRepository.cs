@@ -5,6 +5,6 @@ namespace Jalasoft.TeamUp.Resumes.DAL.Interfaces
 
     public interface IPostulationsRepository : IRepository<Postulation>
     {
-        IEnumerable<Postulation> GetPostulationsById(string value);
+        IEnumerable<Postulation> GetPostulationsResumeId(string value);
     }
 }
