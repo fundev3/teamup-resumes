@@ -38,7 +38,7 @@
                 .NotEmpty()
                 .NotNull();
 
-            this.RuleFor(postulation => postulation.LastDate)
+            this.RuleFor(postulation => postulation.LastUpdate)
                 .NotEmpty()
                 .NotNull();
         }

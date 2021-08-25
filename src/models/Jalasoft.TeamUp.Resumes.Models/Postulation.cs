@@ -6,7 +6,7 @@
     {
         public int Id { get; set; }
 
-        public Guid ProjectId { get; set; }
+        public string ProjectId { get; set; }
 
         public int ResumeId { get; set; }
 
@@ -18,7 +18,7 @@
 
         public DateTime CreationDate { get; set; }
 
-        public DateTime LastDate { get; set; }
+        public DateTime LastUpdate { get; set; }
 
         public string State { get; set; }
     }

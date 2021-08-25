@@ -15,26 +15,25 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
     public class GetPostulationsByProjectId
     {
-        /*private readonly IPostulationsService postulationsService;
+        private readonly IPostulationsService postulationsService;
 
         public GetPostulationsByProjectId(IPostulationsService postulationsService)
         {
             this.postulationsService = postulationsService;
-        }*/
+        }
 
         [FunctionName("GetPostulationsByProjectId")]
         [OpenApiOperation(operationId: "GetPostulationsByProjectId", tags: new[] { "Postulations" })]
         [OpenApiParameter(name: "projectId", In = ParameterLocation.Query, Required = true, Type = typeof(Guid), Description = "The Id of the project to search by.")]
-
-        // [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulations[]), Description = "Successful response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
-        public bool Run(
+        public IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/postulations")] HttpRequest req)
         {
-            /*try
+            try
             {
                 req.Query.TryGetValue("projectId", out StringValues projectId);
-                var postulations = this.skillsService.GetSkills(projectId);
+                var postulations = this.postulationsService.GetPostulationsByProjectId(projectId);
                 if (postulations.Length == 0)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
@@ -51,8 +50,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             {
                 var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
                 return errorException.Error;
-            }*/
-            return true;
+            }
         }
     }
 }
