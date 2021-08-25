@@ -18,7 +18,7 @@
 
         public DateTime CreationDate { get; set; }
 
-        public DateTime LastDate { get; set; }
+        public DateTime LastUpdate { get; set; }
 
         public string State { get; set; }
     }

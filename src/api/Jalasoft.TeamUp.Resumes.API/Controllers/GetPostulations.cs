@@ -10,29 +10,30 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+    using Microsoft.Extensions.Primitives;
     using Microsoft.OpenApi.Models;
 
-    public class GetPostulationsByResumeId
+    public class GetPostulations
     {
-        private readonly IPostulationService postulationService;
+        private readonly IPostulationsService postulationService;
 
-        public GetPostulationsByResumeId(IPostulationService postulationService)
+        public GetPostulations(IPostulationsService postulationService)
         {
             this.postulationService = postulationService;
         }
 
         [FunctionName("GetPostulationsByResumeId")]
-        [OpenApiOperation(operationId: "GetPostulationsByResumeId", tags: new[] { "Resumes" })]
-        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The resume identifier.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
+        [OpenApiOperation(operationId: "GetPostulationsByResumeId", tags: new[] { "Postulations" })]
+        [OpenApiParameter(name: "id", In = ParameterLocation.Query, Required = false, Type = typeof(int), Description = "The resume identifier.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes/{id:int}")] HttpRequest req, int id)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/postulation")] HttpRequest req)
         {
             try
             {
-                var result = new Resume();
-                result = this.postulationService.GetPostulationsByResumeId(id);
+                string id = req.Query["id"];
+                var result = this.postulationService.GetPostulations(id);
                 if (result == null)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);

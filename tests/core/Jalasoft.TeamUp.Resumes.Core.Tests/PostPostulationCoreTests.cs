@@ -30,7 +30,7 @@
                 ResumeName = "Jorge Lopez",
                 Picture = "test",
                 CreationDate = DateTime.Now.AddDays(-10),
-                LastDate = DateTime.Now,
+                LastUpdate = DateTime.Now,
                 State = "Applied"
             };
 
@@ -50,7 +50,7 @@
                 ResumeName = string.Empty,
                 Picture = string.Empty,
                 CreationDate = DateTime.Now.AddDays(-10),
-                LastDate = DateTime.Now,
+                LastUpdate = DateTime.Now,
                 State = "Applied"
             };
 

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     using Dapper;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -28,7 +29,7 @@
                 resumeName = postulation.ResumeName,
                 picture = postulation.Picture,
                 creationDate = postulation.CreationDate,
-                lastUpdate = postulation.LastDate,
+                lastUpdate = postulation.LastUpdate,
                 state = postulation.State
             };
 
@@ -58,6 +59,24 @@
         public IEnumerable<Resume> GetByName(string name)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Resume> GetBySkill(string skill)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Postulation> GetPostulationsById(string id)
+        {
+            List<Postulation> postulations = new List<Postulation>();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Get_postulations_by_ld";
+                var values = new { Id = id };
+                postulations = db.Query<Postulation>(sp, values, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return postulations;
         }
 
         public Postulation Update(Postulation updateObject)

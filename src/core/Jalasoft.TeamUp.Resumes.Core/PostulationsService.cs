@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
+    using System.Linq;
     using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Core.Validators;
@@ -11,19 +12,21 @@
     {
         private readonly IPostulationsRepository postulationsRepository;
 
-        public PostulationsService(IPostulationsRepository resumesRepository)
+        public PostulationsService(IPostulationsRepository postulationsRepository)
         {
-            this.postulationsRepository = resumesRepository;
+            this.postulationsRepository = postulationsRepository;
         }
 
-        public Postulation GetPostulation(int id)
+        public Postulation[] GetPostulations(string value)
         {
-            throw new NotImplementedException();
-        }
-
-        public Postulation[] GetPostulations()
-        {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(value))
+            {
+                return this.postulationsRepository.GetPostulationsById(null).ToArray();
+            }
+            else
+            {
+                return this.postulationsRepository.GetPostulationsById(value).ToArray();
+            }
         }
 
         public Postulation PostPostulation(Postulation postulation)
