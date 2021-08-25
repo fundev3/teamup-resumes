@@ -92,7 +92,7 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetPostulationsByProjectId(It.IsAny<string>())).Throws(new ResumesException(ResumesErrors.NotFound));
+            this.mockService.Setup(service => service.GetPostulationsByProjectId(It.IsAny<string>())).Returns(new Postulation[0]);
 
             // Act
             var response = this.getPostulationsByProjectId.Run(request);
