@@ -25,7 +25,7 @@
                 .NotNull()
                 .MaximumLength(50);
 
-            this.RuleFor(postulation => postulation.Status)
+            this.RuleFor(postulation => postulation.State)
                 .NotEmpty()
                 .NotNull()
                 .MaximumLength(20);
