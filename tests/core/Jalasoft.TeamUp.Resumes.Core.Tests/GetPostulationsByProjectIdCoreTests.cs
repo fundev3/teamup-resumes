@@ -51,7 +51,7 @@
         }
 
         [Fact]
-        public void GetPostulationsByProjectId_AllItems_PostulationResult()
+        public void GetPostulationsByProjectId_ValidProjectId_Postulations()
         {
             // Arrange
             this.mockRepository.Setup(repository => repository.GetAllByProjectId(It.IsAny<string>())).Returns(GetTestPostulations());
@@ -64,7 +64,7 @@
         }
 
         [Fact]
-        public void GetPostulationsByProjectId_EmptyItems_PostulationResult()
+        public void GetPostulationsByProjectId_ValidProjectId_EmptyPostulations()
         {
             // Arrange
             this.mockRepository.Setup(repository => repository.GetAllByProjectId(It.IsAny<string>())).Returns(new List<Postulation>());
