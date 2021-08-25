@@ -28,7 +28,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         }
 
         [FunctionName("PostPostulation")]
-        [OpenApiOperation(operationId: "PostPostulation", tags: new[] { "Postulation" })]
+        [OpenApiOperation(operationId: "PostPostulation", tags: new[] { "Postulations" })]
         [OpenApiRequestBody("application/json", typeof(Postulation), Description = "JSON request body containing Postulation")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(Postulation), Description = "Successful response")]
         public IActionResult Run(
