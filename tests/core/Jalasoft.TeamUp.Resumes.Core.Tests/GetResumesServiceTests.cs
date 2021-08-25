@@ -149,6 +149,33 @@
             Assert.Null(this.resumesService.GetResume(1));
         }
 
+        [Fact]
+        public void GetResumesByName_ItemsExist_ResumesArray()
+        {
+            // Arrange
+            this.mockRepository.Setup(repository => repository.GetByName("Gustavo")).Returns(GetTestResumes().ToList());
+
+            // Act
+            var result = this.resumesService.GetByName("Gustavo");
+
+            // Assert
+            Assert.Equal(2, result.Length);
+        }
+
+        [Fact]
+        public void GetResumesByName_NoItems_EmptyResult()
+        {
+            // Arrange
+            var stubEmptyResumeList = new List<Resume>();
+            this.mockRepository.Setup(repository => repository.GetByName("Gustavo")).Returns(stubEmptyResumeList);
+
+            // Act
+            var result = this.resumesService.GetByName("Gustavo");
+
+            // Assert
+            Assert.Empty(result);
+        }
+
         // -----------------------------------------
         [Fact]
         public void GetResumesBySkill_NoItems_EmptyResult()
