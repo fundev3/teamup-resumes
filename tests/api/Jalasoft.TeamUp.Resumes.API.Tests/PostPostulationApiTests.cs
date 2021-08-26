@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.API.Tests
+namespace Jalasoft.TeamUp.Resumes.API.Tests
 {
     using System;
     using FluentValidation;

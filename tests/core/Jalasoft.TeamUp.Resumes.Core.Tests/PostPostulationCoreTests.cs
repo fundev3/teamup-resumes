@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Core.Tests
+namespace Jalasoft.TeamUp.Resumes.Core.Tests
 {
     using System;
     using System.Collections.Generic;
