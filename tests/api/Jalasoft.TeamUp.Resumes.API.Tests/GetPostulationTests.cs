@@ -36,6 +36,7 @@
 
             // Assert
             var okObjectResult = Assert.IsType<OkObjectResult>(response);
+            Assert.Equal(200, okObjectResult.StatusCode);
             Assert.IsType<Postulation[]>(okObjectResult.Value);
         }
 

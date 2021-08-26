@@ -26,14 +26,27 @@
             {
                 new Postulation()
                 {
-                    ProjectId = "1231231273687812",
+                    Id = 1,
+                    ProjectId = "7ca39055-b22a-4826-9304-318009778f6b",
                     ResumeId = 1,
-                    ProjectName = "TeamUp",
-                    ResumeName = "Jorge Lopez",
-                    Picture = "test",
-                    CreationDate = DateTime.Now.AddDays(-10),
+                    ProjectName = "JalaTalk",
+                    ResumeName = "Lina",
+                    Picture = "test.png",
+                    CreationDate = DateTime.Now,
                     LastUpdate = DateTime.Now,
-                    State = "Applied"
+                    State = "postulated"
+                },
+                new Postulation()
+                {
+                    Id = 2,
+                    ProjectId = "7ca39055-b22a-4826-9304-318009778f6b",
+                    ResumeId = 2,
+                    ProjectName = "JalaTalk",
+                    ResumeName = "Paulo",
+                    Picture = "test.png",
+                    CreationDate = DateTime.Now,
+                    LastUpdate = DateTime.Now,
+                    State = "postulated"
                 }
             };
             return postulations;
@@ -49,7 +62,7 @@
             var result = this.postulationService.GetPostulations(It.IsAny<string>());
 
             // Assert
-            Assert.NotNull(result);
+            Assert.Equal(2, result.Length);
         }
 
         [Fact]
