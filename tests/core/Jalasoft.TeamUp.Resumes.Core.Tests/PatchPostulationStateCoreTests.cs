@@ -34,7 +34,7 @@
                 State = "Applied"
             };
 
-            this.mockPostulation.Setup(repository => repository.Add(stubPostulation)).Returns(new Postulation());
+            this.mockPostulation.Setup(repository => repository.Update(stubPostulation)).Returns(new Postulation());
             var result = this.postulationService.PatchPostulation(stubPostulation);
             Assert.IsType<Postulation>(result);
         }
@@ -44,11 +44,12 @@
         {
             var stubPostulation = new Postulation
             {
-                ProjectId = "1235",
+                Id = 1,
+                ProjectId = "12332",
                 ResumeId = 1,
-                ProjectName = string.Empty,
-                ResumeName = string.Empty,
-                Picture = string.Empty,
+                ProjectName = "TeamUp",
+                ResumeName = "Jorge Lopez",
+                Picture = "test.png",
                 CreationDate = DateTime.Now.AddDays(-10),
                 LastUpdate = DateTime.Now,
                 State = "Applied"

@@ -1,4 +1,4 @@
-namespace Jalasoft.TeamUp.Resumes.DAL
+﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
     using System;
     using System.Collections.Generic;
@@ -28,8 +28,8 @@ namespace Jalasoft.TeamUp.Resumes.DAL
                 projectName = postulation.ProjectName,
                 resumeName = postulation.ResumeName,
                 picture = postulation.Picture,
-                creationDate = postulation.CreationDate,
-                lastUpdate = postulation.LastUpdate,
+                creationDate = DateTime.Now,
+                lastUpdate = DateTime.Now,
                 state = postulation.State
             };
 
@@ -70,11 +70,6 @@ namespace Jalasoft.TeamUp.Resumes.DAL
         }
 
         public IEnumerable<Resume> GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Resume> GetBySkill(string skill)
         {
             throw new NotImplementedException();
         }

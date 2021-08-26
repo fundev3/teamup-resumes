@@ -28,18 +28,16 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
         [FunctionName("PatchPostulation")]
         [OpenApiOperation(operationId: "PatchPostulation", tags: new[] { "Postulations" })]
-        [OpenApiParameter(name: "Id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The Postulation identifier")]
         [OpenApiRequestBody("application/json", typeof(Postulation), Description = "JSON request body containing Postulation")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation), Description = "Successful response")]
         public IActionResult Patch(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "v1/postulations/{id: int}")] HttpRequest req, int id)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "v1/postulations/{id: int}")] HttpRequest req)
         {
             try
             {
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
                 var postulation = JsonConvert.DeserializeObject<Postulation>(requestBody);
 
-                // postulation.Id = id;
                 var result = this.postulationsService.PatchPostulation(postulation);
 
                 if (result == null)

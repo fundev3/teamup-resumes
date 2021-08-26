@@ -28,7 +28,7 @@
         {
             var request = this.mockHttpContext.Request;
             this.mockPostulationsService.Setup(service => service.PatchPostulation(It.IsAny<Postulation>())).Returns(new Postulation());
-            var response = this.patchPostulation.Patch(request, 1);
+            var response = this.patchPostulation.Patch(request);
             var updatedResult = Assert.IsType<OkObjectResult>(response);
         }
 
@@ -38,7 +38,7 @@
             var request = this.mockHttpContext.Request;
             Postulation postulation = null;
             this.mockPostulationsService.Setup(service => service.PatchPostulation(It.IsAny<Postulation>())).Returns(postulation);
-            var response = this.patchPostulation.Patch(request, 7);
+            var response = this.patchPostulation.Patch(request);
             var updatedResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(404, updatedResult.StatusCode);
         }
@@ -48,7 +48,7 @@
         {
             var request = this.mockHttpContext.Request;
             this.mockPostulationsService.Setup(service => service.PatchPostulation(It.IsAny<Postulation>())).Throws(new Exception());
-            var response = this.patchPostulation.Patch(request, 1);
+            var response = this.patchPostulation.Patch(request);
             var updatedResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(500, updatedResult.StatusCode);
         }
