@@ -24,7 +24,7 @@ namespace Jalasoft.TeamUp.Resumes.Core
 
         public Postulation[] GetPostulations(string value)
         {
-                return this.postulationsRepository.GetPostulationsResumeId(value).ToArray();
+                return this.postulationsRepository.GetPostulationsByResumeId(value).ToArray();
         }
 
         public Postulation[] GetPostulationsByProjectId(string projectId)

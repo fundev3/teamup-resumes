@@ -43,7 +43,7 @@
         public void GetPostulationsByResumeId_ValidResumeId_Postulations()
         {
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetPostulationsResumeId(It.IsAny<string>())).Returns(GetTestPostulations);
+            this.mockRepository.Setup(repository => repository.GetPostulationsByResumeId(It.IsAny<string>())).Returns(GetTestPostulations);
 
             // Act
             var result = this.postulationService.GetPostulations(It.IsAny<string>());
@@ -57,7 +57,7 @@
         {
             // Arrange
             var stubEmptyProjectList = new List<Postulation>();
-            this.mockRepository.Setup(repository => repository.GetPostulationsResumeId(It.IsAny<string>())).Returns(stubEmptyProjectList);
+            this.mockRepository.Setup(repository => repository.GetPostulationsByResumeId(It.IsAny<string>())).Returns(stubEmptyProjectList);
 
             // Act
             var result = this.postulationService.GetPostulations(It.IsAny<string>());
