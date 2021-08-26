@@ -116,7 +116,7 @@
         }
 
         [Fact]
-        public void GetPostulationsByResumeId_ValidProjectId_OkObjectResult()
+        public void GetPostulationsByResumeId_ValidResumeId_OkObjectResult()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
@@ -147,7 +147,7 @@
         }
 
         [Fact]
-        public void GetPostulationsByResumeId_InvalidProjectId_BadRequest()
+        public void GetPostulationsByResumeId_InvalidResumeId_BadRequest()
         {
             // Arrange
             var request = this.mockHttpContext.Request;
