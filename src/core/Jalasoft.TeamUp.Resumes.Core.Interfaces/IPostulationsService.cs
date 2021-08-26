@@ -11,5 +11,7 @@
         Postulation[] GetPostulations();
 
         Postulation[] GetPostulationsByProjectId(string projectId);
+
+        Postulation PatchPostulation(Postulation postulation);
     }
 }

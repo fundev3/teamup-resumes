@@ -76,7 +76,31 @@
 
         public Postulation Update(Postulation updateObject)
         {
-            throw new NotImplementedException();
+            bool postulationExist = true;
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Update_State_Postulation";
+                var values = new
+                {
+                    id = updateObject.Id,
+                    state = updateObject.State,
+                    projectId = updateObject.ProjectId,
+                    resumeId = updateObject.ResumeId,
+                    projectName = updateObject.ProjectName,
+                    resumeName = updateObject.ResumeName,
+                    picture = updateObject.Picture,
+                    creationDate = updateObject.CreationDate,
+                    lastUpdate = updateObject.LastUpdate,
+                };
+                postulationExist = db.QuerySingle<bool>(sp, values, commandType: CommandType.StoredProcedure);
+            }
+
+            if (!postulationExist)
+            {
+                updateObject = null;
+            }
+
+            return updateObject;
         }
     }
 }

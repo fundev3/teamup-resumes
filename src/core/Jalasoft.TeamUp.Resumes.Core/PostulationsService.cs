@@ -33,6 +33,14 @@
             return postulations.ToArray();
         }
 
+        public Postulation PatchPostulation(Postulation postulation)
+        {
+            var postulationValidator = new PostulationValidator();
+            postulationValidator.ValidateAndThrow(postulation);
+
+            return this.postulationsRepository.Update(postulation);
+        }
+
         public Postulation PostPostulation(Postulation postulation)
         {
             var postulationValidator = new PostulationValidator();
