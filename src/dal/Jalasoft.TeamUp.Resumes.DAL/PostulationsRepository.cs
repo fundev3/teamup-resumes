@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.DAL
+namespace Jalasoft.TeamUp.Resumes.DAL
 {
     using System;
     using System.Collections.Generic;
@@ -28,8 +28,8 @@
                 projectName = postulation.ProjectName,
                 resumeName = postulation.ResumeName,
                 picture = postulation.Picture,
-                creationDate = DateTime.Now,
-                lastUpdate = DateTime.Now,
+                creationDate = postulation.CreationDate,
+                lastUpdate = postulation.LastUpdate,
                 state = postulation.State
             };
 
@@ -72,6 +72,24 @@
         public IEnumerable<Resume> GetByName(string name)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Resume> GetBySkill(string skill)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Postulation> GetPostulationsByResumeId(int? resumeId)
+        {
+            List<Postulation> postulations = new List<Postulation>();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Get_postulations_by_ld";
+                var values = new { Id = resumeId };
+                postulations = db.Query<Postulation>(sp, values, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return postulations;
         }
 
         public Postulation Update(Postulation updateObject)

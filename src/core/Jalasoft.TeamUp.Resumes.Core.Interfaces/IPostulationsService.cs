@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Core.Interfaces
+namespace Jalasoft.TeamUp.Resumes.Core.Interfaces
 {
     using Jalasoft.TeamUp.Resumes.Models;
 
@@ -6,9 +6,9 @@
     {
         Postulation PostPostulation(Postulation postulation);
 
-        Postulation GetPostulation(int id);
+        Postulation[] GetPostulations(int? resumeId);
 
-        Postulation[] GetPostulations();
+        Postulation GetPostulation(int id);
 
         Postulation[] GetPostulationsByProjectId(string projectId);
     }

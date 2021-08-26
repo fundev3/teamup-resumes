@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Core
+namespace Jalasoft.TeamUp.Resumes.Core
 {
     using System;
     using System.Linq;
@@ -12,9 +12,9 @@
     {
         private readonly IPostulationsRepository postulationsRepository;
 
-        public PostulationsService(IPostulationsRepository resumesRepository)
+        public PostulationsService(IPostulationsRepository postulationsRepository)
         {
-            this.postulationsRepository = resumesRepository;
+            this.postulationsRepository = postulationsRepository;
         }
 
         public Postulation GetPostulation(int id)
@@ -22,15 +22,14 @@
             throw new NotImplementedException();
         }
 
-        public Postulation[] GetPostulations()
+        public Postulation[] GetPostulations(int? resumeId)
         {
-            throw new NotImplementedException();
+                return this.postulationsRepository.GetPostulationsByResumeId(resumeId).ToArray();
         }
 
         public Postulation[] GetPostulationsByProjectId(string projectId)
         {
-            var postulations = this.postulationsRepository.GetAllByProjectId(projectId);
-            return postulations.ToArray();
+                return this.postulationsRepository.GetAllByProjectId(projectId).ToArray();
         }
 
         public Postulation PostPostulation(Postulation postulation)
