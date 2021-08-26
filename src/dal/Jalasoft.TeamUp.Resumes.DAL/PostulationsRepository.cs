@@ -79,7 +79,7 @@ namespace Jalasoft.TeamUp.Resumes.DAL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Postulation> GetPostulationsByResumeId(string resumeId)
+        public IEnumerable<Postulation> GetPostulationsByResumeId(int? resumeId)
         {
             List<Postulation> postulations = new List<Postulation>();
             using (IDbConnection db = new SqlConnection(this.connectionString))

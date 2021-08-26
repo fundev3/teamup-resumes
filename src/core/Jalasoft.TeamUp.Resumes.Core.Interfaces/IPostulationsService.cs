@@ -6,7 +6,7 @@ namespace Jalasoft.TeamUp.Resumes.Core.Interfaces
     {
         Postulation PostPostulation(Postulation postulation);
 
-        Postulation[] GetPostulations(string value);
+        Postulation[] GetPostulations(int? resumeId);
 
         Postulation GetPostulation(int id);
 

@@ -22,15 +22,14 @@ namespace Jalasoft.TeamUp.Resumes.Core
             throw new NotImplementedException();
         }
 
-        public Postulation[] GetPostulations(string value)
+        public Postulation[] GetPostulations(int? resumeId)
         {
-                return this.postulationsRepository.GetPostulationsByResumeId(value).ToArray();
+                return this.postulationsRepository.GetPostulationsByResumeId(resumeId).ToArray();
         }
 
         public Postulation[] GetPostulationsByProjectId(string projectId)
         {
-            var postulations = this.postulationsRepository.GetAllByProjectId(projectId);
-            return postulations.ToArray();
+                return this.postulationsRepository.GetAllByProjectId(projectId).ToArray();
         }
 
         public Postulation PostPostulation(Postulation postulation)

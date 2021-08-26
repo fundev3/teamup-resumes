@@ -24,7 +24,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
         [FunctionName("GetPostulations")]
         [OpenApiOperation(operationId: "GetPostulations", tags: new[] { "Postulations" })]
-        [OpenApiParameter(name: "resumeId", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The resume identifier.")]
+        [OpenApiParameter(name: "resumeId", In = ParameterLocation.Query, Required = false, Type = typeof(int), Description = "The resume identifier.")]
         [OpenApiParameter(name: "projectId", In = ParameterLocation.Query, Required = false, Type = typeof(Guid), Description = "The Id of the project to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
@@ -35,10 +35,12 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             {
                 req.Query.TryGetValue("resumeId", out StringValues resumeId);
                 req.Query.TryGetValue("projectId", out StringValues projectId);
+                int? resumeIdNumber;
+                resumeIdNumber = string.IsNullOrEmpty(resumeId) ? resumeIdNumber = null : resumeIdNumber = int.Parse(resumeId);
                 Postulation[] result = null;
                 if (string.IsNullOrEmpty(projectId))
                 {
-                    result = this.postulationsService.GetPostulations(resumeId);
+                    result = this.postulationsService.GetPostulations(resumeIdNumber);
                 }
                 else
                 {

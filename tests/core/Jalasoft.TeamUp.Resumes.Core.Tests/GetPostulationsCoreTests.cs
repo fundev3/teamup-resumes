@@ -56,24 +56,24 @@
         public void GetPostulationsByResumeId_ValidResumeId_Postulations()
         {
             // Arrange
-            this.mockRepository.Setup(repository => repository.GetPostulationsByResumeId(It.IsAny<string>())).Returns(GetTestPostulations);
+            this.mockRepository.Setup(repository => repository.GetPostulationsByResumeId(It.IsAny<int>())).Returns(GetTestPostulations);
 
             // Act
-            var result = this.postulationService.GetPostulations(It.IsAny<string>());
+            var result = this.postulationService.GetPostulations(It.IsAny<int>());
 
             // Assert
             Assert.Equal(2, result.Length);
         }
 
         [Fact]
-        public void GetPostulationsByResumeId_ValidProjectId_EmptyPostulations()
+        public void GetPostulationsByResumeId_ValidResumeId_EmptyPostulations()
         {
             // Arrange
             var stubEmptyProjectList = new List<Postulation>();
-            this.mockRepository.Setup(repository => repository.GetPostulationsByResumeId(It.IsAny<string>())).Returns(stubEmptyProjectList);
+            this.mockRepository.Setup(repository => repository.GetPostulationsByResumeId(It.IsAny<int>())).Returns(stubEmptyProjectList);
 
             // Act
-            var result = this.postulationService.GetPostulations(It.IsAny<string>());
+            var result = this.postulationService.GetPostulations(It.IsAny<int>());
 
             // Assert
             Assert.Empty(result);
