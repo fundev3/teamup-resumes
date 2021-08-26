@@ -29,7 +29,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiRequestBody("application/json", typeof(Postulation), Description = "JSON request body containing Postulation")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(Postulation), Description = "Successful response")]
         public IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "v1/postulations")] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/postulations")] HttpRequest req)
         {
             try
             {
