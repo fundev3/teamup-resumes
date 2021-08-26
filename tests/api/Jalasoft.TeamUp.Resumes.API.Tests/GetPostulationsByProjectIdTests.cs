@@ -15,13 +15,13 @@
     {
         private readonly Mock<IPostulationsService> mockService;
         private readonly DefaultHttpContext mockHttpContext;
-        private readonly GetPostulationsByProjectId getPostulationsByProjectId;
+        private readonly GetPostulations getPostulationsByProjectId;
 
         public GetPostulationsByProjectIdTests()
         {
             this.mockService = new Mock<IPostulationsService>();
             this.mockHttpContext = new DefaultHttpContext();
-            this.getPostulationsByProjectId = new GetPostulationsByProjectId(this.mockService.Object);
+            this.getPostulationsByProjectId = new GetPostulations(this.mockService.Object);
         }
 
         public static Postulation[] GetTestPostulations()
@@ -61,7 +61,7 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetPostulationsByProjectId(It.IsAny<string>())).Returns(GetTestPostulations());
+            this.mockService.Setup(service => service.GetPostulations(It.IsAny<string>())).Returns(GetTestPostulations());
 
             // Act
             var response = this.getPostulationsByProjectId.Run(request);
@@ -77,7 +77,7 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            var res = this.mockService.Setup(service => service.GetPostulationsByProjectId(null)).Throws(new ResumesException(ResumesErrors.InternalServerError, new Exception()));
+            var res = this.mockService.Setup(service => service.GetPostulations(null)).Throws(new ResumesException(ResumesErrors.InternalServerError, new Exception()));
 
             // Act
             var response = this.getPostulationsByProjectId.Run(request);
@@ -92,7 +92,7 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetPostulationsByProjectId(It.IsAny<string>())).Returns(new Postulation[0]);
+            this.mockService.Setup(service => service.GetPostulations(It.IsAny<string>())).Returns(new Postulation[0]);
 
             // Act
             var response = this.getPostulationsByProjectId.Run(request);

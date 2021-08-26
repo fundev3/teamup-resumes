@@ -28,8 +28,8 @@ namespace Jalasoft.TeamUp.Resumes.DAL
                 projectName = postulation.ProjectName,
                 resumeName = postulation.ResumeName,
                 picture = postulation.Picture,
-                creationDate = DateTime.Now,
-                lastUpdate = DateTime.Now,
+                creationDate = postulation.CreationDate,
+                lastUpdate = postulation.LastUpdate,
                 state = postulation.State
             };
 

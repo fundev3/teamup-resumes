@@ -53,7 +53,7 @@
         }
 
         [Fact]
-        public void GetPostulationsByResumeId_InvalidResumeId_ValidationException()
+        public void GetPostulationsByResumeId_ValidProjectId_EmptyPostulations()
         {
             // Arrange
             var stubEmptyProjectList = new List<Postulation>();

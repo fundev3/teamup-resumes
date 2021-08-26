@@ -15,26 +15,36 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
     public class GetPostulations
     {
-        private readonly IPostulationsService postulationService;
+        private readonly IPostulationsService postulationsService;
 
-        public GetPostulations(IPostulationsService postulationService)
+        public GetPostulations(IPostulationsService postulationsService)
         {
-            this.postulationService = postulationService;
+            this.postulationsService = postulationsService;
         }
 
-        [FunctionName("GetPostulationsByResumeId")]
-        [OpenApiOperation(operationId: "GetPostulationsByResumeId", tags: new[] { "Postulations" })]
+        [FunctionName("GetPostulations")]
+        [OpenApiOperation(operationId: "GetPostulations", tags: new[] { "Postulations" })]
         [OpenApiParameter(name: "resumeId", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The resume identifier.")]
+        [OpenApiParameter(name: "projectId", In = ParameterLocation.Query, Required = false, Type = typeof(Guid), Description = "The Id of the project to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/postulation")] HttpRequest req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/postulations")] HttpRequest req)
         {
             try
             {
-                string resumeId = req.Query["resumeId"];
+                req.Query.TryGetValue("resumeId", out StringValues resumeId);
+                req.Query.TryGetValue("projectId", out StringValues projectId);
                 Postulation[] result = null;
-                result = this.postulationService.GetPostulations(resumeId);
+                if (string.IsNullOrEmpty(projectId))
+                {
+                    result = this.postulationsService.GetPostulations(resumeId);
+                }
+                else
+                {
+                    result = this.postulationsService.GetPostulationsByProjectId(projectId);
+                }
+
                 if (result.Length == 0)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
@@ -46,9 +56,9 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             {
                 return e.Error;
             }
-            catch (Exception ex)
+            catch (System.Exception e)
             {
-                var errorException = new ResumesException(ResumesErrors.InternalServerError, ex);
+                var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
                 return errorException.Error;
             }
         }
