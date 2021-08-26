@@ -127,6 +127,7 @@
 
             // Assert
             var okObjectResult = Assert.IsType<OkObjectResult>(response);
+            Assert.Equal(200, okObjectResult.StatusCode);
             Assert.IsType<Postulation[]>(okObjectResult.Value);
         }
 
@@ -150,7 +151,7 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetPostulations(It.IsAny<int?>())).Throws(new ResumesException(ResumesErrors.NotFound));
+            this.mockService.Setup(service => service.GetPostulations(It.IsAny<int?>())).Returns(new Postulation[0]);
 
             // Act
             var response = this.getPostulations.Run(request);
