@@ -78,5 +78,31 @@
             // Assert
             Assert.Empty(result);
         }
+
+        [Fact]
+        public void GetPostulationsByProjectId_ValidProjectId_Postulations()
+        {
+            // Arrange
+            this.mockRepository.Setup(repository => repository.GetAllByProjectId(It.IsAny<string>())).Returns(GetTestPostulations());
+
+            // Act
+            var result = this.postulationService.GetPostulationsByProjectId(It.IsAny<string>());
+
+            // Assert
+            Assert.Equal(2, result.Length);
+        }
+
+        [Fact]
+        public void GetPostulationsByProjectId_ValidProjectId_EmptyPostulations()
+        {
+            // Arrange
+            this.mockRepository.Setup(repository => repository.GetAllByProjectId(It.IsAny<string>())).Returns(new List<Postulation>());
+
+            // Act
+            var result = this.postulationService.GetPostulationsByProjectId(It.IsAny<string>());
+
+            // Assert
+            Assert.Empty(result);
+        }
     }
 }
