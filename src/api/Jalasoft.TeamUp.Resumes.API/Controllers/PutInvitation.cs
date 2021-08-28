@@ -36,9 +36,10 @@
         {
             {
                 string requestBody = new StreamReader(req.Body).ReadToEnd();
-                var invitation = JsonConvert.DeserializeObject(requestBody);
+                var invitations = JsonConvert.DeserializeObject(requestBody);
                 var result = this.invitationsService.UpdateInvitation(invitationId);
-
+                var idresume = req.idresume;
+                var projectId = req.projectId;
                 // var response = this.invitationsService.UpdateProject(idresume, projectId);
                 return new OkObjectResult(result);
             }
