@@ -1,10 +1,9 @@
 namespace Jalasoft.TeamUp.Resumes.API.Controllers
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Net;
-    using System.Threading.Tasks;
+    using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Jalasoft.TeamUp.Resumes.ResumesException;
@@ -13,7 +12,6 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-    using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
     using Newtonsoft.Json;
 
@@ -31,7 +29,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiRequestBody("application/json", typeof(Postulation), Description = "JSON request body containing Postulation")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation), Description = "Successful response")]
         public IActionResult Patch(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "v1/postulations/{id: int}")] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "v1/postulations")] HttpRequest req)
         {
             try
             {

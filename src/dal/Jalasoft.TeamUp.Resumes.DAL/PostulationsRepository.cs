@@ -92,7 +92,7 @@
             bool postulationExist = true;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                var sp = "Update_State_Postulation";
+                var sp = "Update_Postulation";
                 var values = new
                 {
                     id = updateObject.Id,
