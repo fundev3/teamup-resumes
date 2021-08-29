@@ -6,8 +6,6 @@
     {
         Postulation PostPostulation(Postulation postulation);
 
-        Postulation GetPostulation(int id);
-
         Postulation[] GetPostulations(int? resumeId);
 
         Postulation[] GetPostulationsByProjectId(string projectId);

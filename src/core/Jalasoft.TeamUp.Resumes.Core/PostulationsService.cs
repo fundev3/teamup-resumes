@@ -17,27 +17,19 @@ namespace Jalasoft.TeamUp.Resumes.Core
             this.postulationsRepository = postulationsRepository;
         }
 
-        public Postulation GetPostulation(int id)
-        {
-            return this.postulationsRepository.GetById(id);
-        }
-
         public Postulation[] GetPostulations(int? resumeId)
         {
-                return this.postulationsRepository.GetPostulationsByResumeId(resumeId).ToArray();
+            return this.postulationsRepository.GetPostulationsByResumeId(resumeId).ToArray();
         }
 
         public Postulation[] GetPostulationsByProjectId(string projectId)
         {
-                return this.postulationsRepository.GetAllByProjectId(projectId).ToArray();
+            return this.postulationsRepository.GetAllByProjectId(projectId).ToArray();
         }
 
         public Postulation PatchPostulation(Postulation postulation)
         {
-            var postulationValidator = new PostulationValidator();
-            postulationValidator.ValidateAndThrow(postulation);
-
-            return this.postulationsRepository.Update(postulation);
+            return this.postulationsRepository.UpdatePostulation(postulation);
         }
 
         public Postulation PostPostulation(Postulation postulation)
@@ -45,7 +37,7 @@ namespace Jalasoft.TeamUp.Resumes.Core
             var postulationValidator = new PostulationValidator();
             postulationValidator.ValidateAndThrow(postulation);
 
-            var result = this.postulationsRepository.Add(postulation);
+            var result = this.postulationsRepository.AddPostulation(postulation);
             return result;
         }
     }

@@ -18,7 +18,7 @@
             this.connectionString = Environment.GetEnvironmentVariable("SQLConnetionString", EnvironmentVariableTarget.Process);
         }
 
-        public Postulation Add(Postulation postulation)
+        public Postulation AddPostulation(Postulation postulation)
         {
             var storeProcedure = "Create_Postulation";
             var values = new
@@ -28,8 +28,8 @@
                 projectName = postulation.ProjectName,
                 resumeName = postulation.ResumeName,
                 picture = postulation.Picture,
-                creationDate = DateTime.Now,
-                lastUpdate = DateTime.Now,
+                creationDate = postulation.CreationDate,
+                lastUpdate = postulation.LastUpdate,
                 state = postulation.State
             };
 
@@ -39,16 +39,6 @@
             }
 
             return postulation;
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Postulation> GetAll()
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<Postulation> GetAllByProjectId(string projectId)
@@ -64,24 +54,6 @@
             return postulations;
         }
 
-        public Postulation GetById(int id)
-        {
-            Postulation postulation;
-            using (IDbConnection db = new SqlConnection(this.connectionString))
-            {
-                var sp = "Get_Postulation_By_Id";
-                var values = new { id = id };
-                postulation = db.QuerySingleOrDefault<Postulation>(sp, values, commandType: CommandType.StoredProcedure);
-            }
-
-            return postulation;
-        }
-
-        public IEnumerable<Resume> GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Postulation> GetPostulationsByResumeId(int? resumeId)
         {
             List<Postulation> postulations = new List<Postulation>();
@@ -95,9 +67,8 @@
             return postulations;
         }
 
-        public Postulation Update(Postulation updateObject)
+        public Postulation UpdatePostulation(Postulation updateObject)
         {
-            bool postulationExist = true;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 var sp = "Update_Postulation";
@@ -106,19 +77,11 @@
                     id = updateObject.Id,
                     state = updateObject.State,
                     projectId = updateObject.ProjectId,
-                    resumeId = updateObject.ResumeId,
                     projectName = updateObject.ProjectName,
                     resumeName = updateObject.ResumeName,
                     picture = updateObject.Picture,
-                    creationDate = updateObject.CreationDate,
-                    lastUpdate = updateObject.LastUpdate,
                 };
-                postulationExist = db.QuerySingle<bool>(sp, values, commandType: CommandType.StoredProcedure);
-            }
-
-            if (!postulationExist)
-            {
-                updateObject = null;
+                updateObject = db.QuerySingleOrDefault<Postulation>(sp, values, commandType: CommandType.StoredProcedure);
             }
 
             return updateObject;

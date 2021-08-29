@@ -31,21 +31,23 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The postulation identifier.")]
         [OpenApiRequestBody("application/json", typeof(JsonPatchDocument<Postulation>), Description = "JSON request body containing Postulation")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation), Description = "Successful response")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public async Task<IActionResult> Patch(
             [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "v1/postulations/{id:int}")] HttpRequest req, int id)
         {
             try
             {
-                var postulation = this.postulationsService.GetPostulation(id);
-                if (postulation == null)
-                {
-                    throw new ResumesException(ResumesErrors.NotFound);
-                }
-
+                var postulation = new Postulation();
+                postulation.Id = id;
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var data = JsonConvert.DeserializeObject<JsonPatchDocument<Postulation>>(requestBody);
                 data.ApplyTo(postulation);
                 var result = this.postulationsService.PatchPostulation(postulation);
+                if (result == null)
+                {
+                    throw new ResumesException(ResumesErrors.NotFound);
+                }
+
                 return new OkObjectResult(result);
             }
             catch (ResumesException e)

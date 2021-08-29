@@ -34,7 +34,7 @@ namespace Jalasoft.TeamUp.Resumes.Core.Tests
                 State = "Applied"
             };
 
-            this.mockPostulation.Setup(repository => repository.Add(stubPostulation)).Returns(new Postulation());
+            this.mockPostulation.Setup(repository => repository.AddPostulation(stubPostulation)).Returns(new Postulation());
             var result = this.postulationService.PostPostulation(stubPostulation);
             Assert.IsType<Postulation>(result);
         }
@@ -54,7 +54,7 @@ namespace Jalasoft.TeamUp.Resumes.Core.Tests
                 State = "Applied"
             };
 
-            this.mockPostulation.Setup(repository => repository.Add(stubPostulation)).Returns(new Postulation());
+            this.mockPostulation.Setup(repository => repository.AddPostulation(stubPostulation)).Returns(new Postulation());
 
             Assert.Throws<FluentValidation.ValidationException>(() => this.postulationService.PostPostulation(stubPostulation));
         }

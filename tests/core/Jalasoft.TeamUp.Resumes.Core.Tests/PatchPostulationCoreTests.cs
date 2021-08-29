@@ -34,7 +34,7 @@
                 State = "Applied"
             };
 
-            this.mockPostulation.Setup(repository => repository.Update(stubPostulation)).Returns(new Postulation());
+            this.mockPostulation.Setup(repository => repository.UpdatePostulation(stubPostulation)).Returns(new Postulation());
             var result = this.postulationService.PatchPostulation(stubPostulation);
             Assert.IsType<Postulation>(result);
         }
@@ -56,7 +56,7 @@
             };
 
             Postulation postulation = null;
-            this.mockPostulation.Setup(repository => repository.Update(It.IsAny<Postulation>())).Returns(postulation);
+            this.mockPostulation.Setup(repository => repository.UpdatePostulation(It.IsAny<Postulation>())).Returns(postulation);
             var result = this.postulationService.PatchPostulation(stubPostulation);
             Assert.Null(result);
         }

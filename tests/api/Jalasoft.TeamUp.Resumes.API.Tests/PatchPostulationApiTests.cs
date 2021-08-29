@@ -29,12 +29,15 @@
         [InlineData(@"[
         {""op"" : ""replace"", ""path"" : ""/state"", ""value"" : ""Accepted""},
         ]")]
+        [InlineData(@"[
+        {""op"" : ""replace"", ""path"" : ""/state"", ""value"" : ""Rejected""},
+        {""op"" : ""replace"", ""path"" : ""/projectName"", ""value"" : ""Projects""},
+        ]")]
         public async void PatchPostulation_ExistentId_OkObjectResult(string body)
         {
             var request = this.mockHttpContext.Request;
             request.Body = SetStream.Setstream(body);
             this.mockPostulationsService.Setup(service => service.PatchPostulation(It.IsAny<Postulation>())).Returns(StubPostulation.GetPostulation());
-            this.mockPostulationsService.Setup(service => service.GetPostulation(It.IsAny<int>())).Returns(StubPostulation.GetPostulation());
             var response = await this.patchPostulation.Patch(request, 1);
             var updatedResult = Assert.IsType<OkObjectResult>(response);
             Assert.Equal(200, updatedResult.StatusCode);
@@ -43,6 +46,11 @@
         [Theory]
         [InlineData(@"[
         {""op"" : ""replace"", ""path"" : ""/state"", ""value"" : ""Accepted""},
+        {""op"" : ""replace"", ""path"" : ""/projectName"", ""value"" : ""TeamUp""},
+        ]")]
+        [InlineData(@"[
+        {""op"" : ""replace"", ""path"" : ""/state"", ""value"" : ""Rejected""},
+        {""op"" : ""replace"", ""path"" : ""/projectName"", ""value"" : ""Projects""},
         ]")]
         public async void PatchPostulation_UnexistentId_NotFound(string body)
         {
@@ -59,12 +67,15 @@
         [InlineData(@"[
         {""op"" : ""replace"", ""path"" : ""/state"", ""value"" : ""BadRequest""},
         ]")]
+        [InlineData(@"[
+        {""op"" : ""replace"", ""path"" : ""/state"", ""value"" : ""Rejected""},
+        {""op"" : ""replace"", ""path"" : ""/projectName"", ""value"" : ""Projects""},
+        ]")]
         public async void PatchPostulation_UnexpectedError_BadRequest(string body)
         {
             var request = this.mockHttpContext.Request;
             request.Body = SetStream.Setstream(body);
             this.mockPostulationsService.Setup(service => service.PatchPostulation(It.IsAny<Postulation>())).Throws(new ValidationException("Bad Request"));
-            this.mockPostulationsService.Setup(service => service.GetPostulation(It.IsAny<int>())).Returns(StubPostulation.GetPostulation());
             var response = await this.patchPostulation.Patch(request, 8);
             var updatedResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(400, updatedResult.StatusCode);
@@ -74,7 +85,6 @@
         public async void PatchPostulation_UnexpectedError_InternalError()
         {
             var request = this.mockHttpContext.Request;
-            this.mockPostulationsService.Setup(service => service.GetPostulation(It.IsAny<int>())).Returns(StubPostulation.GetPostulation());
             this.mockPostulationsService.Setup(service => service.PatchPostulation(It.IsAny<Postulation>())).Throws(new Exception());
             var response = await this.patchPostulation.Patch(request, 8);
             var updatedResult = Assert.IsType<ObjectResult>(response);
