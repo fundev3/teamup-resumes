@@ -3,7 +3,7 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "SQLConnetionString": "Server = MISKYS; DataBase = TeamUp; User ID = AppConnection; Password=123; "
+    "SQLConnetionString": "Server=tcp:sql-tuapi-dev-bra.database.windows.net,1433;Initial Catalog=sqldb-tuapi-dev-bra;Persist Security Info=False;User ID=n1d0d3v;Password=D3vL3v3l3;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   },
   "Host": {
     "CORS": "*"
