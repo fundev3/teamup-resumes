@@ -54,7 +54,7 @@
                     "INNER JOIN Person person ON resume.IdPerson = person.Id " +
                     "INNER JOIN Contact contact ON resume.IdContact = contact.Id " +
                     "INNER JOIN Resume_Skill resumeSkill ON resume.Id = resumeSkill.IdResume " +
-                    "INNER JOIN Skill skill ON resumeSkill.IdSkill = skill.Id";
+                    "INNER JOIN Skill skill ON resumeSkill.IdSkill = skill.Id ORDER BY resume.CreationDate DESC";
 
                 var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(sql, (resume, person, contact, skill) =>
                 {
