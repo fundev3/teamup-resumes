@@ -1,4 +1,4 @@
-namespace Jalasoft.TeamUp.Resumes.Core.Tests
+﻿namespace Jalasoft.TeamUp.Resumes.Core.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -8,19 +8,19 @@ namespace Jalasoft.TeamUp.Resumes.Core.Tests
     using Moq;
     using Xunit;
 
-    public class PostPostulationCoreTests
+    public class PatchPostulationCoreTests
     {
         private readonly PostulationsService postulationService;
         private readonly Mock<IPostulationsRepository> mockPostulation;
 
-        public PostPostulationCoreTests()
+        public PatchPostulationCoreTests()
         {
             this.mockPostulation = new Mock<IPostulationsRepository>();
             this.postulationService = new PostulationsService(this.mockPostulation.Object);
         }
 
         [Fact]
-        public void PostPostulation_ValidPostulation_Postulation()
+        public void PatchPostulationState_ValidId_Postulation()
         {
             var stubPostulation = new Postulation
             {
@@ -34,29 +34,31 @@ namespace Jalasoft.TeamUp.Resumes.Core.Tests
                 State = "Applied"
             };
 
-            this.mockPostulation.Setup(repository => repository.AddPostulation(stubPostulation)).Returns(new Postulation());
-            var result = this.postulationService.PostPostulation(stubPostulation);
+            this.mockPostulation.Setup(repository => repository.UpdatePostulation(stubPostulation)).Returns(new Postulation());
+            var result = this.postulationService.PatchPostulation(stubPostulation);
             Assert.IsType<Postulation>(result);
         }
 
         [Fact]
-        public void PostPostulation_InvalidPostulation_ValidationException()
+        public void PatchPostulationState_InvalidId_Null()
         {
             var stubPostulation = new Postulation
             {
-                ProjectId = "1235",
+                Id = 1,
+                ProjectId = "12332",
                 ResumeId = 1,
-                ProjectName = string.Empty,
-                ResumeName = string.Empty,
-                Picture = string.Empty,
+                ProjectName = "TeamUp",
+                ResumeName = "Jorge Lopez",
+                Picture = "test.png",
                 CreationDate = DateTime.Now.AddDays(-10),
                 LastUpdate = DateTime.Now,
                 State = "Applied"
             };
 
-            this.mockPostulation.Setup(repository => repository.AddPostulation(stubPostulation)).Returns(new Postulation());
-
-            Assert.Throws<FluentValidation.ValidationException>(() => this.postulationService.PostPostulation(stubPostulation));
+            Postulation postulation = null;
+            this.mockPostulation.Setup(repository => repository.UpdatePostulation(It.IsAny<Postulation>())).Returns(postulation);
+            var result = this.postulationService.PatchPostulation(stubPostulation);
+            Assert.Null(result);
         }
     }
 }

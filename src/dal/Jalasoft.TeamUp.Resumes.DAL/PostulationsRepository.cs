@@ -1,4 +1,4 @@
-namespace Jalasoft.TeamUp.Resumes.DAL
+﻿namespace Jalasoft.TeamUp.Resumes.DAL
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace Jalasoft.TeamUp.Resumes.DAL
             this.connectionString = Environment.GetEnvironmentVariable("SQLConnetionString", EnvironmentVariableTarget.Process);
         }
 
-        public Postulation Add(Postulation postulation)
+        public Postulation AddPostulation(Postulation postulation)
         {
             var storeProcedure = "Create_Postulation";
             var values = new
@@ -41,16 +41,6 @@ namespace Jalasoft.TeamUp.Resumes.DAL
             return postulation;
         }
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Postulation> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Postulation> GetAllByProjectId(string projectId)
         {
             List<Postulation> postulations = new List<Postulation>();
@@ -62,21 +52,6 @@ namespace Jalasoft.TeamUp.Resumes.DAL
             }
 
             return postulations;
-        }
-
-        public Postulation GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Resume> GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Resume> GetBySkill(string skill)
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<Postulation> GetPostulationsByResumeId(int? resumeId)
@@ -92,9 +67,24 @@ namespace Jalasoft.TeamUp.Resumes.DAL
             return postulations;
         }
 
-        public Postulation Update(Postulation updateObject)
+        public Postulation UpdatePostulation(Postulation updateObject)
         {
-            throw new NotImplementedException();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Update_Postulation";
+                var values = new
+                {
+                    id = updateObject.Id,
+                    state = updateObject.State,
+                    projectId = updateObject.ProjectId,
+                    projectName = updateObject.ProjectName,
+                    resumeName = updateObject.ResumeName,
+                    picture = updateObject.Picture,
+                };
+                updateObject = db.QuerySingleOrDefault<Postulation>(sp, values, commandType: CommandType.StoredProcedure);
+            }
+
+            return updateObject;
         }
     }
 }
