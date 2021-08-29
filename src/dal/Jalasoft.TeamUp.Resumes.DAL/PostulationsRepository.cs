@@ -66,7 +66,15 @@
 
         public Postulation GetById(int id)
         {
-            throw new NotImplementedException();
+            Postulation postulation;
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Get_Postulation_By_Id";
+                var values = new { id = id };
+                postulation = db.QuerySingleOrDefault<Postulation>(sp, values, commandType: CommandType.StoredProcedure);
+            }
+
+            return postulation;
         }
 
         public IEnumerable<Resume> GetByName(string name)

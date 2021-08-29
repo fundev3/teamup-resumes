@@ -19,7 +19,7 @@ namespace Jalasoft.TeamUp.Resumes.Core
 
         public Postulation GetPostulation(int id)
         {
-            throw new NotImplementedException();
+            return this.postulationsRepository.GetById(id);
         }
 
         public Postulation[] GetPostulations(int? resumeId)

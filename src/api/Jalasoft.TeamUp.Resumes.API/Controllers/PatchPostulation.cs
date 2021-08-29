@@ -3,11 +3,13 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using System;
     using System.IO;
     using System.Net;
+    using System.Threading.Tasks;
     using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.JsonPatch;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -26,23 +28,24 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
 
         [FunctionName("PatchPostulation")]
         [OpenApiOperation(operationId: "PatchPostulation", tags: new[] { "Postulations" })]
-        [OpenApiRequestBody("application/json", typeof(Postulation), Description = "JSON request body containing Postulation")]
+        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The postulation identifier.")]
+        [OpenApiRequestBody("application/json", typeof(JsonPatchDocument<Postulation>), Description = "JSON request body containing Postulation")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation), Description = "Successful response")]
-        public IActionResult Patch(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "v1/postulations")] HttpRequest req)
+        public async Task<IActionResult> Patch(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "v1/postulations/{id:int}")] HttpRequest req, int id)
         {
             try
             {
-                string requestBody = new StreamReader(req.Body).ReadToEnd();
-                var postulation = JsonConvert.DeserializeObject<Postulation>(requestBody);
-
-                var result = this.postulationsService.PatchPostulation(postulation);
-
-                if (result == null)
+                var postulation = this.postulationsService.GetPostulation(id);
+                if (postulation == null)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
                 }
 
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                var data = JsonConvert.DeserializeObject<JsonPatchDocument<Postulation>>(requestBody);
+                data.ApplyTo(postulation);
+                var result = this.postulationsService.PatchPostulation(postulation);
                 return new OkObjectResult(result);
             }
             catch (ResumesException e)

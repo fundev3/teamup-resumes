@@ -8,12 +8,12 @@
     using Moq;
     using Xunit;
 
-    public class PatchPostulationStateCoreTests
+    public class PatchPostulationCoreTests
     {
         private readonly PostulationsService postulationService;
         private readonly Mock<IPostulationsRepository> mockPostulation;
 
-        public PatchPostulationStateCoreTests()
+        public PatchPostulationCoreTests()
         {
             this.mockPostulation = new Mock<IPostulationsRepository>();
             this.postulationService = new PostulationsService(this.mockPostulation.Object);
