@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using FluentValidation;
-    using Jalasoft.TeamUp.Projects.API.Tests.Utils;
     using Jalasoft.TeamUp.Resumes.API.Controllers;
+    using Jalasoft.TeamUp.Resumes.API.Tests.Utils;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
     using Microsoft.AspNetCore.Http;
