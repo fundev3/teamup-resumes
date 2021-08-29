@@ -21,17 +21,22 @@
 
         public Resume Add(Resume newObject)
         {
-            var sql = "INSERT INTO Resume ( Title, Summary, CreationDate, LastUpdate ) Output Inserted.Id VALUES (@title, @summary, @creationdate, @lastupdate)";
+            var values = new
+            {
+                title = newObject.Title,
+                summary = newObject.Summary,
+                firstName = newObject.Person.FirstName,
+                lastName = newObject.Person.LastName,
+                birthdate = newObject.Person.Birthdate,
+                picture = newObject.Person.Picture,
+                address = newObject.Contact.Address,
+                email = newObject.Contact.Email,
+                phone = newObject.Contact.Phone
+            };
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
-                db.Open();
-                DynamicParameters parameter = new DynamicParameters();
-
-                parameter.Add("@title", newObject.Title, DbType.AnsiString, ParameterDirection.Input, 30);
-                parameter.Add("@summary", newObject.Summary, DbType.AnsiString, ParameterDirection.Input, 150);
-                parameter.Add("@creationdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
-                parameter.Add("@lastupdate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
-                newObject.Id = db.QuerySingle<int>(sql, parameter);
+                var sp = "Create_Resume";
+                newObject.Id = db.QuerySingleOrDefault<int>(sp, values, commandType: CommandType.StoredProcedure);
             }
 
             return newObject;
@@ -53,8 +58,8 @@
                     "FROM Resume resume " +
                     "INNER JOIN Person person ON resume.IdPerson = person.Id " +
                     "INNER JOIN Contact contact ON resume.IdContact = contact.Id " +
-                    "INNER JOIN Resume_Skill resumeSkill ON resume.Id = resumeSkill.IdResume " +
-                    "INNER JOIN Skill skill ON resumeSkill.IdSkill = skill.Id";
+                    "LEFT JOIN Resume_Skill resumeSkill ON resume.Id = resumeSkill.IdResume " +
+                    "LEFT JOIN Skill skill ON resumeSkill.IdSkill = skill.Id";
 
                 var resumesAux = db.Query<Resume, Person, Contact, Skill, Resume>(sql, (resume, person, contact, skill) =>
                 {
@@ -87,8 +92,8 @@
                         "FROM resume res " +
                         "INNER JOIN Person person ON res.IdPerson = person.Id " +
                         "INNER JOIN Contact contact ON res.IdContact = contact.Id " +
-                        "INNER JOIN resume_Skill resSkill ON res.Id = resSkill.Idresume " +
-                        "INNER JOIN Skill skill ON resSkill.IdSkill = skill.Id " +
+                        "LEFT JOIN resume_Skill resSkill ON res.Id = resSkill.Idresume " +
+                        "LEFT JOIN Skill skill ON resSkill.IdSkill = skill.Id " +
                         "WHERE res.Id = @id";
                 db.Open();
                 var parameters = new { id = id };
