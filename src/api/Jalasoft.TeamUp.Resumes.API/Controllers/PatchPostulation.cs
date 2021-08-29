@@ -32,6 +32,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiRequestBody("application/json", typeof(JsonPatchDocument<Postulation>), Description = "JSON request body containing Postulation")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.InternalServerError, Description = "Resource internal server error")]
         public async Task<IActionResult> Patch(
             [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "v1/postulations/{id:int}")] HttpRequest req, int id)
         {
@@ -53,11 +54,6 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             catch (ResumesException e)
             {
                 return e.Error;
-            }
-            catch (ValidationException exVal)
-            {
-                var errorException = new ResumesException(ResumesErrors.BadRequest, exVal);
-                return errorException.Error;
             }
             catch (Exception e)
             {
