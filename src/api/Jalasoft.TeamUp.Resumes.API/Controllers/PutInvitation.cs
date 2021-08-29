@@ -14,6 +14,7 @@
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.Http;
     using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+    using Microsoft.Extensions.Primitives;
     using Microsoft.OpenApi.Models;
     using Newtonsoft.Json;
 
@@ -28,20 +29,32 @@
 
         [FunctionName("UpdateInvitation")]
         [OpenApiOperation(operationId: "UpdateInvitation", tags: new[] { "ResumeSkills" })]
-        [OpenApiRequestBody("application/json", typeof(Skill[]), Description = "JSON request body containing list of skills")]
-        [OpenApiParameter(name: "invitationId", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The resume identifier.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill[]), Description = "Successful response")]
+        [OpenApiRequestBody("application/json", typeof(Invitation), Description = "JSON request body containing list of Invitations")]
+        [OpenApiParameter(name: "invitationId", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The Invitation identifier.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Invitation), Description = "Successful response")]
         public IActionResult UpdateResumeSkill(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "v1/resumes/invitations/{invitationId}&{gatito}")] HttpRequest req, Guid invitationId)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "v1/invitations/{invitationId}")] HttpRequest req, Guid invitationId)
         {
             {
-                string requestBody = new StreamReader(req.Body).ReadToEnd();
-                var invitations = JsonConvert.DeserializeObject(requestBody);
-                var result = this.invitationsService.UpdateInvitation(invitationId);
-                var idresume = req.idresume;
-                var projectId = req.projectId;
-                // var response = this.invitationsService.UpdateProject(idresume, projectId);
-                return new OkObjectResult(result);
+                try
+                {
+                    string requestBody = new StreamReader(req.Body).ReadToEnd();
+                    var invitations = JsonConvert.DeserializeObject(requestBody);
+                    var result = this.invitationsService.UpdateInvitation(invitationId);
+                    req.Query.TryGetValue("projectId", out StringValues projectId);
+                    req.Query.TryGetValue("projectId", out StringValues idResume);
+                    var response = this.invitationsService.UpdateProject(int.Parse(idResume), Guid.Parse(projectId));
+                    return new OkObjectResult(result);
+                }
+                catch (ResumesException e)
+                {
+                    return e.Error;
+                }
+                catch (System.Exception e)
+                {
+                    var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
+                    return errorException.Error;
+                }
             }
         }
     }

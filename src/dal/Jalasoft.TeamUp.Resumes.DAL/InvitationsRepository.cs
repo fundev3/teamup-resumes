@@ -29,9 +29,10 @@
         private Guid UpdateProject(int idResume, Guid projectId)
         {
             Resume resume = this.resumesRepository.GetById(idResume);
-            var project = new { op = "add", path = "/memberList", value = new { idResume = idResume, name = resume.Person.FirstName + " " + resume.Person.LastName } };
+            var project = new { op = "add", path = "/memberList", value = new { IdResume = idResume, Name = resume.Person.FirstName + " " + resume.Person.LastName } };
             var client = new RestClient($"https://fa-tuapi-projects-dev-bra.azurewebsites.net/api/v1/projects/ {idResume}");
             var request = new RestRequest(Method.PATCH);
+            request.AddJsonBody(JsonConvert.SerializeObject(project));
             return projectId;
         }
     }
