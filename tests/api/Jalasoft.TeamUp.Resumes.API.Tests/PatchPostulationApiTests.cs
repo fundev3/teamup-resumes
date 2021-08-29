@@ -63,24 +63,6 @@
             Assert.Equal(404, updatedResult.StatusCode);
         }
 
-        [Theory]
-        [InlineData(@"[
-        {""op"" : ""replace"", ""path"" : ""/state"", ""value"" : ""BadRequest""},
-        ]")]
-        [InlineData(@"[
-        {""op"" : ""replace"", ""path"" : ""/state"", ""value"" : ""Rejected""},
-        {""op"" : ""replace"", ""path"" : ""/projectName"", ""value"" : ""Projects""},
-        ]")]
-        public async void PatchPostulation_UnexpectedError_BadRequest(string body)
-        {
-            var request = this.mockHttpContext.Request;
-            request.Body = SetStream.Setstream(body);
-            this.mockPostulationsService.Setup(service => service.PatchPostulation(It.IsAny<Postulation>())).Throws(new ValidationException("Bad Request"));
-            var response = await this.patchPostulation.Patch(request, 8);
-            var updatedResult = Assert.IsType<ObjectResult>(response);
-            Assert.Equal(400, updatedResult.StatusCode);
-        }
-
         [Fact]
         public async void PatchPostulation_UnexpectedError_InternalError()
         {
