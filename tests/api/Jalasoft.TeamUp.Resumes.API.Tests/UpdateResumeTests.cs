@@ -28,7 +28,7 @@
         {
             var request = this.mockHttpContext.Request;
             IEnumerable<Skill> skills = new List<Skill>() { new Skill() };
-            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(skills);
+            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(new Resume());
             var response = this.putResume.UpdateResumeSkill(request, 1);
             var updatedResult = Assert.IsType<OkObjectResult>(response);
         }
@@ -37,8 +37,8 @@
         public void UpdateResume_UnexistentId_NotFound()
         {
             var request = this.mockHttpContext.Request;
-            IEnumerable<Skill> skills = new List<Skill>();
-            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(skills);
+            Resume resume = null;
+            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(resume);
             var response = this.putResume.UpdateResumeSkill(request, 7);
             var updatedResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(404, updatedResult.StatusCode);

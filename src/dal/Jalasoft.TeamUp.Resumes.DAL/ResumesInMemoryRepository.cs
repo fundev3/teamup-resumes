@@ -128,13 +128,13 @@
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
+        public Resume UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var resume = Resumes.Find(x => x.Id == idResume);
 
             if (resume == null)
             {
-                return new Skill[0];
+                return null;
             }
 
             var skillsUpdate = resume.Skills.ToList();
@@ -144,7 +144,7 @@
             }
 
             resume.Skills = skillsUpdate;
-            return resume.Skills;
+            return resume;
         }
 
         public IEnumerable<Resume> GetByName(string name)

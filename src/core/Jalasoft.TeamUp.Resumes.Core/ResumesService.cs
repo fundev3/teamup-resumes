@@ -45,12 +45,12 @@
             return result;
         }
 
-        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
+        public Resume UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var skillValidator = new SkillValidator();
             skillValidator.ValidateAndThrow(skills);
 
-            return this.resumesRepository.UpdateResumeSkill(idResume, skills).ToList();
+            return this.resumesRepository.UpdateResumeSkill(idResume, skills);
         }
 
         public Resume[] GetByName(string name)

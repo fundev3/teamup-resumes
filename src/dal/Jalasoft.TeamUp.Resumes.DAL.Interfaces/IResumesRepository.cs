@@ -7,7 +7,7 @@ namespace Jalasoft.TeamUp.Resumes.DAL.Interfaces
     {
         IEnumerable<Resume> GetByName(string name);
 
-        IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills);
+        Resume UpdateResumeSkill(int idResume, Skill[] skills);
 
         IEnumerable<Resume> GetBySkill(string skill);
     }

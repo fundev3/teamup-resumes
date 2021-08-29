@@ -30,7 +30,7 @@
         [OpenApiOperation(operationId: "UpdateResumeSkill", tags: new[] { "ResumeSkills" })]
         [OpenApiRequestBody("application/json", typeof(Skill[]), Description = "JSON request body containing list of skills")]
         [OpenApiParameter(name: "idResume", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The resume identifier.")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill[]), Description = "Successful response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
         public IActionResult UpdateResumeSkill(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "v1/resumes/{idResume}/skills")] HttpRequest req, int idResume)
         {
@@ -41,7 +41,7 @@
 
                 var result = this.resumesService.UpdateResumeSkill(idResume, skills);
 
-                if (result.Count() == 0)
+                if (result == null)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
                 }
