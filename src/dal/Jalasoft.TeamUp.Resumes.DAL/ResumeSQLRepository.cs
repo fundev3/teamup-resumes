@@ -21,22 +21,21 @@
 
         public Resume Add(Resume newObject)
         {
-            var values = new
-            {
-                title = newObject.Title,
-                summary = newObject.Summary,
-                firstName = newObject.Person.FirstName,
-                lastName = newObject.Person.LastName,
-                birthdate = newObject.Person.Birthdate,
-                picture = newObject.Person.Picture,
-                address = newObject.Contact.Address,
-                email = newObject.Contact.Email,
-                phone = newObject.Contact.Phone
-            };
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 var sp = "Create_Resume";
-                newObject.Id = db.QuerySingleOrDefault<int>(sp, values, commandType: CommandType.StoredProcedure);
+                DynamicParameters parameter = new DynamicParameters();
+
+                parameter.Add("@title", newObject.Title, DbType.AnsiString, ParameterDirection.Input, 30);
+                parameter.Add("@summary", newObject.Summary, DbType.AnsiString, ParameterDirection.Input, 150);
+                parameter.Add("@firstName", newObject.Person.FirstName, DbType.AnsiString, ParameterDirection.Input, 150);
+                parameter.Add("@lastName", newObject.Person.LastName, DbType.AnsiString, ParameterDirection.Input, 150);
+                parameter.Add("@birthdate", newObject.Person.Birthdate, DbType.DateTime, ParameterDirection.Input);
+                parameter.Add("@picture", newObject.Person.Picture, DbType.AnsiString, ParameterDirection.Input, 150);
+                parameter.Add("@address", newObject.Contact.Address, DbType.AnsiString, ParameterDirection.Input, 150);
+                parameter.Add("@email", newObject.Contact.Email, DbType.AnsiString, ParameterDirection.Input, 150);
+                parameter.Add("@phone", newObject.Contact.Phone, DbType.Int64, ParameterDirection.Input);
+                newObject.Id = db.QuerySingleOrDefault<int>(sp, parameter, commandType: CommandType.StoredProcedure);
             }
 
             return newObject;
@@ -128,20 +127,22 @@
         {
             var storeProcedure = "Resume_Skill_Update";
             var createTempTable = "CREATE TABLE #SkillTemp(Id Varchar(20), Name Varchar(50))";
-            var value = new { idResume = idResume };
             bool resumeExist;
             using (IDbConnection db = new SqlConnection(this.connectionString))
             {
                 db.Open();
+                DynamicParameters parameter = new DynamicParameters();
+
+                parameter.Add("@idResume", idResume, DbType.Int32, ParameterDirection.Input, 30);
                 db.Execute(createTempTable);
                 DapperPlusManager.Entity<Skill>().Table("#SkillTemp");
                 db.BulkInsert(skills);
-                resumeExist = db.QuerySingle<bool>(storeProcedure, value, commandType: CommandType.StoredProcedure);
+                resumeExist = db.QuerySingle<bool>(storeProcedure, parameter, commandType: CommandType.StoredProcedure);
             }
 
             if (!resumeExist)
             {
-                skills = null;
+                return null;
             }
 
             return skills;
