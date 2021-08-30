@@ -67,7 +67,7 @@
                         new Skill
                         {
                             Id = "1",
-                            Name = "C#"
+                            Name = "C++"
                         },
                         new Skill
                         {
@@ -125,31 +125,46 @@
 
         public Resume Update(Resume updateObject)
         {
-            var resume = Resumes.Find(x => x.Id == updateObject.Id);
-
-            if (resume == null)
-            {
-                return resume;
-            }
-
-            var skills = resume.Skills.ToList();
-            foreach (var skill in updateObject.Skills)
-            {
-                skills.Add(skill);
-            }
-
-            resume.Skills = skills;
-            return resume;
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
-            throw new NotImplementedException();
+            var resume = Resumes.Find(x => x.Id == idResume);
+
+            if (resume == null)
+            {
+                return null;
+            }
+
+            var skillsUpdate = resume.Skills.ToList();
+            foreach (var skill in skills)
+            {
+                skillsUpdate.Add(skill);
+            }
+
+            resume.Skills = skillsUpdate;
+            return resume.Skills;
         }
 
         public IEnumerable<Resume> GetByName(string name)
         {
             return Resumes;
+        }
+
+        public IEnumerable<Resume> GetBySkill(string skill)
+        {
+            List<Resume> result = new List<Resume>();
+            foreach (Resume item in Resumes)
+            {
+                var find = item.Skills.Find(x => x.Name == skill);
+                if (find != null)
+                {
+                    result.Add(item);
+                }
+            }
+
+            return result;
         }
     }
 }

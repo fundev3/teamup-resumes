@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using FluentValidation;
+    using FluentValidation.Results;
     using Jalasoft.TeamUp.Resumes.Core;
     using Jalasoft.TeamUp.Resumes.DAL.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -20,7 +22,7 @@
             this.resumesService = new ResumesService(this.mockResumeRepository.Object);
         }
 
-        public static List<Skill> GetResume()
+        public List<Skill> GetSkills()
         {
             var stubSkill = new List<Skill>()
             {
@@ -42,9 +44,18 @@
         [Fact]
         public void UpdateResume_ExistentId_Resume()
         {
-            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(UpdateResumeCoreTests.GetResume());
-            var result = this.resumesService.UpdateResumeSkill(1, UpdateResumeCoreTests.GetResume().ToArray());
+            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(this.GetSkills());
+            var result = this.resumesService.UpdateResumeSkill(2, this.GetSkills().ToArray());
             Assert.IsType<Skill[]>(result.ToArray());
+        }
+
+        [Fact]
+        public void UpdateResume_UnexistentId_Null()
+        {
+            IEnumerable<Skill> skills = null;
+            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(skills);
+            var result = this.resumesService.UpdateResumeSkill(7, this.GetSkills().ToArray());
+            Assert.Null(result);
         }
     }
 }

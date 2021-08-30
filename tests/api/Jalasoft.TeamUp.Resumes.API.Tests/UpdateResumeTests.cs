@@ -1,10 +1,10 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.API.Tests
 {
+    using System;
     using System.Collections.Generic;
     using Jalasoft.TeamUp.Resumes.API.Controllers;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
-    using Jalasoft.TeamUp.Resumes.ResumesException;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Moq;
@@ -27,29 +27,29 @@
         public void UpdateResume_ExistentId_OkObjectResult()
         {
             var request = this.mockHttpContext.Request;
-            IEnumerable<Skill> skills = new List<Skill>();
+            IEnumerable<Skill> skills = new List<Skill>() { new Skill() };
             this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(skills);
-            var response = this.putResume.UpdateResume(request, 1);
+            var response = this.putResume.UpdateResumeSkill(request, 1);
             var updatedResult = Assert.IsType<OkObjectResult>(response);
         }
 
         [Fact]
-        public void UpdateResume_UnexistentId_Error404()
+        public void UpdateResume_UnexistentId_NotFound()
         {
             var request = this.mockHttpContext.Request;
-            IEnumerable<Skill> resume = null;
-            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(resume);
-            var response = this.putResume.UpdateResume(request, 1);
+            IEnumerable<Skill> skills = null;
+            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(skills);
+            var response = this.putResume.UpdateResumeSkill(request, 7);
             var updatedResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(404, updatedResult.StatusCode);
         }
 
         [Fact]
-        public void UpdateResume_UnexpectedError_Error500()
+        public void UpdateResume_UnexpectedError_InternalError()
         {
             var request = this.mockHttpContext.Request;
-            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Throws(new ResumesException(ResumesErrors.InternalServerError));
-            var response = this.putResume.UpdateResume(request, 1);
+            this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Throws(new Exception());
+            var response = this.putResume.UpdateResumeSkill(request, 1);
             var updatedResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(500, updatedResult.StatusCode);
         }

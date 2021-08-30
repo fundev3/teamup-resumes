@@ -25,10 +25,16 @@
             }
         }
 
-        public Resume[] GetResumes()
+        public Resume[] GetResumes(string value)
         {
-            var resumes = this.resumesRepository.GetAll().ToArray();
-            return resumes;
+            if (!string.IsNullOrEmpty(value))
+            {
+                return this.resumesRepository.GetBySkill(value).ToArray();
+            }
+            else
+            {
+                return this.resumesRepository.GetAll().ToArray();
+            }
         }
 
         public Resume PostResumes(Resume resume)
@@ -42,10 +48,9 @@
         public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var skillValidator = new SkillValidator();
-
             skillValidator.ValidateAndThrow(skills);
 
-            return this.resumesRepository.UpdateResumeSkill(idResume, skills).ToList();
+            return this.resumesRepository.UpdateResumeSkill(idResume, skills);
         }
 
         public Resume[] GetByName(string name)

@@ -8,10 +8,6 @@
     {
         public ResumeValidator()
         {
-            this.RuleFor(resume => resume.Id)
-                .NotEmpty()
-                .NotNull();
-
             this.RuleFor(resume => resume.Title)
                 .NotEmpty()
                 .NotNull()
