@@ -35,6 +35,5 @@ stages:
 - stage: Deploy
   displayName: Deploy
   dependsOn: Build
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   jobs: 
   - template: azure-pipelines/netcore-deploy-template.yml@templates
