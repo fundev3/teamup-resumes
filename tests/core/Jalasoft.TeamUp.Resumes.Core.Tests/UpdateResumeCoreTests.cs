@@ -44,16 +44,16 @@
         [Fact]
         public void UpdateResume_ExistentId_Resume()
         {
-            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(new Resume { Skills = this.GetSkills() });
+            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(this.GetSkills());
             var result = this.resumesService.UpdateResumeSkill(2, this.GetSkills().ToArray());
-            Assert.IsType<Resume>(result);
+            Assert.IsType<Skill[]>(result.ToArray());
         }
 
         [Fact]
         public void UpdateResume_UnexistentId_Null()
         {
-            Resume resume = null;
-            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(resume);
+            IEnumerable<Skill> skills = null;
+            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(skills);
             var result = this.resumesService.UpdateResumeSkill(7, this.GetSkills().ToArray());
             Assert.Null(result);
         }

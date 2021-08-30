@@ -124,9 +124,8 @@
             throw new NotImplementedException();
         }
 
-        public Resume UpdateResumeSkill(int idResume, Skill[] skills)
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
-            var result = new Resume { Skills = skills.ToList() };
             var storeProcedure = "Resume_Skill_Update";
             var createTempTable = "CREATE TABLE #SkillTemp(Id Varchar(20), Name Varchar(50))";
             var value = new { idResume = idResume };
@@ -142,10 +141,10 @@
 
             if (!resumeExist)
             {
-                result = null;
+                skills = null;
             }
 
-            return result;
+            return skills;
         }
 
         public IEnumerable<Resume> GetByName(string name)

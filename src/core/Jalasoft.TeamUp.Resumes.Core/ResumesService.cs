@@ -45,7 +45,7 @@
             return result;
         }
 
-        public Resume UpdateResumeSkill(int idResume, Skill[] skills)
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var skillValidator = new SkillValidator();
             skillValidator.ValidateAndThrow(skills);

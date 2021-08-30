@@ -128,7 +128,7 @@
             throw new NotImplementedException();
         }
 
-        public Resume UpdateResumeSkill(int idResume, Skill[] skills)
+        public IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills)
         {
             var resume = Resumes.Find(x => x.Id == idResume);
 
@@ -144,7 +144,7 @@
             }
 
             resume.Skills = skillsUpdate;
-            return resume;
+            return resume.Skills;
         }
 
         public IEnumerable<Resume> GetByName(string name)

@@ -12,7 +12,7 @@
 
         Resume PostResumes(Resume resume);
 
-        Resume UpdateResumeSkill(int idResume, Skill[] skills);
+        IEnumerable<Skill> UpdateResumeSkill(int idResume, Skill[] skills);
 
         Resume[] GetByName(string name);
     }
