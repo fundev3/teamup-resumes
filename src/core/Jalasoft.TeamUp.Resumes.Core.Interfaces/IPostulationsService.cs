@@ -6,10 +6,10 @@
     {
         Postulation PostPostulation(Postulation postulation);
 
-        Postulation GetPostulation(int id);
-
-        Postulation[] GetPostulations();
+        Postulation[] GetPostulations(int? resumeId);
 
         Postulation[] GetPostulationsByProjectId(string projectId);
+
+        Postulation PatchPostulation(Postulation postulation);
     }
 }

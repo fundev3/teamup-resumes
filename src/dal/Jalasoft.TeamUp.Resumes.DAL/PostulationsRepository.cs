@@ -18,7 +18,7 @@
             this.connectionString = Environment.GetEnvironmentVariable("SQLConnetionString", EnvironmentVariableTarget.Process);
         }
 
-        public Postulation Add(Postulation postulation)
+        public Postulation AddPostulation(Postulation postulation)
         {
             var storeProcedure = "Create_Postulation";
             var values = new
@@ -28,8 +28,8 @@
                 projectName = postulation.ProjectName,
                 resumeName = postulation.ResumeName,
                 picture = postulation.Picture,
-                creationDate = DateTime.Now,
-                lastUpdate = DateTime.Now,
+                creationDate = postulation.CreationDate,
+                lastUpdate = postulation.LastUpdate,
                 state = postulation.State
             };
 
@@ -39,16 +39,6 @@
             }
 
             return postulation;
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Postulation> GetAll()
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<Postulation> GetAllByProjectId(string projectId)
@@ -64,19 +54,37 @@
             return postulations;
         }
 
-        public Postulation GetById(int id)
+        public IEnumerable<Postulation> GetPostulationsByResumeId(int? resumeId)
         {
-            throw new NotImplementedException();
+            List<Postulation> postulations = new List<Postulation>();
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Get_postulations_by_ld";
+                var values = new { Id = resumeId };
+                postulations = db.Query<Postulation>(sp, values, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return postulations;
         }
 
-        public IEnumerable<Resume> GetByName(string name)
+        public Postulation UpdatePostulation(Postulation updateObject)
         {
-            throw new NotImplementedException();
-        }
+            using (IDbConnection db = new SqlConnection(this.connectionString))
+            {
+                var sp = "Update_Postulation";
+                var values = new
+                {
+                    id = updateObject.Id,
+                    state = updateObject.State,
+                    projectId = updateObject.ProjectId,
+                    projectName = updateObject.ProjectName,
+                    resumeName = updateObject.ResumeName,
+                    picture = updateObject.Picture,
+                };
+                updateObject = db.QuerySingleOrDefault<Postulation>(sp, values, commandType: CommandType.StoredProcedure);
+            }
 
-        public Postulation Update(Postulation updateObject)
-        {
-            throw new NotImplementedException();
+            return updateObject;
         }
     }
 }

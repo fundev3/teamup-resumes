@@ -1,4 +1,4 @@
-﻿namespace Jalasoft.TeamUp.Resumes.Core.Validators
+namespace Jalasoft.TeamUp.Resumes.Core.Validators
 {
     using FluentValidation;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -14,12 +14,12 @@
                 .NotEmpty();
 
             this.RuleFor(postulation => postulation.ProjectName)
-                .Length(3, 15)
+                .Length(3, 50)
                 .Matches("^[a-zñ A-ZÑ]+$")
                 .NotEmpty();
 
             this.RuleFor(postulation => postulation.ResumeName)
-                .Length(3, 15)
+                .Length(3, 50)
                 .Matches("^[a-zñ A-ZÑ]+$")
                 .NotEmpty();
 

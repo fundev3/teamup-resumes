@@ -13,18 +13,19 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
     using Microsoft.Extensions.Primitives;
     using Microsoft.OpenApi.Models;
 
-    public class GetPostulationsByProjectId
+    public class GetPostulations
     {
         private readonly IPostulationsService postulationsService;
 
-        public GetPostulationsByProjectId(IPostulationsService postulationsService)
+        public GetPostulations(IPostulationsService postulationsService)
         {
             this.postulationsService = postulationsService;
         }
 
-        [FunctionName("GetPostulationsByProjectId")]
-        [OpenApiOperation(operationId: "GetPostulationsByProjectId", tags: new[] { "Postulations" })]
-        [OpenApiParameter(name: "projectId", In = ParameterLocation.Query, Required = true, Type = typeof(Guid), Description = "The Id of the project to search by.")]
+        [FunctionName("GetPostulations")]
+        [OpenApiOperation(operationId: "GetPostulations", tags: new[] { "Postulations" })]
+        [OpenApiParameter(name: "resumeId", In = ParameterLocation.Query, Required = false, Type = typeof(int), Description = "The resume identifier.")]
+        [OpenApiParameter(name: "projectId", In = ParameterLocation.Query, Required = false, Type = typeof(Guid), Description = "The Id of the project to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
         public IActionResult Run(
@@ -32,14 +33,26 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         {
             try
             {
+                req.Query.TryGetValue("resumeId", out StringValues resumeId);
                 req.Query.TryGetValue("projectId", out StringValues projectId);
-                var postulations = this.postulationsService.GetPostulationsByProjectId(projectId);
-                if (postulations.Length == 0)
+                int? resumeIdNumber;
+                resumeIdNumber = string.IsNullOrEmpty(resumeId) ? resumeIdNumber = null : resumeIdNumber = int.Parse(resumeId);
+                Postulation[] result = null;
+                if (string.IsNullOrEmpty(projectId))
+                {
+                    result = this.postulationsService.GetPostulations(resumeIdNumber);
+                }
+                else
+                {
+                    result = this.postulationsService.GetPostulationsByProjectId(projectId);
+                }
+
+                if (result.Length == 0)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
                 }
 
-                return new OkObjectResult(postulations);
+                return new OkObjectResult(result);
             }
             catch (ResumesException e)
             {
