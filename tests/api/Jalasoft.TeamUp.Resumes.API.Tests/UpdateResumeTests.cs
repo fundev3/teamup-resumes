@@ -37,7 +37,7 @@
         public void UpdateResume_UnexistentId_NotFound()
         {
             var request = this.mockHttpContext.Request;
-            IEnumerable<Skill> skills = new List<Skill>();
+            IEnumerable<Skill> skills = null;
             this.mockResumesService.Setup(service => service.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(skills);
             var response = this.putResume.UpdateResumeSkill(request, 7);
             var updatedResult = Assert.IsType<ObjectResult>(response);

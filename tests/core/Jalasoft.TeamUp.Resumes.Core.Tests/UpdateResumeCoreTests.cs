@@ -50,11 +50,12 @@
         }
 
         [Fact]
-        public void UpdateResume_UnexistentId_EmptyList()
+        public void UpdateResume_UnexistentId_Null()
         {
-            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(new Skill[0]);
+            IEnumerable<Skill> skills = null;
+            this.mockResumeRepository.Setup(repository => repository.UpdateResumeSkill(It.IsAny<int>(), It.IsAny<Skill[]>())).Returns(skills);
             var result = this.resumesService.UpdateResumeSkill(7, this.GetSkills().ToArray());
-            Assert.IsType<Skill[]>(result.ToArray());
+            Assert.Null(result);
         }
     }
 }
