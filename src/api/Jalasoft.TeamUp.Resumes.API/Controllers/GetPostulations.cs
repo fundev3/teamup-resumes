@@ -47,7 +47,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
                     result = this.postulationsService.GetPostulationsByProjectId(projectId);
                 }
 
-                if (result.Length == 0)
+                if (result.Length > 0 && result[0].Id == 0)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
                 }
