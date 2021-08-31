@@ -28,6 +28,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiParameter(name: "projectId", In = ParameterLocation.Query, Required = false, Type = typeof(Guid), Description = "The Id of the project to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Postulation[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.InternalServerError, Description = "Resource internal server error")]
         public IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/postulations")] HttpRequest req)
         {
@@ -58,7 +59,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             {
                 return e.Error;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
                 return errorException.Error;
