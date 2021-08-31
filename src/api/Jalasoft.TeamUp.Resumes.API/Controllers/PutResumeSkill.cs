@@ -27,7 +27,7 @@
         }
 
         [FunctionName("UpdateResumeSkill")]
-        [OpenApiOperation(operationId: "UpdateResumeSkill", tags: new[] { "ResumeSkills" })]
+        [OpenApiOperation(operationId: "UpdateResumeSkill", tags: new[] { "Resumes" })]
         [OpenApiRequestBody("application/json", typeof(Skill[]), Description = "JSON request body containing list of skills")]
         [OpenApiParameter(name: "idResume", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The resume identifier.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Skill[]), Description = "Successful response")]
