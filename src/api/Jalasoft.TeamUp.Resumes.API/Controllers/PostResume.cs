@@ -28,6 +28,8 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiOperation(operationId: "CreateResume", tags: new[] { "Resumes" })]
         [OpenApiRequestBody("application/json", typeof(Resume), Description = "JSON request body containing { FirstName, LastName, Email, Phone, Summary, Picture}")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(Resume), Description = "Successful response")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.BadRequest, Description = "Resource bad request")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.InternalServerError, Description = "Resource internal server error")]
         public IActionResult CreateResume(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/resumes")] HttpRequest req)
         {
@@ -43,10 +45,6 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             {
                 var errorException = new ResumesException(ResumesErrors.BadRequest, exVal);
                 return errorException.Error;
-            }
-            catch (ResumesException e)
-            {
-                return e.Error;
             }
             catch (Exception e)
             {

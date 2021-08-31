@@ -134,7 +134,7 @@
 
             if (resume == null)
             {
-                return new Skill[0];
+                return null;
             }
 
             var skillsUpdate = resume.Skills.ToList();

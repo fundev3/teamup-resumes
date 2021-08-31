@@ -1,6 +1,7 @@
 ﻿namespace Jalasoft.TeamUp.Resumes.API.Tests
 {
     using System;
+    using FluentValidation;
     using Jalasoft.TeamUp.Resumes.API.Controllers;
     using Jalasoft.TeamUp.Resumes.Core;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
@@ -40,7 +41,7 @@
         public void PostResume_InvalidResume_BadRequest()
         {
             var request = this.mockHttpContext.Request;
-            this.mockResumesService.Setup(service => service.PostResumes(null)).Throws(new ResumesException(ResumesErrors.BadRequest, new FluentValidation.ValidationException("BadRequest")));
+            this.mockResumesService.Setup(service => service.PostResumes(null)).Throws(new ValidationException("BadRequest"));
             var response = this.postResume.CreateResume(request);
             var objectResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal(400, objectResult.StatusCode);
