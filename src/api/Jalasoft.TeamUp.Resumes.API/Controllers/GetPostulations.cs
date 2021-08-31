@@ -49,7 +49,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
                     result = this.postulationsService.GetPostulationsByProjectId(projectId);
                 }
 
-                if (result.ToList().FirstOrDefault()?.Id == 0)
+                if (result.FirstOrDefault()?.Id == 0)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
                 }
