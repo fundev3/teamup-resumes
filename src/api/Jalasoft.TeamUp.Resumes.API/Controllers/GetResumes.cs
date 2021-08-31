@@ -28,14 +28,13 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiParameter(name: "skill", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The name of the skill to search by.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Resume[]), Description = "Successful response")]
         [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.NotFound, Description = "Resource not found")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.InternalServerError, Description = "Resource internal server error")]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "v1/resumes")] HttpRequest req)
         {
             try
             {
                 string skill = req.Query["skill"];
-
-                // var resumes_ = this.resumesService.GetResumes(skill);
                 req.Query.TryGetValue("name", out StringValues name);
                 Resume[] resumes = null;
                 if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(skill))

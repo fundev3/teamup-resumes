@@ -28,6 +28,8 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
         [OpenApiOperation(operationId: "PostPostulation", tags: new[] { "Postulations" })]
         [OpenApiRequestBody("application/json", typeof(Postulation), Description = "JSON request body containing Postulation")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(Postulation), Description = "Successful response")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.BadRequest, Description = "Resource bad request")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.InternalServerError, Description = "Resource internal server error")]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/postulations")] HttpRequest req)
         {
