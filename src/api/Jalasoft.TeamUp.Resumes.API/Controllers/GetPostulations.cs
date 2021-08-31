@@ -1,6 +1,7 @@
 namespace Jalasoft.TeamUp.Resumes.API.Controllers
 {
     using System;
+    using System.Linq;
     using System.Net;
     using Jalasoft.TeamUp.Resumes.Core.Interfaces;
     using Jalasoft.TeamUp.Resumes.Models;
@@ -48,7 +49,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
                     result = this.postulationsService.GetPostulationsByProjectId(projectId);
                 }
 
-                if (result.Length == 0)
+                if (result.FirstOrDefault()?.Id == 0)
                 {
                     throw new ResumesException(ResumesErrors.NotFound);
                 }
@@ -59,7 +60,7 @@ namespace Jalasoft.TeamUp.Resumes.API.Controllers
             {
                 return e.Error;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 var errorException = new ResumesException(ResumesErrors.InternalServerError, e);
                 return errorException.Error;

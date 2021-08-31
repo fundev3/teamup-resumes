@@ -104,8 +104,13 @@
         public void GetPostulationsByProjectId_InvalidProjectId_BadRequest()
         {
             // Arrange
+            var qs = new Dictionary<string, StringValues>
+            {
+                { "projectId", "7c9e6679-7425-40de-944b-e07fc1560ae7" }
+            };
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetPostulationsByProjectId(It.IsAny<string>())).Returns(new Postulation[0]);
+            request.Query = new QueryCollection(qs);
+            this.mockService.Setup(service => service.GetPostulationsByProjectId(It.IsAny<string>())).Returns(new List<Postulation> { new Postulation() }.ToArray());
 
             // Act
             var response = this.getPostulations.Run(request);
@@ -120,7 +125,7 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetPostulations(It.IsAny<int?>())).Returns(new Postulation[10]);
+            this.mockService.Setup(service => service.GetPostulations(It.IsAny<int?>())).Returns(new List<Postulation> { GetTestPostulations()[0] }.ToArray());
 
             // Act
             var response = this.getPostulations.Run(request);
@@ -151,7 +156,7 @@
         {
             // Arrange
             var request = this.mockHttpContext.Request;
-            this.mockService.Setup(service => service.GetPostulations(It.IsAny<int?>())).Returns(new Postulation[0]);
+            this.mockService.Setup(service => service.GetPostulations(It.IsAny<int?>())).Returns(new List<Postulation> { new Postulation() }.ToArray());
 
             // Act
             var response = this.getPostulations.Run(request);
